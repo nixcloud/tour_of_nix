@@ -45,35 +45,35 @@
 {
 "topic":" Functions",
 "question":" Implement the min and the max function.\n\n\n NOTE: those functions already exists and can be accessed with lib.min or lib.max (don't do this in this exercise).",
-"code":"let\n  min = XX\n  max = XX\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}",
+"code":"let\n  min = XX\n  max = XX\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
 "solution":"let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}",
 "result":""
 },
 {
 "topic":" Functions",
 "question":"Functions can also define default values for parameters, making those parameters optional.\n\nDoing so allow the function to be called without the optional parameter.\n\nA default value is defined with an '?'. Change the function 'func' in a way that foobar is evaluated to 'foobar'.",
-"code":"let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b , c }: a+b+c; #Only modify this line!\nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}",
+"code":"let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b , c }: a+b+c; #Only modify this line!\nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}\n",
 "solution":"let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b ? \"a\", c ? \"\"}: a+b+c; #Only modify this line! \nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}",
 "result":""
 },
 {
 "topic":" Boolean",
 "question":"To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
-"code":"with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex1 =  \"a\" == XX; \n  #unequal \n#  ex2 = !(\"b\" != XX);\n  #and/or/neg\n#  ex3 = ex1 && !ex2 || ! XX;\n  #implication\n#  ex4 = true -> XX;\n #contains attribute\n#  ex5 = attrSet ? XX;\n#  ex6 = XX ? f;\n}",
+"code":"with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex1 =  \"a\" == XX; \n  #unequal \n#  ex2 = !(\"b\" != XX);\n  #and/or/neg\n#  ex3 = ex1 && !ex2 || ! XX;\n  #implication\n#  ex4 = true -> XX;\n #contains attribute\n#  ex5 = attrSet ? XX;\n#  ex6 = XX ? f;\n}\n",
 "solution":"with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex1 = \"a\" == attrSet.x;\n  #unequal \n  ex2 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex3 = ex1 && !ex2 || !attrSet.b.f;\n  #implication\n  ex4 = true -> attrSet.b.t;\n  #contains attribute\n  ex5 = attrSet ? e;\n  ex6 = attrSet.e ? f;\n}",
 "result":""
 },
 {
 "topic":" Lists",
 "question":"To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
-"code":"with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true  true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isList X;\n  ex1 = elemAt list 2 == X;\n  ex2 = length list == X;\n  ex3 = last list == X;\n  ex4 = filter f list == [XX];\n  ex5 = head list == X;\n  ex6 = tail list == [XXX];\n  ex7 = remove true list == [XXX];\n  ex8 = toList s == [XXX];\n  ex9 = take 3 list == [XXX];\n  ex10 = drop 4 list == [XXX];\n  ex11 = unique list == [XXX];\n  ex12 = list ++ [\"x\" \"y\"] == [XXX];\n}\n",
-"solution":"with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isList list;\n  ex1 = elemAt list 2 == true;\n  ex2 = length list == 6;\n  ex3 = last list == 2;\n  ex4 = filter f list == [\"4\"];\n  ex5 = head list == 2;\n  ex6 = tail list == [\"4\" true true {a = 27;} 2];\n  ex7 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex8 = toList s == [s];\n  ex9 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n",
+"code":"with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true  true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList X;\n  ex01 = elemAt list 2 == X;\n  ex02 = length list == X;\n  ex03 = last list == X;\n  ex04 = filter f list == [XX];\n  ex05 = head list == X;\n  ex06 = tail list == [XXX];\n  ex07 = remove true list == [XXX];\n  ex08 = toList s == [XXX];\n  ex09 = take 3 list == [XXX];\n  ex10 = drop 4 list == [XXX];\n  ex11 = unique list == [XXX];\n  ex12 = list ++ [\"x\" \"y\"] == [XXX];\n}\n",
+"solution":"with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n",
 "result":""
 },
 {
 "topic":" Lists",
 "question":"To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
-"code":"let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}",
+"code":"let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
 "solution":"let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}",
 "result":""
 },
@@ -101,14 +101,14 @@
 {
 "topic":" Attributes",
 "question":" Make all ex evaluate to true.",
-"code":"with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n\n\n",
+"code":"with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
 "solution":"with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n",
 "result":""
 },
 {
 "topic":" Attributes",
 "question":"To learn the basic syntax replace every XX in the rec scope with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
-"code":"with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}",
+"code":"with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
 "solution":"with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}",
 "result":""
 },
@@ -122,7 +122,7 @@
 {
 "topic":" Fold",
 "question":" \"Fold\" is a binary function that uses the function 'f' between successive elements of 'list' with 'z' as the starting value,\n\n i.e.,  'fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))'.\n\n ![alt text](https://upload.wikimedia.org/wikipedia/commons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n More informations about fold can be found on [wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29). \n\n \nuse fold to write a function that counts all \"a\" in a list.",
-"code":"with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n",
+"code":"with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
 "solution":"\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n",
 "result":""
 },
@@ -136,14 +136,14 @@
 {
 "topic":" Fold",
 "question":"use fold to write your own map function \n\nNOTE: The little error is intended, FIX IT!",
-"code":"with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}",
+"code":"with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
 "solution":"with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
 "result":""
 },
 {
 "topic":" Reimplementation",
 "question":" write the function 'attrVals'.\n\n This function consums a list of attribute names and an attribute set. It returnes the values of each attributename.  ",
-"code":"\nwith import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tips: use the map function and acces the attribute values \n  #in the same way as 'getSingleVal'\n  attrVals = TODO;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\"; #is [1]\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n\n",
+"code":"with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tips: use the map function and acces the attribute values \n  #in the same way as 'getSingleVal'\n  attrVals = TODO;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\"; #is [1]\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n",
 "solution":"\nwith import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tip use map and acces the attribute values in the same way\n  #as 'getSingleVal'\n  attrVals = List: attrSet: map (x: attrSet.${x}) List;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\";\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n\n",
 "result":""
 },
@@ -157,14 +157,14 @@
 {
 "topic":" Reimplementation",
 "question":" write the function 'catAttrs'. This function collects each attribute with a specific name from a list of attribute sets.\n\n Sets that don't contain the named attribute are ignored.\n\n NOTE: you can use the builtin function concatLists. ",
-"code":"with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n  \n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = TODO\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}",
+"code":"with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n  \n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = TODO\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
 "solution":"with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n\n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = name: List: builtins.concatLists (map (x: if x ? ${name} then [x.${name}] else []) List);\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
 "result":""
 },
 {
 "topic":"The end",
 "question":"## It is done!\nCongratulation! You reached the end of this course and you made it!\n\nWe hope you liked 'A tour of Nix' and if you want to contribute new \nquestions or alter existing ones, please feel to send an email to:\n\n* [Joachim Schiele](mailto:js@lastlog.de)\n* [Paul Seitz](mailto:paul.m.seitz@gmail.com)\n\n**Note:** As soon as we got an editor/GIT repository ready you will be \nable to create pull requests.\n\n## Further reading\n\n* [Luca Bruno's nix pill(s)](http://lethalman.blogspot.de/2014/07/nix-pill-1-why-you-should-give-it-try.html)\n  \n  The Nix Pills are a wonderful introduction into Nix programming and you will \n  have much joy reading them!\n  \n* [NixOS Wiki](https://nixos.org/wiki/Main_Page)\n\n  The Wiki contains a lot of practical articles, like the \n  [Cheatsheet](https://nixos.org/wiki/Cheatsheet)\n\n\n",
-"code":"with import <nixpkgs> { }; \nrec {\n made_it = \"it is done\";\n }",
+"code":"with import <nixpkgs> { }; \nrec {\n  made_it = \"it is done\";\n}\n",
 "solution":"",
 "result":""
 }
