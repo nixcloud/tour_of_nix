@@ -1,243 +1,243 @@
 <html lang="en" dir="ltr" >
-	<head>
-		<meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
-		<!--
-	    <script type="text/javascript" src="nix-instantiate.js"></script>
-		-->
-		<script type="text/javascript" src="markdown.min.js"></script>
-		<title>A tour of Nix</title>
+<head>
+  <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
+  <!--
+    <script type="text/javascript" src="nix-instantiate.js"></script>
+    -->
+    <script type="text/javascript" src="markdown.min.js"></script>
+    <title>A tour of Nix</title>
 
-		<link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
-		<link rel="stylesheet" href="style.css" type="text/css"/>
-		<link rel="stylesheet" href="font/font.css" type="text/css"/>
-		<script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
-		<script type="text/javascript" charset="utf-8">
-          //function replaceQueryParam(param, newval, search) {
-          //  var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
-          //  var query = search.replace(regex, "$1").replace(/&$/, '');
-          //  return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
-          //}
-          var initialized = 0;
-          var selected_question = 0;
-		  var prepare_data = function () {
-			  for(i = 0; i < questions.questions.length; i++) {
-                questions.questions[i].mycode = questions.questions[i].code;
-			  }
-		  }
-          function getURLParameter(name) {
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
-          }
-          function load_wanted_page() {
-            var i = parseInt(getURLParameter("id"))
-            //console.log("parser of getURLParameter found: " + getURLParameter("id"))
-            //console.log("parser of getURLParameter found: " + i)
-            if (!isNaN(i)) {
-              change_question(i-1) 
-            } else {
-              change_question(0) 
-            }
-          }
-          var keys = [];
-          function keysPressed(e) {
-            keys[e.keyCode] = true;
-            if (keys[16] && keys[13]) { // shift+return
-                 runNix()
-                 e.preventDefault(); 
-            }
-            if (keys[17] && keys[74]) { // ctrl+ k
-                 change_question(1);
-                 e.preventDefault(); 
-            }
-            if (keys[17] && keys[75]) { // ctrl+.j
-                 change_question(-1);
-                 e.preventDefault(); 
-            }
-            if (keys[17] && keys[190]) { // ctrl+.
-            	 markdown2html();
-                 e.preventDefault(); 
-			}
-            if (keys[17] && keys[188]) { // ctrl+,
-            	 load_markdown();
-                 e.preventDefault(); 
-			}
-            if (keys[17] && keys[73]) { // ctrl+i
-            	 reset_question();
-                 e.preventDefault(); 
-			}
-          }
-          function keysReleased(e) {
-              // mark keys that were released
-              keys[e.keyCode] = false;
-          }
-          window.addEventListener("keydown", keysPressed, false);
-          window.addEventListener("keyup", keysReleased, false);
+    <link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <link rel="stylesheet" href="font/font.css" type="text/css"/>
+    <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
+    <script type="text/javascript" charset="utf-8">
+//function replaceQueryParam(param, newval, search) {
+//  var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
+//  var query = search.replace(regex, "$1").replace(/&$/, '');
+//  return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
+//}
+var initialized = 0;
+var selected_question = 0;
+var prepare_data = function () {
+  for(i = 0; i < questions.questions.length; i++) {
+    questions.questions[i].mycode = questions.questions[i].code;
+  }
+}
+function getURLParameter(name) {
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+}
+function load_wanted_page() {
+  var i = parseInt(getURLParameter("id"))
+    //console.log("parser of getURLParameter found: " + getURLParameter("id"))
+    //console.log("parser of getURLParameter found: " + i)
+    if (!isNaN(i)) {
+      change_question(i-1) 
+    } else {
+      change_question(0) 
+    }
+}
+var keys = [];
+function keysPressed(e) {
+  keys[e.keyCode] = true;
+  if (keys[16] && keys[13]) { // shift+return
+    runNix()
+      e.preventDefault(); 
+  }
+  if (keys[17] && keys[74]) { // ctrl+ k
+    change_question(1);
+    e.preventDefault(); 
+  }
+  if (keys[17] && keys[75]) { // ctrl+.j
+    change_question(-1);
+    e.preventDefault(); 
+  }
+  if (keys[17] && keys[190]) { // ctrl+.
+    markdown2html();
+    e.preventDefault(); 
+  }
+  if (keys[17] && keys[188]) { // ctrl+,
+    load_markdown();
+    e.preventDefault(); 
+  }
+  if (keys[17] && keys[73]) { // ctrl+i
+    reset_question();
+    e.preventDefault(); 
+  }
+}
+function keysReleased(e) {
+  // mark keys that were released
+  keys[e.keyCode] = false;
+}
+window.addEventListener("keydown", keysPressed, false);
+window.addEventListener("keyup", keysReleased, false);
 
-          var questions;
-          var current_question = 0;
+var questions;
+var current_question = 0;
 
-          function loadJSON(path, success, error) {
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function()
-            {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        if (success)
-                            success(JSON.parse(xhr.responseText));
-                    } else {
-                        if (error)
-                            error(xhr);
-                    }
-                }
-            };
-            xhr.open("GET", path, true);
-            xhr.send();
-          }
-          loadJSON('questions.json',
-            function(data) { /*console.log(data);*/ questions = data; prepare_data(); load_wanted_page();},
-            function(xhr) { console.error(xhr); }
-          );
+function loadJSON(path, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function()
+  {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        if (success)
+          success(JSON.parse(xhr.responseText));
+      } else {
+        if (error)
+          error(xhr);
+      }
+    }
+  };
+  xhr.open("GET", path, true);
+  xhr.send();
+}
+loadJSON('questions.json',
+    function(data) { /*console.log(data);*/ questions = data; prepare_data(); load_wanted_page();},
+    function(xhr) { console.error(xhr); }
+    );
 
-          var change_question = function(myinput) {
-            // save old buffer
-            if (initialized) {
-              questions.questions[current_question].mycode = editor.getValue();
-              questions.questions[current_question].result = document.getElementById('output').value;
-            }
-            initialized=1
-            current_question += myinput; 
+var change_question = function(myinput) {
+  // save old buffer
+  if (initialized) {
+    questions.questions[current_question].mycode = editor.getValue();
+    questions.questions[current_question].result = document.getElementById('output').value;
+  }
+  initialized=1
+    current_question += myinput; 
 
-			if (current_question < 0)
-				current_question = 0;
-			if (current_question >= questions.questions.length-1)
-				current_question = questions.questions.length-1;
+  if (current_question < 0)
+    current_question = 0;
+  if (current_question >= questions.questions.length-1)
+    current_question = questions.questions.length-1;
 
-            var contentNumber = document.getElementById('contentNumber')
-            var contentQuestion = document.getElementById('contentQuestion')
-            var contentSolution = document.getElementById('solution')
+  var contentNumber = document.getElementById('contentNumber')
+    var contentQuestion = document.getElementById('contentQuestion')
+    var contentSolution = document.getElementById('solution')
 
-            var topic = questions.questions[current_question].topic
-            var question = questions.questions[current_question].question
-            var mycode = questions.questions[current_question].mycode
-            var solution = questions.questions[current_question].solution
-            document.getElementById('solution').style.visibility="hidden";
+    var topic = questions.questions[current_question].topic
+    var question = questions.questions[current_question].question
+    var mycode = questions.questions[current_question].mycode
+    var solution = questions.questions[current_question].solution
+    document.getElementById('solution').style.visibility="hidden";
 
-            contentNumber.innerHTML = String(current_question + 1 + " - " + topic);
-            contentQuestion.innerHTML = markdown.toHTML(question);
-            contentSolution.innerHTML = solution;
-            editor.setValue(mycode);
-            document.getElementById('output').value = questions.questions[current_question].result;
-            selected_question = current_question;
+  contentNumber.innerHTML = String(current_question + 1 + " - " + topic);
+  contentQuestion.innerHTML = markdown.toHTML(question);
+  contentSolution.innerHTML = solution;
+  editor.setValue(mycode);
+  document.getElementById('output').value = questions.questions[current_question].result;
+  selected_question = current_question;
 
-            //var str = window.location.search
-            //replaceQueryParam('id', current_question+1, str)
-            //console.log(window.location.pathname + str)
-            //window.location = window.location.pathname + str
-		  };
-          var showSolution = function() {
-            if (document.getElementById('solution').style.visibility == "visible")
-              document.getElementById('solution').style.visibility="hidden";
-            else
-              document.getElementById('solution').style.visibility="visible";
-		    }
-            var reset_question = function() {
-              editor.setValue(questions.questions[selected_question].code);
-              console.log("reset question")
-			}
-            var markdown2html = function() {
-              var text = editor.getValue();
-              contentQuestion.innerHTML = markdown.toHTML(text);
-              return text.split('\n').join('\\n').replace("\"", "\\\"")
-				  ///replace(/(?:\r\n|\r|\n)/g,'\n') 
-			}
-            var load_markdown = function() {
-              var text = questions.questions[current_question].question;
-              editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
-			}
-            var runNix = function() {
-            console.log("running runNix()");
-		    document.getElementById('runInfo').innerHTML = "computation in progress";
-		    document.getElementById('output').value = "";
-            Module['print'] = function(text) {
-		      Module['return'] = text + '\n'; 
-		      document.getElementById('output').value += text;
-		      document.getElementById('runInfo').innerHTML = "";
-		    };
-            Module['printErr'] = function(text) {
-		      text = text.replace("[31;1m", "");
-		      text = text.replace("[1m", "");
-		      text = text.replace("[1m", "");
-		      text = text.replace("[0m","");
-		      text = text.replace("[0m","");
-		      text = text.replace("/test.nix","line");
-		      text = text.replace("/test.nix","line");
-		      text = text.replace("/test.nix","line");
-		      text = text.replace("/test.nix","line");
-		      text = text.replace(//g, "");
-		      console.log(text);
-		      Module['return'] = text + '\n'; 
-		      document.getElementById('runInfo').innerHTML = "";
-		      document.getElementById('output').value += text;
-		    };
-	        var input_text = editor.getValue();
-		    FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
-	        Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
-		    //var result = FS.readFile('test.nix', {encoding: 'utf8'});
-	        //console.log(result);
-	        Module.callMain(Module['arguments'])
-		  };   	     
-      </script>
-	</head>
-	<body>
-        <div id="masterdiv">
-                <progress value="0" max="100" id="progress" hidden=1>progress</progress>
-                <div id="spinner-fullscreen">
-                  <div id="spinner-elementgroup">
-                    <div id="spinner-icon"><img src="nix.gif"></div>
-                    <div class="emscripten" id="status">Downloading...</div>
-                  </div>
-                </div>
+  //var str = window.location.search
+  //replaceQueryParam('id', current_question+1, str)
+  //console.log(window.location.pathname + str)
+  //window.location = window.location.pathname + str
+};
+var showSolution = function() {
+  if (document.getElementById('solution').style.visibility == "visible")
+    document.getElementById('solution').style.visibility="hidden";
+  else
+    document.getElementById('solution').style.visibility="visible";
+}
+var reset_question = function() {
+  editor.setValue(questions.questions[selected_question].code);
+  console.log("reset question")
+}
+var markdown2html = function() {
+  var text = editor.getValue();
+  contentQuestion.innerHTML = markdown.toHTML(text);
+  return text.split('\n').join('\\n').replace("\"", "\\\"")
+    ///replace(/(?:\r\n|\r|\n)/g,'\n') 
+}
+var load_markdown = function() {
+  var text = questions.questions[current_question].question;
+  editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
+}
+var runNix = function() {
+  console.log("running runNix()");
+  document.getElementById('runInfo').innerHTML = "computation in progress";
+  document.getElementById('output').value = "";
+  Module['print'] = function(text) {
+    Module['return'] = text + '\n'; 
+    document.getElementById('output').value += text;
+    document.getElementById('runInfo').innerHTML = "";
+  };
+  Module['printErr'] = function(text) {
+    text = text.replace("[31;1m", "");
+    text = text.replace("[1m", "");
+    text = text.replace("[1m", "");
+    text = text.replace("[0m","");
+    text = text.replace("[0m","");
+    text = text.replace("/test.nix","line");
+    text = text.replace("/test.nix","line");
+    text = text.replace("/test.nix","line");
+    text = text.replace("/test.nix","line");
+    text = text.replace(//g, "");
+    console.log(text);
+    Module['return'] = text + '\n'; 
+    document.getElementById('runInfo').innerHTML = "";
+    document.getElementById('output').value += text;
+  };
+  var input_text = editor.getValue();
+  FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
+  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+  //var result = FS.readFile('test.nix', {encoding: 'utf8'});
+  //console.log(result);
+  Module.callMain(Module['arguments'])
+};   	     
+    </script>
+</head>
+<body>
+  <div id="masterdiv">
+    <progress value="0" max="100" id="progress" hidden=1>progress</progress>
+    <div id="spinner-fullscreen" class="flex-container-row">
+      <div class="flex-container-col">
+        <div class="flex-item" id="spinner-icon"><img src="nix.gif"></div>
+        <div class="flex-item" id="status">Downloading...</div>
+      </div>
+    </div>
 
-		<h1>A tour of Nix</h1>
-        <div id="bar">
-          <div vertical-slide="" id="resize" left="#left-side" right="#right-side" class="ui-draggable"></div>
-          <div id="left">
-          	<div id="adsfas">
-              <div id="foo">
-		        <textarea class="input" id="input" rows="8">demo text textarea</textarea>
-              </div>
-              <div id="nn">
-		        <button type="button" class="mybutton" id="resetButton" onClick="reset_question()" title="">reset</button>
-		        <button type="button" class="mybutton" id="solutionButton" onClick="showSolution()" title="">solution</button>
-		        <button type="button" class="mybutton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
-              </div>
-            </div>
-          <div class="foo">
-		    <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+    <h1>A tour of Nix</h1>
+    <div id="bar">
+      <div vertical-slide="" id="resize" left="#left-side" right="#right-side" class="ui-draggable"></div>
+      <div id="left">
+        <div id="adsfas">
+          <div id="foo">
+            <textarea class="input" id="input" rows="8">demo text textarea</textarea>
           </div>
-          <div class="foo">
-		    <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-          </div>
-          <div class="bar">
-		    <div id="runInfo"></div>
-          </div>
-          </div>
-          <div id="right">
-			  <div id="kdvjf">
-		        <button type="button" class="mybutton" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
-		        <button type="button" class="mybutton" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
-			  </div>
-		    <h1><div id="contentNumber">A tour of NixLang</div></h1>
-		    <div id="contentQuestion">demo text contentQuestion area</div>
+          <div id="nn">
+            <button type="button" class="mybutton" id="resetButton" onClick="reset_question()" title="">reset</button>
+            <button type="button" class="mybutton" id="solutionButton" onClick="showSolution()" title="">solution</button>
+            <button type="button" class="mybutton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
         </div>
-        <script type="text/javascript">
-		  var input = document.getElementById('input');
-		  var editor = CodeMirror.fromTextArea(input, {
-		    lineNumbers: true,
-		    viewportMargin: Infinity
-		  });
-		</script>
-        <script type="text/javascript">
-		</script>
-	</body>
+        <div class="foo">
+          <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        </div>
+        <div class="foo">
+          <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        </div>
+        <div class="bar">
+          <div id="runInfo"></div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="kdvjf">
+          <button type="button" class="mybutton" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
+          <button type="button" class="mybutton" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
+        </div>
+        <h1><div id="contentNumber">A tour of NixLang</div></h1>
+        <div id="contentQuestion">demo text contentQuestion area</div>
+      </div>
+    </div>
+    <script type="text/javascript">
+var input = document.getElementById('input');
+var editor = CodeMirror.fromTextArea(input, {
+  lineNumbers: true,
+  viewportMargin: Infinity
+});
+    </script>
+    <script type="text/javascript">
+    </script>
+</body>
 </html>

@@ -1,7 +1,8 @@
 things we want to do before the official announcement:
- * add favicon
  * fix spinner text & div
+ * disable shortcuts until all js has been loaded
  * use flex layouts
+ * add favicon
  * add chapters to the editor
  * add a simple editor
  * encode question number in url
