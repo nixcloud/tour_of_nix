@@ -2,8 +2,8 @@
 <head>
   <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
   <!--
-    <script type="text/javascript" src="nix-instantiate.js"></script>
     -->
+    <script type="text/javascript" src="nix-instantiate.js"></script>
     <script type="text/javascript" src="markdown.min.js"></script>
     <title>A tour of Nix</title>
 
@@ -12,11 +12,7 @@
     <link rel="stylesheet" href="font/font.css" type="text/css"/>
     <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
     <script type="text/javascript" charset="utf-8">
-//function replaceQueryParam(param, newval, search) {
-//  var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
-//  var query = search.replace(regex, "$1").replace(/&$/, '');
-//  return (query.length > 2 ? query + "&" : "?") + (newval ? param + "=" + newval : '');
-//}
+
 var initialized = 0;
 var selected_question = 0;
 var prepare_data = function () {
@@ -190,10 +186,10 @@ var runNix = function() {
 <body>
   <div id="masterdiv">
     <progress value="0" max="100" id="progress" hidden=1>progress</progress>
-    <div id="spinner-fullscreen" class="flex-container-row">
-      <div class="flex-container-col">
-        <div class="flex-item" id="spinner-icon"><img src="nix.gif"></div>
-        <div class="flex-item" id="status">Downloading...</div>
+    <div id="spinner" class="spinner-flex-container-row">
+      <div class="spinner-flex-container-col">
+        <div id="spinner-icon"><img src="nix.gif"></div>
+        <div id="status">Downloading...</div>
       </div>
     </div>
 
@@ -211,13 +207,13 @@ var runNix = function() {
             <button type="button" class="mybutton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
         </div>
-        <div class="foo">
+        <div class="zz">
           <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
         </div>
-        <div class="foo">
+        <div class="zz">
           <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
         </div>
-        <div class="bar">
+        <div class="zz">
           <div id="runInfo"></div>
         </div>
       </div>

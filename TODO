@@ -1,5 +1,4 @@
 things we want to do before the official announcement:
- * fix spinner text & div
  * disable shortcuts until all js has been loaded
  * use flex layouts
  * add favicon

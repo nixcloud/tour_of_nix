@@ -2,33 +2,77 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-#spinner-fullscreen {
+#spinner {
   position: absolute;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  opacity: 0.9;
+  opacity: 0.8;
   font-size: 20;
   z-index: 999;
-  background: center no-repeat #ffffff;
-  justify-content: center;
+  background: #ffffff;
 }
 
-.flex-container-col {
-  display: flex; /* or inline-flex */
+.spinner-flex-container-col {
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.flex-container-row {
-  display: flex; /* or inline-flex */
+.spinner-flex-container-row {
+  display: flex;
   flex-direction: row;
   align-items: center;
-/*   align-items: center; */
+  justify-content: center;
 }
-.flex-item {
-  flex-grow: 1; /* default 0 */
+
+.CodeMirror {
+  border: 1px solid #eee;
+  height: auto;
+  width: 100%;
+}
+.CodeMirror-scroll {
+  height: initial;
+}
+
+code {
+  font-size: 93%;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  overflow: auto;
+  border-radius: 0.2em;
+}
+
+.mybutton {
+  color: black;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  border-radius: 2px;
+  background-color: #E0EBF6;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 2px;
+  padding: 1px 8px;
+  line-height: 24px;
+}
+
+
+.header {
+  
+}
+
+.footer {
+  
+}
+
+#masterdiv {
+  background-size: 350px;
+  background-image: url("nixos-cccamp2015.png");
+  background-repeat: no-repeat;
+  background-position: right top, left top;
 }
 
 #output {
@@ -59,15 +103,6 @@ body {
   visibility: hidden;
 }
 
-.CodeMirror {
-  border: 1px solid #eee;
-  height: auto;
-  width: 100%;
-}
-.CodeMirror-scroll {
-  height: initial;
-}
-
 #right {
   padding-left: 16px;
   padding-right: 16px;
@@ -77,13 +112,6 @@ body {
   right: 0px;
   left: 50%;
   background: rgba(255, 255, 255,0.95);
-}
-
-#masterdiv {
-  background-size: 350px;
-  background-image: url("nixos-cccamp2015.png");
-  background-repeat: no-repeat;
-  background-position: right top, left top;
 }
 
 #left {
@@ -133,21 +161,6 @@ body {
   right: 4;
 }
 
-.mybutton {
-  color: black;
-  text-align: center;
-  display: inline-block;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 0.9em;
-  border-radius: 2px;
-  background-color: #E0EBF6;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  margin: 2px;
-  padding: 1px 8px;
-  line-height: 24px;
-}
-
 #kdvjf {
   float: right;
   position: absolute;
@@ -155,10 +168,4 @@ body {
   right: 10px;
 }
 
-code {
-  font-size: 93%;
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
-  overflow: auto;
-  border-radius: 0.2em;
-}
+
