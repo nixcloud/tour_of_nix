@@ -2,6 +2,11 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
+h1 {
+  -webkit-margin-before: 0.2 em;
+  -webkit-margin-after:  0.2 em;
+}
+
 #spinner {
   position: absolute;
   left: 0;
@@ -56,9 +61,12 @@ code {
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 2px;
   padding: 1px 8px;
-  line-height: 24px;
+  line-height: 20px;
 }
 
+.mybutton:hover {
+  background: rgb(178, 208, 242);
+}
 
 .header {
   
@@ -68,39 +76,38 @@ code {
   
 }
 
+/*
 #masterdiv {
   background-size: 350px;
   background-image: url("nixos-cccamp2015.png");
   background-repeat: no-repeat;
   background-position: right top, left top;
-}
+}*/
 
 #output {
   color: white;
   width: 100%;
-  display: block;
-  margin-top: 5px;
   word-wrap: break-word;
   white-space: pre-wrap;
   background-color: grey;
   border: 1px solid rgba(0,0,0,0.15);
-  height: 110px;
-  padding: 10px;
+  padding: 5px;
+  resize: vertical;
+  margin-top: 4px;
 }
 
 #solution{
   color: black;
   width: 100%;
-  display: block;
-  margin-top: 5px;
   word-wrap: break-word;
   white-space: pre-wrap;
   /*background-color: rgb(210, 177, 210);*/
   background-color: rgb(238, 238, 238);
   order: 1px solid rgba(0,0,0,0.15);
-  height: 150px;
-  padding: 10px;
+  padding: 5px;
   visibility: hidden;
+  resize: vertical;
+  margin-top: 4px;
 }
 
 #right {
@@ -126,13 +133,7 @@ code {
   background-color: rgb(250, 250, 250);
 }
 
-#resizebar {
-  display: block;
-  position: relative;
-  height: 100%;
-}
-
-#resize {
+/*#resize {
   position: absolute;
   top: 0px;
   bottom: 0px;
@@ -142,7 +143,7 @@ code {
   right: 50%;
   z-index: 100;
   cursor: move;
-}
+}*/
 
 #bar {
   display: block;

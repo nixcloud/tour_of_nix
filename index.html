@@ -3,22 +3,28 @@
   <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
   <!--
     -->
-    <script type="text/javascript" src="nix-instantiate.js"></script>
-    <script type="text/javascript" src="markdown.min.js"></script>
-    <title>A tour of Nix</title>
+  <script type="text/javascript" src="nix-instantiate.js"></script>
+  <script type="text/javascript" src="markdown.min.js"></script>
+  <title>A tour of Nix</title>
 
-    <link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
-    <link rel="stylesheet" href="style.css" type="text/css"/>
-    <link rel="stylesheet" href="font/font.css" type="text/css"/>
-    <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
-    <script type="text/javascript" charset="utf-8">
+  <link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
+  <link rel="stylesheet" href="style.css" type="text/css"/>
+  <link rel="stylesheet" href="font/font.css" type="text/css"/>
+  <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
+  <script type="text/javascript" charset="utf-8">
 
 var initialized = 0;
 var selected_question = 0;
+
 var prepare_data = function () {
   for(i = 0; i < questions.questions.length; i++) {
     questions.questions[i].mycode = questions.questions[i].code;
   }
+}
+var auto_resize = function (e) {
+  //e.rows=e.value.split('\n').length+2
+  e.style.height = 'auto';
+  e.style.height = e.scrollHeight + 2 +'px';
 }
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
@@ -108,18 +114,19 @@ var change_question = function(myinput) {
     current_question = questions.questions.length-1;
 
   var contentNumber = document.getElementById('contentNumber')
-    var contentQuestion = document.getElementById('contentQuestion')
-    var contentSolution = document.getElementById('solution')
+  var contentQuestion = document.getElementById('contentQuestion')
+  var contentSolution = document.getElementById('solution')
 
-    var topic = questions.questions[current_question].topic
-    var question = questions.questions[current_question].question
-    var mycode = questions.questions[current_question].mycode
-    var solution = questions.questions[current_question].solution
-    document.getElementById('solution').style.visibility="hidden";
+  var topic = questions.questions[current_question].topic
+  var question = questions.questions[current_question].question
+  var mycode = questions.questions[current_question].mycode
+  var solution = questions.questions[current_question].solution
+  document.getElementById('solution').style.visibility="hidden";
 
   contentNumber.innerHTML = String(current_question + 1 + " - " + topic);
   contentQuestion.innerHTML = markdown.toHTML(question);
   contentSolution.innerHTML = solution;
+  auto_resize(contentSolution)
   editor.setValue(mycode);
   document.getElementById('output').value = questions.questions[current_question].result;
   selected_question = current_question;
@@ -155,7 +162,9 @@ var runNix = function() {
   document.getElementById('output').value = "";
   Module['print'] = function(text) {
     Module['return'] = text + '\n'; 
-    document.getElementById('output').value += text;
+    var o = document.getElementById('output')
+    o.value += text;
+    auto_resize(o)
     document.getElementById('runInfo').innerHTML = "";
   };
   Module['printErr'] = function(text) {
@@ -172,7 +181,9 @@ var runNix = function() {
     console.log(text);
     Module['return'] = text + '\n'; 
     document.getElementById('runInfo').innerHTML = "";
-    document.getElementById('output').value += text;
+    var o = document.getElementById('output')
+    o.value += text;
+    auto_resize(o)
   };
   var input_text = editor.getValue();
   FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
@@ -180,7 +191,8 @@ var runNix = function() {
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
   //console.log(result);
   Module.callMain(Module['arguments'])
-};   	     
+};   	    
+
     </script>
 </head>
 <body>
