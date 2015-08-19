@@ -141,7 +141,7 @@ code {
   border: 2px dotted rgb(184, 217, 255);
 }
 
-#bar {
+#middle {
   display: block;
   position: relative;
   height: 100%;
@@ -151,7 +151,7 @@ code {
   position: relative;
 }
 
-#nn {
+#editorButtonGroup {
   position: absolute;
   bottom: 0;
   z-index: 202;

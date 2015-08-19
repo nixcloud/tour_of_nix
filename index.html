@@ -2,7 +2,7 @@
 <head>
   <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
   <!--
-    -->
+  -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
   <script type="text/javascript" src="markdown.min.js"></script>
   <title>A tour of Nix</title>
@@ -115,25 +115,25 @@ var change_question = function(myinput) {
   if (current_question >= questions.questions.length-1)
     current_question = questions.questions.length-1;
 
-  var contentNumber = document.getElementById('contentNumber')
-  var contentQuestion = document.getElementById('contentQuestion')
-  var contentSolution = document.getElementById('solution')
+  var contentTitle = document.getElementById('contentTitle')
+    var contentQuestion = document.getElementById('contentQuestion')
+    var contentSolution = document.getElementById('solution')
 
-  var topic = questions.questions[current_question].topic
-  var question = questions.questions[current_question].question
-  var mycode = questions.questions[current_question].mycode
-  var solution = questions.questions[current_question].solution
-  document.getElementById('solution').style.visibility="hidden";
+    var topic = questions.questions[current_question].topic
+    var question = questions.questions[current_question].question
+    var mycode = questions.questions[current_question].mycode
+    var solution = questions.questions[current_question].solution
+    document.getElementById('solution').style.visibility="hidden";
 
-  contentNumber.innerHTML = String(current_question + 1 + " - " + topic);
+  contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
   contentQuestion.innerHTML = markdown.toHTML(question);
   contentSolution.innerHTML = solution;
   auto_resize(contentSolution)
-  editor.setValue(mycode);
+    editor.setValue(mycode);
   output.value = questions.questions[current_question].result;
   auto_resize(output)
-  auto_resize(contentSolution)
-  selected_question = current_question;
+    auto_resize(contentSolution)
+    selected_question = current_question;
 
   //var str = window.location.search
   //replaceQueryParam('id', current_question+1, str)
@@ -167,9 +167,9 @@ var runNix = function() {
   Module['print'] = function(text) {
     Module['return'] = text + '\n'; 
     var o = document.getElementById('output')
-    o.value += text;
+      o.value += text;
     auto_resize(o)
-    document.getElementById('runInfo').innerHTML = "";
+      document.getElementById('runInfo').innerHTML = "";
   };
   Module['printErr'] = function(text) {
     text = text.replace("[31;1m", "");
@@ -186,7 +186,7 @@ var runNix = function() {
     Module['return'] = text + '\n'; 
     document.getElementById('runInfo').innerHTML = "";
     var o = document.getElementById('output')
-    o.value += text;
+      o.value += text;
     auto_resize(o)
   };
   var input_text = editor.getValue();
@@ -197,65 +197,54 @@ var runNix = function() {
   Module.callMain(Module['arguments'])
 };   	    
 
-    </script>
+  </script>
 </head>
 <body>
-    
-    <div id="spinner" class="spinner-flex-container-row">
-      <div class="spinner-flex-container-col">
-        <div id="spinner-icon"><img src="nix.gif"></div>
-        <div id="status">Downloading...</div>
-         <progress value="0" max="100" id="progress" hidden=1>progress</progress>
-      </div>
+  <div id="spinner" class="spinner-flex-container-row">
+    <div class="spinner-flex-container-col">
+      <div id="spinner-icon"><img src="nix.gif"></div>
+      <div id="status">Downloading...</div>
+      <progress value="0" max="100" id="progress" hidden=1>progress</progress>
     </div>
+  </div>
+  <div class="flex-container-col">
     <div id="header">
-    <h1>A tour of Nix</h1>
+      <h1>A tour of Nix</h1>
     </div>
-    <div id="bar">
-      <div vertical-slide="" id="resize" left="#left-side" right="#right-side" class="ui-draggable"></div>
+    <div id="middle">
       <div id="left">
         <div id="adsfas">
-          <div id="foo">
-            <textarea class="input" id="input" rows="8">demo text textarea</textarea>
-          </div>
-          <div id="nn">
+          <textarea class="input" id="input" rows="8">demo text textarea</textarea>
+          <div id="editorButtonGroup">
             <button type="button" class="mybutton" id="resetButton" onClick="reset_question()" title="">reset</button>
             <button type="button" class="mybutton" id="solutionButton" onClick="showSolution()" title="">solution</button>
             <button type="button" class="mybutton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
         </div>
-        <div class="zz">
-          <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-        </div>
-        <div class="zz">
-          <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-        </div>
-        <div class="zz">
-          <textarea id="autocheck" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-        </div>
-        <div class="zz">
-          <div id="runInfo"></div>
-        </div>
+        <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <textarea id="autocheck" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <div id="runInfo"></div>
       </div>
       <div id="right">
         <div id="question_navigation">
           <button type="button" class="mybutton" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
           <button type="button" class="mybutton" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
         </div>
-        <h1><div id="contentNumber">A tour of NixLang</div></h1>
-        <div id="contentQuestion">demo text contentQuestion area</div>
+        <h1><div id="contentTitle">A tour of Nix</div></h1>
+        <div id="contentQuestion">If you can see this, questions.json wasn't loaded properly!</div>
+      </div>
       <div id="footer">
         bar
       </div>
-      </div>
-    <script type="text/javascript">
+    </div>
+  </div>
+  <script type="text/javascript">
 var input = document.getElementById('input');
 var editor = CodeMirror.fromTextArea(input, {
   lineNumbers: true,
   viewportMargin: Infinity
 });
-    </script>
-    <script type="text/javascript">
-    </script>
+  </script>
 </body>
 </html>
