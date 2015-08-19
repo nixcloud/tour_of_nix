@@ -1,0 +1,8 @@
+things we want to do before the official announcement:
+ * add favicon
+ * fix spinner text & div
+ * use flex layouts
+ * add chapters to the editor
+ * add a simple editor
+ * encode question number in url
+   * http://chaplinjs.org/

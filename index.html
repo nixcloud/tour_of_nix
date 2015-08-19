@@ -2,8 +2,8 @@
 	<head>
 		<meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
 		<!--
-		-->
 	    <script type="text/javascript" src="nix-instantiate.js"></script>
+		-->
 		<script type="text/javascript" src="markdown.min.js"></script>
 		<title>A tour of Nix</title>
 
@@ -11,18 +11,6 @@
 		<link rel="stylesheet" href="style.css" type="text/css"/>
 		<link rel="stylesheet" href="font/font.css" type="text/css"/>
 		<script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
-		<!--    todo -->
-		<!--      * add chapters to the editor -->
-		<!--      * fix encoding but in firefox -->
-		<!--      * reset button for code field -->
-		<!--      * encode question number in url  -->
-		<!--      * https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
-		<!--      *  -->
-		<!--      * make a clean git history of the project and create a release-->
-		<!--      *  -->
-		<!--      *  -->
-		<!--      *  -->
-		<!--      * http://chaplinjs.org/ -->
 		<script type="text/javascript" charset="utf-8">
           //function replaceQueryParam(param, newval, search) {
           //  var regex = new RegExp("([?;&])" + param + "[^&;]*[;&]?");
@@ -200,10 +188,14 @@
       </script>
 	</head>
 	<body>
-	  <div id="masterdiv">
-		<progress value="0" max="100" id="progress" hidden=1>progress</progress>
-		<div class="emscripten" id="status">Downloading...</div>
-		<div class="spinner" id='spinner'>spinner</div>
+        <div id="masterdiv">
+                <progress value="0" max="100" id="progress" hidden=1>progress</progress>
+                <div id="spinner-fullscreen">
+                  <div id="spinner-elementgroup">
+                    <div id="spinner-icon"><img src="nix.gif"></div>
+                    <div class="emscripten" id="status">Downloading...</div>
+                  </div>
+                </div>
 
 		<h1>A tour of Nix</h1>
         <div id="bar">

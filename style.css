@@ -1,6 +1,28 @@
 body {
   font-family: 'Open Sans', sans-serif;
 }
+
+#spinner-fullscreen {
+  position: absolute;
+  left: 0px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0.9;
+  font-size: 20;
+  text-align: center;
+  z-index: 999;
+  background: center no-repeat #ffffff;
+}
+#spinner-icon {
+  z-index: 1111;  
+}
+#spinner-elementgroup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 #output {
   color: white;
   width: 100%;
@@ -38,19 +60,9 @@ body {
   height: initial;
 }
 
-.spinner {
-  position: absolute;
-  left: 0px;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  opacity: 0.9;
-  background: center
-  url("nix.gif")
-  no-repeat #ffffff;
-  font-size: 0;
-  z-index: 999;
-}
+
+
+
 
 #right {
   padding-left: 16px;
