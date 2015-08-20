@@ -1,14 +1,5 @@
 html {
   overflow-y: scroll;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefcea+0,f1da36+100;Gold+3D */
-background: #fefcea; /* Old browsers */
-background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* IE10+ */
-background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
 }
 
 body {
@@ -20,7 +11,7 @@ h1 {
   margin-bottom:  0.2em;
 }
 
-/*#spinner {
+#spinner {
   position: absolute;
   left: 0;
   right: 0;
@@ -30,7 +21,7 @@ h1 {
   font-size: 20;
   z-index: 999;
   background: #ffffff;
-}*/
+}
 
 .flex-container-col {
   display: flex;
@@ -149,7 +140,7 @@ code {
   position: absolute;
   top: 0;
   z-index: 111;
-  right: 4;
+  right: 0;
 }
 
 #left {
@@ -169,15 +160,15 @@ code {
   position: absolute;
   bottom: 0;
   z-index: 111;
-  right: 4;
+  right: 0;
 }
 
 #footer {
-  min-height: 270px;
+/*  min-height: 270px;
   background-image: url(layer1.png);
   background-repeat: no-repeat;
   background-size: 100%;
-  background-position: bottom;
+  background-position: bottom;*/
 }
 
 @media all and (max-width: 800px) {
