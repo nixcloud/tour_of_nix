@@ -1,5 +1,14 @@
 html {
   overflow-y: scroll;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fefcea+0,f1da36+100;Gold+3D */
+background: #fefcea; /* Old browsers */
+background: -moz-linear-gradient(top, #fefcea 0%, #f1da36 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefcea), color-stop(100%,#f1da36)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #fefcea 0%,#f1da36 100%); /* IE10+ */
+background: linear-gradient(to bottom, #fefcea 0%,#f1da36 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefcea', endColorstr='#f1da36',GradientType=0 ); /* IE6-9 */
 }
 
 body {
@@ -34,7 +43,7 @@ h1 {
 }
 
 .flex-item {
-  flex-grow: 1; /* default 0 */
+  flex-grow: 1;
 }
 
 .spinner-flex-container-col {
@@ -87,12 +96,9 @@ code {
 }
 
 #header {
-  background-color: green;
+/*   background-color: green; */
 }
 
-#footer {
-  background-color: yellow;
-}
 
 #output {
   color: white;
@@ -130,12 +136,13 @@ code {
 }
 
 #right {
+  order: 1;
   position: relative;
   padding-left: 16px;
   padding-right: 16px;
   flex-basis: calc(50%);
   background: rgba(255, 255, 255,0.95);
-  border: 2px dotted rgb(184, 217, 255);
+  border-left: 4px solid rgb(184, 217, 255);
 }
 
 #questionNavigation {
@@ -147,12 +154,10 @@ code {
 
 #left {
   flex-basis: calc(50%);
-  border: 2px dotted rgb(184, 217, 255);
+  order: 1;
 }
 
 #middle {
-/*   display: block; */
-/*   position: relative; */
 }
 
 #adsfas {
@@ -166,6 +171,18 @@ code {
   right: 4;
 }
 
+#footer {
+  min-height: 270px;
+  background-image: url(layer1.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: bottom;
+}
 
-
-
+@media all and (max-width: 800px) {
+  /* We tell both sidebars to share a row */
+  #middle { flex-direction: column; }
+  #left  { order: 3; }
+  #right { order: 2; }
+/*   #right {background-color: red;} */
+}
