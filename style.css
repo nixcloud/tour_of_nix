@@ -155,6 +155,7 @@ code {
 #left {
   flex-basis: calc(50%);
   order: 1;
+  padding-right: 6px;
 }
 
 #middle {
@@ -182,7 +183,7 @@ code {
 @media all and (max-width: 800px) {
   /* We tell both sidebars to share a row */
   #middle { flex-direction: column; }
-  #left  { order: 3; }
+  #left  { order: 3;  padding-top: 10px;   padding-right: 0px;}
   #right { order: 2; }
 /*   #right {background-color: red;} */
 }
