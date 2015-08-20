@@ -1,7 +1,7 @@
 things we want to do before the official announcement:
  * disable shortcuts until all js has been loaded
- * use flex layouts
  * add favicon
+ * create a nice design
  * parse output and autocheck for attributes
  * add chapters to the editor
  * add a simple editor

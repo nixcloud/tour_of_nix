@@ -2,6 +2,11 @@
 <html lang="en" dir="ltr" >
 <head>
   <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
+  <!--[if IE]>
+  <meta HTTP-EQUIV="REFRESH" content="0; url=https://www.mozilla.org/en-US/firefox/new/">
+  <![endif]-->
+
+
   <!--
   -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
@@ -24,6 +29,7 @@ var prepare_data = function () {
 }
 var auto_resize = function (e) {
   //e.rows=e.value.split('\n').length+2
+  
   e.style.height = 'auto';
   e.style.height = e.scrollHeight + 2 +'px';
 }
@@ -124,7 +130,7 @@ var change_question = function(myinput) {
   var question = questions.questions[current_question].question;
   var mycode = questions.questions[current_question].mycode;
   var solution = questions.questions[current_question].solution;
-  document.getElementById('solution').style.visibility="hidden";
+  contentSolution.style.display="none";
 
   contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
   contentText.innerHTML = markdown.toHTML(question);
@@ -142,10 +148,14 @@ var change_question = function(myinput) {
   //window.location = window.location.pathname + str
 };
 var showSolution = function() {
-  if (document.getElementById('solution').style.visibility == "visible")
-    document.getElementById('solution').style.visibility="hidden";
-  else
-    document.getElementById('solution').style.visibility="visible";
+  var s = document.getElementById('solution');
+  
+  if (s.style.display == "none") {
+    s.style.display = "flex";
+    auto_resize(s);
+  } else {
+    s.style.display = "none";
+  }
 }
 var reset_question = function() {
   editor.setValue(questions.questions[selected_question].code);

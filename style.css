@@ -4,6 +4,9 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
 }
 
 h1 {
@@ -87,6 +90,8 @@ code {
 }
 
 #header {
+  margin-left:  6px;
+  margin-right: 6px;
 /*   background-color: green; */
 }
 
@@ -108,9 +113,9 @@ code {
   white-space: pre-wrap;
   background-color: rgb(238, 238, 238);
   padding: 5px;
-  visibility: hidden;
   resize: vertical;
   margin-top: 4px;
+  display: none;
 }
 
 #autocheck{
@@ -124,6 +129,7 @@ code {
   visibility: hidden;
   resize: vertical;
   margin-top: 4px;
+  display: none;
 }
 
 #right {
@@ -150,6 +156,8 @@ code {
 }
 
 #middle {
+  margin-left:  6px;
+  margin-right: 6px;
 }
 
 #adsfas {
@@ -164,17 +172,17 @@ code {
 }
 
 #footer {
-/*  min-height: 270px;
+  background-size:cover;
   background-image: url(layer1.png);
   background-repeat: no-repeat;
   background-size: 100%;
-  background-position: bottom;*/
+  height: 380px;
+  background-position: bottom;
 }
 
 @media all and (max-width: 800px) {
   /* We tell both sidebars to share a row */
   #middle { flex-direction: column; }
   #left  { order: 3;  padding-top: 10px;   padding-right: 0px;}
-  #right { order: 2; }
-/*   #right {background-color: red;} */
+  #right { order: 2; border: 3px dotted rgb(184, 217, 255);}
 }
