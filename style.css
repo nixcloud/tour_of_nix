@@ -3,8 +3,8 @@ body {
 }
 
 h1 {
-  -webkit-margin-before: 0.2 em;
-  -webkit-margin-after:  0.2 em;
+  -webkit-margin-before: 0.2em;
+  -webkit-margin-after:  0.2em;
 }
 
 #spinner {
@@ -17,6 +17,16 @@ h1 {
   font-size: 20;
   z-index: 999;
   background: #ffffff;
+}
+
+.flex-container-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-container-row {
+  display: flex;
+  flex-direction: row;
 }
 
 .spinner-flex-container-col {
@@ -49,7 +59,7 @@ code {
   border-radius: 0.2em;
 }
 
-.mybutton {
+.myButton {
   color: black;
   text-align: center;
   display: inline-block;
@@ -64,7 +74,7 @@ code {
   line-height: 20px;
 }
 
-.mybutton:hover {
+.myButton:hover {
   background: rgb(178, 208, 242);
 }
 
@@ -78,19 +88,19 @@ code {
 
 #output {
   color: white;
-  width: 100%;
+/*   width: 100%; */
   word-wrap: break-word;
   white-space: pre-wrap;
   background-color: grey;
   border: 1px solid rgba(0,0,0,0.15);
   padding: 5px;
-  resize: vertical;
+/*   resize: vertical; */
   margin-top: 4px;
 }
 
 #solution{
   color: black;
-  width: 100%;
+/*   width: 100%; */
   word-wrap: break-word;
   white-space: pre-wrap;
   /*background-color: rgb(210, 177, 210);*/
@@ -98,13 +108,13 @@ code {
   order: 1px solid rgba(0,0,0,0.15);
   padding: 5px;
   visibility: hidden;
-  resize: vertical;
+/*   resize: vertical; */
   margin-top: 4px;
 }
 
 #autocheck{
   color: black;
-  width: 100%;
+/*   width: 100%; */
   word-wrap: break-word;
   white-space: pre-wrap;
   /*background-color: rgb(210, 177, 210);*/
@@ -112,29 +122,33 @@ code {
   order: 1px solid rgba(0,0,0,0.15);
   padding: 5px;
   visibility: hidden;
-  resize: vertical;
+/*   resize: vertical; */
   margin-top: 4px;
 }
 
 #right {
   padding-left: 16px;
   padding-right: 16px;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 50%;
+    flex-basis: calc(50%);
+
+/*   position: absolute; */
+/*   top: 0px; */
+/*   bottom: 0px; */
+/*   right: 0px; */
+/*   left: 50%; */
   background: rgba(255, 255, 255,0.95);
   border: 2px dotted rgb(184, 217, 255);
 }
 
 #left {
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  width: 50%;
-  overflow: hidden;
+/*   position: absolute; */
+/*   top: 0px; */
+/*   bottom: 0px; */
+/*   left: 0px; */
+/*   width: 50%; */
+/*   overflow: hidden; */
+  flex-basis: calc(50%);
+
   background-repeat: no-repeat;
   background-position: 50% 100%;
   background-color: rgb(250, 250, 250);
@@ -142,8 +156,8 @@ code {
 }
 
 #middle {
-  display: block;
-  position: relative;
+/*   display: block; */
+/*   position: relative; */
   height: 100%;
 }
 
