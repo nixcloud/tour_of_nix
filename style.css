@@ -140,12 +140,13 @@ code {
 
 #right {
   order: 1;
+  box-shadow: 5px 5px 5px rgba(136, 136, 136, 0.5);
   position: relative;
   padding-left: 16px;
   padding-right: 16px;
   flex-basis: calc(50%);
   background: rgba(255, 255, 255,0.95);
-  border: 1px solid rgb(169, 169, 169);
+  border: 1px solid rgb(238, 238, 238);
 /*   border-left: 4px solid rgb(184, 217, 255); */
 }
 
