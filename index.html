@@ -134,7 +134,7 @@ var change_question = function(myinput) {
 
   contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
   contentText.innerHTML = markdown.toHTML(question);
-  contentSolution.innerHTML = solution;
+  contentSolution.value = solution;
   auto_resize(contentSolution);
   editor.setValue(mycode);
   output.value = questions.questions[current_question].result;
