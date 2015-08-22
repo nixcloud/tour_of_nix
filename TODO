@@ -1,9 +1,0 @@
-things we want to do before the official announcement:
- * disable shortcuts until all js has been loaded
- * add favicon
- * create a nice design
- * parse output and autocheck for attributes
- * add chapters to the editor
- * add a simple editor
- * encode question number in url
-   * http://chaplinjs.org/
