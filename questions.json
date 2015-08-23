@@ -4,169 +4,145 @@
             "topic": "A tour of Nix",
             "question": "Welcome to 'A tour of Nix', a beautifully crafted introduction into the [Nix programming language](http://nixos.org/nix/manual/).\n\n\n**'A tour of nix' focuses on language constructs and how Nix can be algorithmically \nused to solve problems.** This is not an introduction into `nix-env`, \n`nix-shell`, `nix-repl` and \nwe won't build/install software using `stdenv.mkDerivation`. Still we bundled [nixpkgs](https://github.com/nixos/nixpkgs) into 'A tour of Nix' and you can Nix helper functions from \n**pkgs/lib** which are used for packaging software using Nix.\n\nThis site is built from this software:\n\n* [Nix 1.9](https://github.com/nixos/nix) (compiled with emscripten)\n* [nixpkgs](https://github.com/nixos/nixpkgs)\n* [emscripten-1.29.10](https://github.com/kripken/emscripten)\n* [codemirror 5.5](https://codemirror.net/)\n* [markdown.js](https://github.com/evilstreak/markdown-js)\n* [FileSaver.js](https://github.com/eligrey/FileSaver.js)\n\n**Note:** 'A tour of Nix' can be used offline once it loaded in the browser. Beware that with ~45 megabyte it is a rather big 'webpage'!\n\n##Shortcuts\n\n* next page: `ctrl + j`\n* prev page: `ctrl + k`\n* run : `shift + return`\n\n\n## Source\n\nThe **source code of 'A tour of Nix'** can be found here:\n<https://github.com/nixcloud/tour_of_nix>\n\nPlease see the **LICENSE** file in that repository for more details.\n\n\n## Authors\n\n* [Joachim Schiele] (mailto:js@lastlog.de)\n* [Paul Seitz] (mailto:paul.m.seitz@gmail.com)\n\nThanks to **contributors**:\n\n* [lassulus](https://github.com/lassulus) (debugging the questions, workflows)\n* [rashfael](https://github.com/rashfael) (design consulting)\n* [aflatter](https://github.com/aflatter) (helping with spinner design)\n\n## Open issues\n\nHere is list of open issues:\n\n* add **chapters** (tree like JSON)\n* add **favicon**\n* **parse output of nix-instantiate** and autocheck for attributes\n* add a **simple editor**\n* **encode question number in url** (it already parses them, see <https://nixcloud.io/tour/?id=12>)\n* consider using: <http://chaplinjs.org/>\n\n## License(s)\n\n### emscripten-1.29.10\n-----\nEmscripten is available under 2 licenses, the MIT license and the\nUniversity of Illinois/NCSA Open Source License.\n\nBoth are permissive open source licenses, with little if any\npractical difference between them.\n\nThe reason for offering both is that (1) the MIT license is\nwell-known, while (2) the University of Illinois/NCSA Open Source\nLicense allows Emscripten's code to be integrated upstream into\nLLVM, which uses that license, should the opportunity arise.\n-----\n\n### codemirror 5.5\n---\n\nCopyright (C) 2015 by Marijn Haverbeke <marijnh@gmail.com> and others\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.\n\n---\n\n### markdown.js\n\n---\n\nReleased under the MIT license.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n---\n\n\n### Nix-1.9 license:\n\n-----\n\nCopyright (c) 2003-2006 Eelco Dolstra\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be\nincluded in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND,\nEXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\nNONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE\nLIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION\nOF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION\nWITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n-----\n\nNote: the license above does not apply to the packages built by the\nNix Packages collection, merely to the package descriptions (i.e., Nix\nexpressions, build scripts, etc.).  Also, the license does not apply\nto some of the binaries used for bootstrapping Nixpkgs (e.g.,\npkgs/stdenv/linux/tools/bash).  It also might not apply to patches\nincluded in Nixpkgs, which may be derivative works of the packages to\nwhich they apply.  The aforementioned artifacts are all covered by the\nlicenses of the respective packages.\n\n-----\n\n## FileSaver.js\n\n---\n\nCopyright © 2015 [Eli Grey][1].\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n  [1]: http://eligrey.com\n\n---",
             "code": "let \n  h = \"Hello\";\n  w = \"World!\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n",
-            "solution": "you found the solution button, please don't cheat yourself!\n",
-            "result": ""
+            "solution": "you found the solution button, please don't cheat yourself!\n"
         },
         {
             "topic": " Hello World",
             "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.",
             "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
-            "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n",
-            "result": "{ helloWorld = \"Hello World\"; }"
+            "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
         },
         {
             "topic": " Hello World again",
             "question": "Nix can also insert `Strings` with ${variable}.\n \n * Complete the `String` to 'Hello World'.",
             "code": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} \";\n}\n",
-            "solution": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} World!\";\n}\n",
-            "result": ""
+            "solution": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} World!\";\n}\n"
         },
         {
             "topic": " Functions",
             "question": "Next we will have a look into `functions` and how they are defined and called:\n\n* Write a `function` that consumes 3 `Strings` and combines them to one. \n\n**Note:** Strings concatenation can be done with the '+' operator.",
             "code": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: XXXX; \nin\n{\n  foo = func f o \"o\";\n}\n",
-            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: a+b+c; \nin\n{\n  foo = func f o \"o\";\n}\n",
-            "result": ""
+            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: a+b+c; \nin\n{\n  foo = func f o \"o\";\n}\n"
         },
         {
             "topic": " Functions",
             "question": "This time we pass an `attribute set` to define the `function's` input arguments.\n\n* Write a function that consumes 3 `Strings` and combines them to one.\n\n**Note:** `Attribute Sets` are a set of key value pairs. \n\nAn example for an `Attribute Set` would be: **{a=f;b=o;}**",
             "code": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: XXXX; \nin\n{\n  foo = func {a=f; XXXXX\n}\n",
-            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: a+b+c; \nin\n{\n  foo = func {a=f; b=o; c=o;};\n}\n",
-            "result": ""
+            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: a+b+c; \nin\n{\n  foo = func {a=f; b=o; c=o;};\n}\n"
         },
         {
             "topic": " Functions",
             "question": "Sets can contain additional attributes which are not part of the function definition.\n\n Inside a function those attributes can be accessed with the ellipsis pattern.\n\n For more details take a look at the given examples.\nNow complete the last line. It should evaluate to 'foobar'",
             "code": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n  func3 = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n  \n  #this evaluates to \"foobar\"\n  foobar2 = func3 {a=\"foo\"; b=\"foo\"; c=\"bar\";};\n  #complete next line so it evaluates to \"foobar\"\n  #foobar3 = func3 {a=\"bar\"; XXXXXX #ONLY EDIT THIS LINE\n}\n",
-            "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n  func3 = {a, b, ...}@bargs: if a == \"foo\" then b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n  \n  #this evaluates to \"foobar\"\n  foobar2 = func3 {a=\"foo\"; b=\"foo\"; c=\"bar\";};\n  #complete next line so it evaluates to \"foobar\"\n  foobar3 = func3 {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\"}; \n}\n",
-            "result": ""
+            "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n  func3 = {a, b, ...}@bargs: if a == \"foo\" then b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n  \n  #this evaluates to \"foobar\"\n  foobar2 = func3 {a=\"foo\"; b=\"foo\"; c=\"bar\";};\n  #complete next line so it evaluates to \"foobar\"\n  foobar3 = func3 {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\"}; \n}\n"
         },
         {
             "topic": " Functions",
-            "question": " Implement the min and the max function.\n\n\n NOTE: those functions already exists and can be accessed with lib.min or lib.max (don't do this in this exercise).",
+            "question": "Implement the `min` and the `max` function.\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiment:** What happens if you create an infinite recursion call to `min`?\n \n ",
             "code": "let\n  min = XX\n  max = XX\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
-            "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}",
-            "result": ""
+            "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}"
         },
         {
             "topic": " Functions",
             "question": "Functions can also define default values for parameters, making those parameters optional.\n\nDoing so allow the function to be called without the optional parameter.\n\nA default value is defined with an '?'. Change the function 'func' in a way that foobar is evaluated to 'foobar'.",
             "code": "let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b , c }: a+b+c; #Only modify this line!\nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}\n",
-            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b ? \"a\", c ? \"\"}: a+b+c; #Only modify this line! \nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}",
-            "result": ""
+            "solution": "let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b ? \"a\", c ? \"\"}: a+b+c; #Only modify this line! \nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}"
         },
         {
             "topic": " Boolean",
             "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
             "code": "with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex1 =  \"a\" == XX; \n  #unequal \n#  ex2 = !(\"b\" != XX);\n  #and/or/neg\n#  ex3 = ex1 && !ex2 || ! XX;\n  #implication\n#  ex4 = true -> XX;\n #contains attribute\n#  ex5 = attrSet ? XX;\n#  ex6 = XX ? f;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex1 = \"a\" == attrSet.x;\n  #unequal \n  ex2 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex3 = ex1 && !ex2 || !attrSet.b.f;\n  #implication\n  ex4 = true -> attrSet.b.t;\n  #contains attribute\n  ex5 = attrSet ? e;\n  ex6 = attrSet.e ? f;\n}",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex1 = \"a\" == attrSet.x;\n  #unequal \n  ex2 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex3 = ex1 && !ex2 || !attrSet.b.f;\n  #implication\n  ex4 = true -> attrSet.b.t;\n  #contains attribute\n  ex5 = attrSet ? e;\n  ex6 = attrSet.e ? f;\n}"
         },
         {
             "topic": " Lists",
             "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
             "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true  true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList X;\n  ex01 = elemAt list 2 == X;\n  ex02 = length list == X;\n  ex03 = last list == X;\n  ex04 = filter f list == [XX];\n  ex05 = head list == X;\n  ex06 = tail list == [XXX];\n  ex07 = remove true list == [XXX];\n  ex08 = toList s == [XXX];\n  ex09 = take 3 list == [XXX];\n  ex10 = drop 4 list == [XXX];\n  ex11 = unique list == [XXX];\n  ex12 = list ++ [\"x\" \"y\"] == [XXX];\n}\n",
-            "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n"
         },
         {
             "topic": " Lists",
             "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
             "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
-            "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}",
-            "result": ""
+            "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
         },
         {
             "topic": " Map",
             "question": "A build in map function exists.\n\nThe `map-function` requires a function and a list as arguments. It `evaluates` the given function on every element \nof the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. So:\n\n* Use the map function to extend every `string` in `bar` with another `string` \nof your choice. \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
             "code": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (XXX) XXXX;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\nin\n{\n  foobar = map (x: \"foo\" + x) bar;\n}\n\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\nin\n{\n  foobar = map (x: \"foo\" + x) bar;\n}\n\n"
         },
         {
             "topic": " Attributes",
             "question": " Make all `ex00` up to `ex07` evaluate to true.",
             "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [XXX];\n  ex4 = attrValues attr == [XXX];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234;} == { X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {XXX};\n  ex7 = listToAttrs [{ name = \"foo\"; value = 123; }\n                     { name = \"bar\"; value = 456; }]\n                    == { XXX };\n}\n",
-            "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234;} == { a = \"b\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n  ex7 = listToAttrs [{ name = \"foo\"; value = 123; }\n                     { name = \"bar\"; value = 456; }]\n                    == {foo = 123; bar = 456;};\n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234;} == { a = \"b\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n  ex7 = listToAttrs [{ name = \"foo\"; value = 123; }\n                     { name = \"bar\"; value = 456; }]\n                    == {foo = 123; bar = 456;};\n}\n"
         },
         {
             "topic": " Attributes",
             "question": "Try to find out what 'rec' stands for and why we need it in this case!",
             "code": "rec {\n  x = \"a\";\n  y = x;\n}\n",
-            "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#rec allows recursions within an attribute set. \n#Be aware of infinit recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.\n\n",
-            "result": ""
+            "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#rec allows recursions within an attribute set. \n#Be aware of infinit recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.\n\n"
         },
         {
             "topic": " Attributes",
             "question": " Make `ex1` and `ex2` to evaluate to true.",
             "code": "with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
         },
         {
             "topic": " Attributes",
             "question": "To learn the basic syntax replace every XX in the `rec` scope with \nvalues from the let scope.\n\n* Every exercise should evaluate to true.",
             "code": "with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
         },
         {
             "topic": " Debuging",
             "question": "This is the package, also called Nix-expression, of the nano text \neditor in nixpkgs.\n\n* find and fix all errors so that a proper `attribute set` is evaluated\n\n**Note:** We had to add some dummy functions or it wouldn't work in \nour simplified javascript environment. Those are needed since we don't want it to realy install \nnano within your browser. \n\n",
             "code": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\"\n  version = 2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/{name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description  \"A small, user-friendly console text editor\";\n  };\n}\n",
-            "solution": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\";\n  version = \"2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/${name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description = \"A small, user-friendly console text editor\";\n  };\n}\n",
-            "result": "error: syntax error, unexpected '=', expecting ';', at line:9:11"
+            "solution": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\";\n  version = \"2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/${name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description = \"A small, user-friendly console text editor\";\n  };\n}\n"
         },
         {
             "topic": " Fold",
             "question": " \"Fold\" is a binary function that uses the function 'f' between successive elements of 'list' with 'z' as the starting value,\n\n i.e.,  'fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))'.\n\n ![alt text](https://upload.wikimedia.org/wikipedia/commons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n More informations about fold can be found on [wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29). \n\n \nuse fold to write a function that counts all \"a\" in a list.",
             "code": "with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
-            "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n",
-            "result": ""
+            "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n"
         },
         {
             "topic": " Fold",
             "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** there also is a `builtin` function `lib.reverseList`.\nYou're function should behave exactly the same!",
             "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold XXXX;\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n"
         },
         {
             "topic": " Fold",
             "question": "use fold to write your own map function \n\n**Note:** The little error is intended, FIX IT!",
             "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n"
         },
         {
             "topic": " Reimplementation",
             "question": " Write your own implementation of the `attrVals` function.\n\n It consumes a list of `attribute names` and an \n `attribute set`. It returnes the values of each \n `attribute name`.  \n \n **Warning:** This is hard!",
             "code": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tips: use the map function and acces the attribute values \n  #in the same way as 'getSingleVal'\n  attrVals = TODO;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\"; #is [1]\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n",
-            "solution": "\nwith import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tip use map and acces the attribute values in the same way\n  #as 'getSingleVal'\n  attrVals = List: attrSet: map (x: attrSet.${x}) List;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\";\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n\n",
-            "result": ""
+            "solution": "\nwith import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tip use map and acces the attribute values in the same way\n  #as 'getSingleVal'\n  attrVals = List: attrSet: map (x: attrSet.${x}) List;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\";\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n\n"
         },
         {
             "topic": " Reimplementation",
             "question": " Write your own implementation of the `attrValues` function.\n\n This function consumes an `attribute set` and returns all values \n sorted by the `attribute name`.\n\n You are allowed to use the builtin function `attrNames` \n and the `attrVals` function you just implemented in the \n last lecture.\n \n **Warning:** This is hard!",
             "code": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n\n  attrValues = XXXX;\nin\nrec {\n  solution = attrValues attrSet; #should be [1 2 3]\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n\n  attrValues = attrSet: lib.attrVals (builtins.attrNames attrSet) attrSet;\nin\nrec {\n  solution = attrValues attrSet; #should be [1 2 3]\n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n\n  attrValues = attrSet: lib.attrVals (builtins.attrNames attrSet) attrSet;\nin\nrec {\n  solution = attrValues attrSet; #should be [1 2 3]\n}\n"
         },
         {
             "topic": " Reimplementation",
-            "question": " write the function 'catAttrs'. This function collects each attribute with a specific name from a list of attribute sets.\n\n Sets that don't contain the named attribute are ignored.\n\n **Note:** you can use the builtin function concatLists. ",
+            "question": "Write the function `catAttrs`. This function collects each \n`attribute` with a specific name from a list of `attribute sets`.\n\n`Attribute sets` that don't contain the named attribute are ignored.\n\n **Note:** you can use the builtin function `concatLists`. ",
             "code": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n  \n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = TODO\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n\n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = name: List: builtins.concatLists (map (x: if x ? ${name} then [x.${name}] else []) List);\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
-            "result": ""
+            "solution": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n\n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = name: List: builtins.concatLists (map (x: if x ? ${name} then [x.${name}] else []) List);\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n"
         },
         {
             "topic": "The end",
             "question": "## It is done!\nCongratulation! You reached the end of this course and you made it!\n\nWe hope you liked 'A tour of Nix' and if you want to contribute new \nquestions or alter existing ones, please feel to send an email to:\n\n* [Joachim Schiele](mailto:js@lastlog.de)\n* [Paul Seitz](mailto:paul.m.seitz@gmail.com)\n\n**Note:** As soon as we got an editor/GIT repository ready you will be \nable to create pull requests.\n\n## Further reading\n\n* [Luca Bruno's nix pill(s)](http://lethalman.blogspot.de/2014/07/nix-pill-1-why-you-should-give-it-try.html)\n  \n  The Nix Pills are a wonderful introduction into Nix programming and you will \n  have much joy reading them!\n  \n* [NixPkgs manual](https://nixos.org/nixpkgs/manual) \n\n  Covers topics as: buildPhases, override(s) and support for specific \n  programming languages\n \n* [NixOS Wiki](https://nixos.org/wiki/Main_Page)\n\n  The Wiki contains a lot of practical articles, like the \n  [Cheatsheet](https://nixos.org/wiki/Cheatsheet)\n\n\n",
             "code": "with import <nixpkgs> { }; \nrec {\n  made_it = \"it is done\";\n}\n",
-            "solution": "",
-            "result": ""
+            "solution": ""
         }
     ]
 }
