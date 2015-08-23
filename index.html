@@ -140,6 +140,8 @@ var change_question = function(myinput) {
   if (current_question >= questions.questions.length-1)
     current_question = questions.questions.length-1;
 
+  window.history.pushState('', '',  window.location.pathname + '?id=' + (current_question + 1));
+
   var contentTitle = document.getElementById('contentTitle');
   var contentText = document.getElementById('contentText');
   var contentSolution = document.getElementById('solution');
