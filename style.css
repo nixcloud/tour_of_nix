@@ -5,6 +5,7 @@ html {
 
 body {
   font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
   margin-left: 0;
   margin-right: 0;
   margin-bottom: 0;
@@ -64,10 +65,8 @@ h1 {
 }
 
 code {
-  font-size: 93%;
   background-color: #f8f8f8;
   border: 1px solid #ddd;
-/*   overflow: auto; */
   border-radius: 0.2em;
 }
 
@@ -77,17 +76,21 @@ code {
   display: inline-block;
   text-decoration: none;
   cursor: pointer;
-  font-size: 0.9em;
   border-radius: 2px;
   background-color: #E0EBF6;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 2px;
   padding: 1px 8px;
+  font-size: initial;
   line-height: 20px;
 }
 
 .myButton:hover {
   background: rgb(178, 208, 242);
+}
+
+textarea {
+  font-size: small; 
 }
 
 #header {
@@ -208,26 +211,10 @@ code {
   padding: 0;
 }
 
-#rotate {
-  background-image: url(rotate.png);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  z-index: 100;
-  width: 70px;
-  height: 45px;
-  top: 15px;
-  right: 12px;
-  position: absolute;
-}
-
-#rotate:hover {
-  background-color: rgb(178, 208, 242);
-}
-
-@media all and (max-width: 800px) {
+@media all and (max-width: 1400px) {
   /* We tell both sidebars to share a row */
   #middle { flex-direction: column; }
-  #left  { order: 3;  padding-top: 10px;   padding-right: 0px;}
-  #right { order: 2; }
+  #left  { order: 3;  padding-top: 6px; padding-right: 2px; padding-bottom: 200px;}
+  #right { order: 2; margin-bottom: 0px; box-shadow: none; }
 }
 
