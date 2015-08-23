@@ -1,4 +1,4 @@
-﻿{
+ï»¿{
     "questions": [
         {
             "topic": "A tour of Nix",
@@ -156,7 +156,7 @@
         },
         {
             "topic": " Reimplementation",
-            "question": "Write the function `catAttrs`. This function collects each \n`attribute` with a specific name from a list of `attribute sets`.\n\n`Attribute sets` that don't contain the named attribute are ignored.\n\n **Note:** you can use the builtin function `concatLists`. ",
+            "question": "Write the function `catAttrs`. This function collects each \n`attribute` with a specific name from a list of `attribute sets`.\n\n`Attribute sets` that don't contain the named attribute are ignored.\n\n **Note:** you can use the builtin function `concatLists`. \n \n **Warning:** This is hard!",
             "code": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n  \n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = TODO\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
             "solution": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n\n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = name: List: builtins.concatLists (map (x: if x ? ${name} then [x.${name}] else []) List);\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
             "result": ""
