@@ -22,6 +22,27 @@
 var initialized = 0;
 var selected_question = 0;
 
+var mobile_layout = function () {
+  if (document.getElementById('middle').style.flexDirection === "column") {
+    document.getElementById('middle').style.flexDirection = "row";
+    var left = document.getElementById('left');
+    left.style.order = 1;
+    left.style.marginTop = "6px";
+    left.style.marginBottom="3px";
+    var right = document.getElementById('right');
+    right.style.marginRight="6px";
+    right.style.marginTop="6px";
+    right.style.marginBottom="100px";
+  } else {
+    document.getElementById('middle').style.flexDirection = "column";
+    var left = document.getElementById('left');
+    left.style.order = 3;
+    left.style.marginBottom="100px";
+    var right = document.getElementById('right');
+    right.style.marginBottom="6px";
+  }
+}
+
 var prepare_data = function () {
   for(i = 0; i < questions.questions.length; i++) {
     questions.questions[i].mycode = questions.questions[i].code;
@@ -220,8 +241,9 @@ var runNix = function() {
     </div>
   </div>
   <div class="flex-container-col">
-    <div id="header">
-      <h1>A tour of Nix</h1>
+    <div id="h_container" class="flex-container-row">
+      <div id="header"><h1>A tour of Nix</h1></div>
+      <div id="rotate" onclick="mobile_layout()"></div>
     </div>
     <div id="middle" class="flex-container-row">
       <div id="left" class="flex-container-col">

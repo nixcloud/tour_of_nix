@@ -92,6 +92,7 @@ code {
 
 #header {
 /*   display: none; */
+  flex-grow: 1;
   background-color: white;
   padding-left:  0.8em;
   margin-left:  6px;
@@ -144,6 +145,7 @@ code {
   position: relative;
   padding-left: 16px;
   padding-right: 16px;
+  margin-bottom: 100px;
   flex-basis: calc(50%);
   background: rgba(255, 255, 255,0.95);
   border: 1px solid rgb(238, 238, 238);
@@ -204,6 +206,22 @@ code {
   z-index: -20;
   margin: 0;
   padding: 0;
+}
+
+#rotate {
+  background-image: url(rotate.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 100;
+  width: 70px;
+  height: 45px;
+  top: 15px;
+  right: 12px;
+  position: absolute;
+}
+
+#rotate:hover {
+  background-color: rgb(178, 208, 242);
 }
 
 @media all and (max-width: 800px) {
