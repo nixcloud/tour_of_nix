@@ -27,7 +27,7 @@ var saveQuestions = function() {
   var t = questions;
   for (i = 0; i < t.questions.length; i++) {
     delete t.questions[i].mycode;
-    delete t.questions[i].result;
+    t.questions[i].result = "";
   }
   var questionsJSON = JSON.stringify(t, null, 4)
   var blob = new Blob([questionsJSON], {type: "text/plain;charset=utf-8"});
@@ -155,7 +155,10 @@ var change_question = function(myinput) {
   contentSolution.value = solution;
   auto_resize(contentSolution);
   editor.setValue(mycode);
-  output.value = questions.questions[current_question].result;
+  if (typeof(questions.questions[current_question].result) !== "undefined")
+    output.value = questions.questions[current_question].result;
+  else
+    output.value = "";
   auto_resize(output);
   auto_resize(contentSolution);
   selected_question = current_question;
