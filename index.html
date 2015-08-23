@@ -11,6 +11,7 @@
   -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
   <script type="text/javascript" src="markdown.min.js"></script>
+  <script type="text/javascript" src="FileSaver.min.js"></script>
   <title>A tour of Nix</title>
 
   <link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
@@ -21,6 +22,18 @@
 
 var initialized = 0;
 var selected_question = 0;
+
+var saveQuestions = function() {
+  var t = questions;
+  for (i = 0; i < t.questions.length; i++) {
+    delete t.questions[i].mycode;
+  }
+  var questionsJSON = JSON.stringify(t, null, 4)
+  var blob = new Blob([questionsJSON], {type: "text/plain;charset=utf-8"});
+  
+  saveAs(blob, "questions.json");
+  delete t;
+}
 
 var prepare_data = function () {
   for(i = 0; i < questions.questions.length; i++) {
@@ -71,6 +84,10 @@ function keysPressed(e) {
   }
   if (keys[17] && keys[73]) { // ctrl+i
     reset_question();
+    e.preventDefault(); 
+  }
+  if (keys[17] && keys[83]) { // ctrl+i
+    saveQuestions();
     e.preventDefault(); 
   }
 }
@@ -163,10 +180,14 @@ var reset_question = function() {
 }
 var markdown2html = function() {
   var text = editor.getValue();
-  contentText.innerHTML = markdown.toHTML(text);
-  return JSON.stringify(text);
-    //.split('\n').join('\\n').replace("\"", "\\\"")
-    ///replace(/(?:\r\n|\r|\n)/g,'\n') 
+  if (text == questions.questions[selected_question].question) {
+    // qutting the editor
+    editor.setValue(questions.questions[selected_question].mycode);
+  } else {
+    // changes were detected, so we just update the preview
+    contentText.innerHTML = markdown.toHTML(text);
+    questions.questions[selected_question].question = text;
+  }
 }
 var load_markdown = function() {
   var text = questions.questions[current_question].question;
