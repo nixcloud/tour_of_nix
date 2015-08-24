@@ -211,10 +211,4 @@ textarea {
   padding: 0;
 }
 
-@media all and (max-width: 1400px) {
-  /* We tell both sidebars to share a row */
-  #middle { flex-direction: column; }
-  #left  { order: 3;  padding-top: 6px; padding-right: 2px; padding-bottom: 200px;}
-  #right { order: 2; margin-bottom: 0px; box-shadow: none; }
-}
 
