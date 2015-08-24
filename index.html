@@ -26,6 +26,8 @@ var selected_question = 0;
 
 var saveQuestions = function() {
   var t = questions;
+  t.questions[selected_question].solution = document.getElementById("solution").value;
+  
   for (i = 0; i < t.questions.length; i++) {
     delete t.questions[i].mycode;
     t.questions[i].result = "";

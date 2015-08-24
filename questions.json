@@ -1,4 +1,4 @@
-﻿{
+{
     "questions": [
         {
             "topic": "A tour of Nix",
@@ -79,9 +79,9 @@
         },
         {
             "topic": " Map",
-            "question": "A build in map function exists.\n\nThe `map-function` requires a function and a list as arguments. It `evaluates` the given function on every element \nof the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. So:\n\n* Use the map function to extend every `string` in `bar` with another `string` \nof your choice. \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
+            "question": "A build in map function exists.\n\nThe `map-function` requires a function and a list as arguments. It `evaluates` the given function on every element \nof the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. So:\n\n* Use the map function to extend every `string` in `bar` with `\"bar\"`. \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
             "code": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (XXX) XXXX;\n}\n",
-            "solution": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\nin\n{\n  foobar = map (x: \"foo\" + x) bar;\n}\n\n",
+            "solution": "with import <nixpkgs> { };\nlet\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}",
             "result": ""
         },
         {
