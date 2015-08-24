@@ -246,9 +246,9 @@ var runNix = function() {
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
     }else{
       console.log("incorrect answer");
-      o.value += text;
+      o.value += "your solution:\n" + text + "\n correct is:\n" + correct_solution;
       o.style.backgroundColor = "#aa4444";
-  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
+  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000); 
     }
     auto_resize(o);
     document.getElementById('runInfo').innerHTML = "";
