@@ -237,16 +237,15 @@ var runNix = function() {
     Module['return'] = text + '\n'; 
     var o = document.getElementById('output');
     if (text == correct_solution){
-    //  o.value += <font color="#00FF00"> + text + </font>;
       console.log("correct answer");
       o.value += text;
       o.style.backgroundColor = "#44aa44";
-      setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
+  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
     }else{
       console.log("incorrect answer");
       o.value += text;
       o.style.backgroundColor = "#aa4444";
-      setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
+  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
     }
     auto_resize(o);
     document.getElementById('runInfo').innerHTML = "";
@@ -273,7 +272,7 @@ var runNix = function() {
     console.log("incorrect answer");
     o.value += text;
     o.style.backgroundColor = "#aa4444";
-    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
+//    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
   };
   var input_text = editor.getValue();
   FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
