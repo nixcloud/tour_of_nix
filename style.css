@@ -211,4 +211,23 @@ textarea {
   padding: 0;
 }
 
+#rotate {
+  background-image: url(rotate.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 100;
+  width: 70px;
+  height: 45px;
+  top: 15px;
+  right: 12px;
+  position: absolute;
+  display: none;
+}
 
+#rotate:hover {
+  background-color: rgb(178, 208, 242);
+}
+
+@media all and (max-width: 1400px) {
+    #rotate { display: flex; }
+}
