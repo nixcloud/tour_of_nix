@@ -171,6 +171,11 @@ var change_question = function(myinput) {
   //console.log(window.location.pathname + str)
   //window.location = window.location.pathname + str
 };
+
+flipStylesheet = function() {
+  document.getElementsByTagName('link')[2].disabled = !document.getElementsByTagName('link')[2].disabled;
+}
+
 var showSolution = function() {
   var s = document.getElementById('solution');
   
