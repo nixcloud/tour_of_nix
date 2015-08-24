@@ -190,6 +190,9 @@ var showSolution = function() {
 }
 var reset_question = function() {
   editor.setValue(questions.questions[selected_question].code);
+  
+  var output = document.getElementById('output');
+  output.style.backgroundColor = "grey";
   console.log("reset question")
 }
 var markdown2html = function() {
