@@ -19,6 +19,8 @@
   <link id ="styleMobile" rel="stylesheet" href="style_mobile.css" type="text/css"/>
   <link rel="stylesheet" href="font/font.css" type="text/css"/>
   <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
+  <script type="text/javascript" src="codemirror-5.5/mode/haskell/haskell.js"></script>
+
   <script type="text/javascript" charset="utf-8">
 
 var initialized = 0;
@@ -333,7 +335,7 @@ var runNix = function() {
 var input = document.getElementById('input');
 var editor = CodeMirror.fromTextArea(input, {
   lineNumbers: true,
-  viewportMargin: Infinity
+  viewportMargin: Infinity,
 });
   </script>
 </body>
