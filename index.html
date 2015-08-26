@@ -35,7 +35,7 @@ var saveQuestions = function() {
     t.questions[i].result = "";
   }
   var questionsJSON = JSON.stringify(t, null, 4)
-  var blob = new Blob([questionsJSON], {type: "text/plain;charset=utf-8"});
+  var blob = new Blob([questionsJSON], {type: "text/plain;"});
   
   saveAs(blob, "questions.json");
   delete t;
