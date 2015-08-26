@@ -15,17 +15,24 @@
             "result": ""
         },
         {
-            "topic": " Hello World",
+            "topic": "Hello World",
             "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.",
             "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
             "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n",
             "result": ""
         },
         {
-            "topic": " Hello World again",
+            "topic": "Strings",
             "question": "Nix can also insert `Strings` with ${variable}.\n \n * Complete the `String` to 'Hello World'.",
             "code": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} \";\n}\n",
             "solution": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} World\";\n}\n",
+            "result": ""
+        },
+        {
+            "topic": "Integer to string",
+            "question": "Inserting `Strings` using the pattern `${variable}` works great \nwith `Strings` but how to get it working for `Integers`?\n \n * Fix `${value}` so it prints the `Integer`\n \nConsult the [Nix manual's builtins section](http://nixos.org/nix/manual/#ssec-builtins).\n",
+            "code": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${value} the win!\";\n}\n",
+            "solution": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${toString value} the win!\";\n}\n",
             "result": ""
         },
         {

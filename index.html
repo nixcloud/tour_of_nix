@@ -252,7 +252,7 @@ var runNix = function() {
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
     }else{
       console.log("incorrect answer");
-      o.value += "your solution:\n" + text + "\n correct is:\n" + correct_solution;
+      o.value += "your solution:\n" + text + "\nexpected was:\n" + correct_solution;
       o.style.backgroundColor = "#aa4444";
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000); 
     }
@@ -318,7 +318,6 @@ var runNix = function() {
         </div>
         <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
         <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-        <textarea id="autocheck" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
         <div id="runInfo"></div>
       </div>
       <div id="right" class="flex-container-col">
