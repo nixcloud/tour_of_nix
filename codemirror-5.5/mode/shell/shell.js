@@ -22,7 +22,7 @@ CodeMirror.defineMode('shell', function() {
   };
 
   // Atoms
-  define('atom', 'true false');
+  define('atom', 'true false null');
 
   // Keywords
   define('keyword', 'if then do else elif while until for in esac fi fin ' +
