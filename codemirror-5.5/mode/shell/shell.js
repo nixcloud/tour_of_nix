@@ -26,7 +26,7 @@ CodeMirror.defineMode('shell', function() {
 
   // Keywords
   define('keyword', 'if then do else elif while until for in esac fi fin ' +
-    'fil done exit set unset export function');
+    'fil done exit set unset export function let with rec import');
 
   // Commands
   define('builtin', 'ab awk bash beep cat cc cd chown chmod chroot clear cp ' +
