@@ -8,7 +8,6 @@
   <meta HTTP-EQUIV="REFRESH" content="0; url=https://www.mozilla.org/en-US/firefox/new/">
   <![endif]-->
 
-
   <!--
   -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
@@ -35,10 +34,16 @@ var editingQuestionText = false;
 // export current question object to questions.json
 var saveQuestions = function() {
   // http://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript
-  var t = questions.slice(0); // makes a real copy, not just pointers
+  var t = JSON.parse(JSON.stringify(questions));
     
+  // might not have been synced yet (click next and prev for example, to do so)
+  t[selected_question].solution = document.getElementById("solution").value;
+  t[selected_question].mycode = editor.getValue();
+
   for (i = 0; i < t.length; i++) {
     t[i].code = t[i].mycode;
+//     t[i].mycode = "";
+//     t[i].result = "";
     delete t[i].mycode;
     delete t[i].result;
   }
@@ -46,7 +51,7 @@ var saveQuestions = function() {
   var blob = new Blob([questionsJSON], {type: "text/plain;"});
   
   saveAs(blob, "questions.json");
-  delete t;
+  //delete t;
 }
 
 // on import, create a copy of code into mycode so we can use the 'reset' button
@@ -58,8 +63,6 @@ var prepare_data = function () {
 
 // hack to make the textarea resize to the exact size needed to view all the data and not more
 var auto_resize = function (e) {
-  //e.rows=e.value.split('\n').length+2
-  
   e.style.height = 'auto';
   e.style.height = e.scrollHeight + 2 +'px';
 }
@@ -111,10 +114,12 @@ function keysPressed(e) {
       e.preventDefault(); 
   }
   if (keys[17] && keys[74]) { // ctrl+ k
+    console.log("change_question(1);");
     change_question(1);
     e.preventDefault(); 
   }
   if (keys[17] && keys[75]) { // ctrl+.j
+    console.log("change_question(-1);");
     change_question(-1);
     e.preventDefault(); 
   }
@@ -146,6 +151,8 @@ var change_question = function(myinput) {
   //callback for the editor
   //editor.on("change", function() { alert('changed')} )
   // save old state
+  if (editingQuestionText == true) 
+    alert("editor must be closed before opening a different question, now everything is corrupted -> reload and start over. sorry (qknight)")
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
 
@@ -154,7 +161,6 @@ var change_question = function(myinput) {
     questions[current_question].mycode = editor.getValue();
     questions[current_question].result = output.value;
     //FIXME must be stored as well as colors
-    // t.questions[selected_question].solution = document.getElementById("solution").value;
     auto_resize(output)
   }
   initialized=1;
@@ -213,7 +219,11 @@ var resetQuestion = function() {
   output.style.backgroundColor = "grey";
   console.log("reset question")
 }
+// embedded 'Questions' editor using the 'editor'
+//   generate preview & close
 var markdown2html = function() {
+  var contentText = document.getElementById('contentText');
+
   if (editingQuestionText == true) {
     var text = editor.getValue();
     if (text == questions[selected_question].question) {
@@ -221,19 +231,29 @@ var markdown2html = function() {
       editor.setValue(questions[selected_question].mycode);
       editingQuestionText = false;
     } else {
+// console.log("6.1")
       // changes were detected, so we just update the preview
-      contentText.innerHTML = markdown.toHTML(text);
+      var p = markdown.toHTML(text);
+// console.log("6.2")
+      contentText.innerHTML = p;
+// console.log("6.3")
+      delete p;
       questions[selected_question].question = text;
     }
   }
 }
+// embedded 'Questions' editor using the 'editor'
+//   open the editor
 var load_markdown = function() {
   if (editingQuestionText == false) {
     editingQuestionText = true;
+    questions[current_question].mycode = editor.getValue();
     var text = questions[current_question].question;
     editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
   }
 }
+
+// primary routine to execute the code from the editor in nix-instantiate
 var runNix = function() {
   // run the solution
   
@@ -253,8 +273,6 @@ var runNix = function() {
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
   //console.log(result);
   Module.callMain(Module['arguments']);
-  
-  
   
   //run the user input
   console.log("running runNix()");
@@ -320,7 +338,7 @@ var runNix = function() {
     </div>
   </div>
   <div class="flex-container-col">
-    <div id="h_container" class="flex-container-row">
+    <div id="header_container" class="flex-container-row">
       <div id="header"><h1>A tour of Nix</h1></div>
       <div id="rotate" onclick="flipStylesheet()"></div>
     </div>
