@@ -31,28 +31,14 @@ var selected_question = 0;
 var questions;
 var current_question = 0;
 
-// var saveQuestions = function() {
-//   var t = questions.questions.slice(0);
-//     
-//   for (i = 0; i < t.length; i++) {
-//     t[i].code = t[i].mycode;
-//     delete t[i].mycode;
-//     t[i].result = "";
-//   }
-//   var questionsJSON = JSON.stringify(t, null, 4)
-//   var blob = new Blob([questionsJSON], {type: "text/plain;"});
-//   
-//   saveAs(blob, "questions.json");
-//   delete t;
-// }
-
 var saveQuestions = function() {
-  var t = questions.questions;
+  // http://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript
+  var t = questions.slice(0); // makes a real copy, not just pointers
     
-  for (i = 0; i < t.questions.length; i++) {
-    t.questions[i].code = t.questions[i].mycode;
-    delete t.questions[i].mycode;
-    t.questions[i].result = "";
+  for (i = 0; i < t.length; i++) {
+    t[i].code = t[i].mycode;
+    delete t[i].mycode;
+    t[i].result = "";
   }
   var questionsJSON = JSON.stringify(t, null, 4)
   var blob = new Blob([questionsJSON], {type: "text/plain;"});
@@ -62,8 +48,8 @@ var saveQuestions = function() {
 }
 
 var prepare_data = function () {
-  for(i = 0; i < questions.questions.length; i++) {
-    questions.questions[i].mycode = questions.questions[i].code;
+  for(i = 0; i < questions.length; i++) {
+    questions[i].mycode = questions[i].code;
   }
 }
 var auto_resize = function (e) {
@@ -153,8 +139,8 @@ var change_question = function(myinput) {
 
   // prevent overwriting with 'empty data' on the first page load
   if (initialized) {
-    questions.questions[current_question].mycode = editor.getValue();
-    questions.questions[current_question].result = output.value;
+    questions[current_question].mycode = editor.getValue();
+    questions[current_question].result = output.value;
     //FIXME must be stored as well as colors
     // t.questions[selected_question].solution = document.getElementById("solution").value;
     auto_resize(output)
@@ -164,8 +150,8 @@ var change_question = function(myinput) {
 
   if (current_question < 0)
     current_question = 0;
-  if (current_question >= questions.questions.length-1)
-    current_question = questions.questions.length-1;
+  if (current_question >= questions.length-1)
+    current_question = questions.length-1;
 
   window.history.pushState('', '',  window.location.pathname + '?id=' + (current_question + 1));
 
@@ -173,10 +159,10 @@ var change_question = function(myinput) {
   var contentText = document.getElementById('contentText');
   var contentSolution = document.getElementById('solution');
 
-  var topic = questions.questions[current_question].topic;
-  var question = questions.questions[current_question].question;
-  var mycode = questions.questions[current_question].mycode;
-  var solution = questions.questions[current_question].solution;
+  var topic = questions[current_question].topic;
+  var question = questions[current_question].question;
+  var mycode = questions[current_question].mycode;
+  var solution = questions[current_question].solution;
   contentSolution.style.display="none";
 
   contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
@@ -184,8 +170,8 @@ var change_question = function(myinput) {
   contentSolution.value = solution;
   auto_resize(contentSolution);
   editor.setValue(mycode);
-  if (typeof(questions.questions[current_question].result) !== "undefined")
-    output.value = questions.questions[current_question].result;
+  if (typeof(questions[current_question].result) !== "undefined")
+    output.value = questions[current_question].result;
   else
     output.value = "";
   auto_resize(output);
@@ -208,7 +194,7 @@ var showSolution = function() {
   }
 }
 var reset_question = function() {
-  editor.setValue(questions.questions[selected_question].code);
+  editor.setValue(questions[selected_question].code);
   
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
@@ -216,17 +202,17 @@ var reset_question = function() {
 }
 var markdown2html = function() {
   var text = editor.getValue();
-  if (text == questions.questions[selected_question].question) {
+  if (text == questions[selected_question].question) {
     // qutting the editor
-    editor.setValue(questions.questions[selected_question].mycode);
+    editor.setValue(questions[selected_question].mycode);
   } else {
     // changes were detected, so we just update the preview
     contentText.innerHTML = markdown.toHTML(text);
-    questions.questions[selected_question].question = text;
+    questions[selected_question].question = text;
   }
 }
 var load_markdown = function() {
-  var text = questions.questions[current_question].question;
+  var text = questions[current_question].question;
   editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
 }
 var runNix = function() {
@@ -242,7 +228,7 @@ var runNix = function() {
   //this should not happen
   //TODO exception handling 
   };
-  var solution_text = questions.questions[current_question].solution;
+  var solution_text = questions[current_question].solution;
   FS.writeFile('/test.nix', solution_text, {encoding: 'utf8'});
   Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
