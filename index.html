@@ -25,14 +25,32 @@
 
   <script type="text/javascript" charset="utf-8">
 
+// global variables
 var initialized = 0;
 var selected_question = 0;
+var questions;
+var current_question = 0;
+
+// var saveQuestions = function() {
+//   var t = questions.questions.slice(0);
+//     
+//   for (i = 0; i < t.length; i++) {
+//     t[i].code = t[i].mycode;
+//     delete t[i].mycode;
+//     t[i].result = "";
+//   }
+//   var questionsJSON = JSON.stringify(t, null, 4)
+//   var blob = new Blob([questionsJSON], {type: "text/plain;"});
+//   
+//   saveAs(blob, "questions.json");
+//   delete t;
+// }
 
 var saveQuestions = function() {
-  var t = questions;
-  t.questions[selected_question].solution = document.getElementById("solution").value;
-  
+  var t = questions.questions;
+    
   for (i = 0; i < t.questions.length; i++) {
+    t.questions[i].code = t.questions[i].mycode;
     delete t.questions[i].mycode;
     t.questions[i].result = "";
   }
@@ -106,9 +124,6 @@ function keysReleased(e) {
 window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
 
-var questions;
-var current_question = 0;
-
 function loadJSON(path, success, error) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function()
@@ -136,9 +151,12 @@ var change_question = function(myinput) {
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
 
+  // prevent overwriting with 'empty data' on the first page load
   if (initialized) {
     questions.questions[current_question].mycode = editor.getValue();
     questions.questions[current_question].result = output.value;
+    //FIXME must be stored as well as colors
+    // t.questions[selected_question].solution = document.getElementById("solution").value;
     auto_resize(output)
   }
   initialized=1;
@@ -173,11 +191,6 @@ var change_question = function(myinput) {
   auto_resize(output);
   auto_resize(contentSolution);
   selected_question = current_question;
-
-  //var str = window.location.search
-  //replaceQueryParam('id', current_question+1, str)
-  //console.log(window.location.pathname + str)
-  //window.location = window.location.pathname + str
 };
 
 flipStylesheet = function() {
@@ -227,7 +240,7 @@ var runNix = function() {
   };
   Module['printErr'] = function(text) {
   //this should not happen
-  //TODO exception handling
+  //TODO exception handling 
   };
   var solution_text = questions.questions[current_question].solution;
   FS.writeFile('/test.nix', solution_text, {encoding: 'utf8'});
