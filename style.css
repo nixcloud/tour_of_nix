@@ -149,7 +149,8 @@ textarea {
   padding-left: 16px;
   padding-right: 16px;
   margin-bottom: 100px;
-  flex-basis: calc(50%);
+  /*flex-basis: calc(50%);*/
+  width: calc(50%);
   background: rgba(255, 255, 255,0.95);
   border: 1px solid rgb(238, 238, 238);
 /*   border-left: 4px solid rgb(184, 217, 255); */
@@ -163,7 +164,8 @@ textarea {
 }
 
 #left {
-  flex-basis: calc(50%);
+  /*flex-basis: calc(50%);*/
+  width: calc(50%);
   order: 1;
   padding-right: 6px;
 }
