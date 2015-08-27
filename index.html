@@ -36,28 +36,30 @@ var saveQuestions = function() {
   // http://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript
   var t = JSON.parse(JSON.stringify(questions));
     
-  // might not have been synced yet (click next and prev for example, to do so)
-  t[selected_question].solution = document.getElementById("solution").value;
-  t[selected_question].mycode = editor.getValue();
-
   for (i = 0; i < t.length; i++) {
     t[i].code = t[i].mycode;
-//     t[i].mycode = "";
-//     t[i].result = "";
+    t[i].solution = t[i].mysolution;
     delete t[i].mycode;
+    delete t[i].mysolution;
     delete t[i].result;
+    delete t[i].resultColor;
   }
+
+  // hack: might not have been synced yet (click next and prev for example, to do so)
+  t[selected_question].solution = document.getElementById("solution").value;
+  t[selected_question].code = editor.getValue();
+
   var questionsJSON = JSON.stringify(t, null, 4)
   var blob = new Blob([questionsJSON], {type: "text/plain;"});
   
   saveAs(blob, "questions.json");
-  //delete t;
 }
 
 // on import, create a copy of code into mycode so we can use the 'reset' button
 var prepare_data = function () {
   for(i = 0; i < questions.length; i++) {
     questions[i].mycode = questions[i].code;
+    questions[i].mysolution = questions[i].solution;
   }
 }
 
@@ -104,7 +106,6 @@ loadJSON('questions.json',
   function(xhr) { console.error(xhr); }
 );
 
-
 // shortcuts
 var keys = [];
 function keysPressed(e) {
@@ -148,23 +149,23 @@ window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
 
 var change_question = function(myinput) {
-  //callback for the editor
-  //editor.on("change", function() { alert('changed')} )
   // save old state
   if (editingQuestionText == true) 
     alert("editor must be closed before opening a different question, now everything is corrupted -> reload and start over. sorry (qknight)")
   var output = document.getElementById('output');
-  output.style.backgroundColor = "grey";
 
   // prevent overwriting with 'empty data' on the first page load
   if (initialized) {
     questions[current_question].mycode = editor.getValue();
+    questions[current_question].mysolution = document.getElementById('solution').value;
     questions[current_question].result = output.value;
-    //FIXME must be stored as well as colors
+    questions[current_question].resultColor = output.style.backgroundColor;
     auto_resize(output)
   }
+
   initialized=1;
   current_question += myinput; 
+  output.style.backgroundColor = "grey";
 
   if (current_question < 0)
     current_question = 0;
@@ -180,18 +181,22 @@ var change_question = function(myinput) {
   var topic = questions[current_question].topic;
   var question = questions[current_question].question;
   var mycode = questions[current_question].mycode;
-  var solution = questions[current_question].solution;
+  var mysolution = questions[current_question].mysolution;
   contentSolution.style.display="none";
 
   contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
   contentText.innerHTML = markdown.toHTML(question);
-  contentSolution.value = solution;
+  contentSolution.value = mysolution;
   auto_resize(contentSolution);
   editor.setValue(mycode);
   if (typeof(questions[current_question].result) !== "undefined")
     output.value = questions[current_question].result;
   else
     output.value = "";
+
+  if (typeof(questions[current_question].resultColor) !== "undefined")
+    output.style.backgroundColor = questions[current_question].resultColor;
+
   auto_resize(output);
   auto_resize(contentSolution);
   selected_question = current_question;
@@ -214,6 +219,8 @@ var showSolution = function() {
 }
 var resetQuestion = function() {
   editor.setValue(questions[selected_question].code);
+  var s = document.getElementById('solution');
+  s.value = questions[selected_question].solution;
   
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
