@@ -65,9 +65,10 @@ h1 {
 }
 
 code {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  background-color: #EFEFEF;
+  border: 1px solid #EFEFEF;
   border-radius: 0.2em;
+  padding: 1px;
 }
 
 .myButton {
