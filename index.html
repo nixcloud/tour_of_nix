@@ -30,7 +30,9 @@ var initialized = 0;
 var selected_question = 0;
 var questions;
 var current_question = 0;
+var editingQuestionText = false;
 
+// export current question object to questions.json
 var saveQuestions = function() {
   // http://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript
   var t = questions.slice(0); // makes a real copy, not just pointers
@@ -38,7 +40,7 @@ var saveQuestions = function() {
   for (i = 0; i < t.length; i++) {
     t[i].code = t[i].mycode;
     delete t[i].mycode;
-    t[i].result = "";
+    delete t[i].result;
   }
   var questionsJSON = JSON.stringify(t, null, 4)
   var blob = new Blob([questionsJSON], {type: "text/plain;"});
@@ -47,17 +49,22 @@ var saveQuestions = function() {
   delete t;
 }
 
+// on import, create a copy of code into mycode so we can use the 'reset' button
 var prepare_data = function () {
   for(i = 0; i < questions.length; i++) {
     questions[i].mycode = questions[i].code;
   }
 }
+
+// hack to make the textarea resize to the exact size needed to view all the data and not more
 var auto_resize = function (e) {
   //e.rows=e.value.split('\n').length+2
   
   e.style.height = 'auto';
   e.style.height = e.scrollHeight + 2 +'px';
 }
+
+// parses the id=23 from the url
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 }
@@ -71,6 +78,31 @@ function load_wanted_page() {
       change_question(0) 
     }
 }
+//loads the questions.json from the webpage
+function loadJSON(path, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function()
+  {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        if (success)
+          success(JSON.parse(xhr.responseText));
+      } else {
+        if (error)
+          error(xhr);
+      }
+    }
+  };
+  xhr.open("GET", path, true);
+  xhr.send();
+}
+loadJSON('questions.json',
+  function(data) { /*console.log(data);*/ questions = data; prepare_data(); load_wanted_page();},
+  function(xhr) { console.error(xhr); }
+);
+
+
+// shortcuts
 var keys = [];
 function keysPressed(e) {
   keys[e.keyCode] = true;
@@ -95,7 +127,7 @@ function keysPressed(e) {
     e.preventDefault(); 
   }
   if (keys[17] && keys[73]) { // ctrl+i
-    reset_question();
+    resetQuestion();
     e.preventDefault(); 
   }
   if (keys[17] && keys[83]) { // ctrl+i
@@ -110,29 +142,9 @@ function keysReleased(e) {
 window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
 
-function loadJSON(path, success, error) {
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function()
-  {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      if (xhr.status === 200) {
-        if (success)
-          success(JSON.parse(xhr.responseText));
-      } else {
-        if (error)
-          error(xhr);
-      }
-    }
-  };
-  xhr.open("GET", path, true);
-  xhr.send();
-}
-loadJSON('questions.json',
-    function(data) { /*console.log(data);*/ questions = data; prepare_data(); load_wanted_page();},
-    function(xhr) { console.error(xhr); }
-    );
-
 var change_question = function(myinput) {
+  //callback for the editor
+  //editor.on("change", function() { alert('changed')} )
   // save old state
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
@@ -179,6 +191,7 @@ var change_question = function(myinput) {
   selected_question = current_question;
 };
 
+// force the two-paned layout even though horizontal space is 'actually' too little
 flipStylesheet = function() {
     document.getElementById("styleMobile").disabled = !document.getElementById("styleMobile").disabled;
   }
@@ -193,7 +206,7 @@ var showSolution = function() {
     s.style.display = "none";
   }
 }
-var reset_question = function() {
+var resetQuestion = function() {
   editor.setValue(questions[selected_question].code);
   
   var output = document.getElementById('output');
@@ -201,19 +214,25 @@ var reset_question = function() {
   console.log("reset question")
 }
 var markdown2html = function() {
-  var text = editor.getValue();
-  if (text == questions[selected_question].question) {
-    // qutting the editor
-    editor.setValue(questions[selected_question].mycode);
-  } else {
-    // changes were detected, so we just update the preview
-    contentText.innerHTML = markdown.toHTML(text);
-    questions[selected_question].question = text;
+  if (editingQuestionText == true) {
+    var text = editor.getValue();
+    if (text == questions[selected_question].question) {
+      // qutting the editor
+      editor.setValue(questions[selected_question].mycode);
+      editingQuestionText = false;
+    } else {
+      // changes were detected, so we just update the preview
+      contentText.innerHTML = markdown.toHTML(text);
+      questions[selected_question].question = text;
+    }
   }
 }
 var load_markdown = function() {
-  var text = questions[current_question].question;
-  editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
+  if (editingQuestionText == false) {
+    editingQuestionText = true;
+    var text = questions[current_question].question;
+    editor.setValue(text.split('\\n').join('\n').replace("\\\"", "\""))
+  }
 }
 var runNix = function() {
   // run the solution
@@ -310,7 +329,7 @@ var runNix = function() {
         <div id="adsfas" class="flex-container-col">
           <textarea class="input" id="input" rows="8">demo text textarea</textarea>
           <div id="editorButtonGroup"  class="flex-container-row">
-            <button type="button" class="myButton" id="resetButton" onClick="reset_question()" title="">reset</button>
+            <button type="button" class="myButton" id="resetButton" onClick="resetQuestion()" title="">reset</button>
             <button type="button" class="myButton" id="solutionButton" onClick="showSolution()" title="">solution</button>
             <button type="button" class="myButton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
