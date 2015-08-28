@@ -186,6 +186,17 @@ var change_question = function(myinput) {
 
   contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
   contentText.innerHTML = markdown.toHTML(question);
+
+    var links = document.links;
+
+   for (var i = 0, linksLength = links.length; i < linksLength; i++) { //>
+     if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+     } 
+   }
+
+
+
   contentSolution.value = mysolution;
   auto_resize(contentSolution);
   editor.setValue(mycode);
@@ -378,12 +389,13 @@ var runNix = function() {
   <div id="footerFG"> </div>
   <div id="footerBG"><img src="footerBG.jpg" width="100%" height="100%"/></div>
   <script type="text/javascript">
-var input = document.getElementById('input');
-var editor = CodeMirror.fromTextArea(input, {
-  lineNumbers: true,
-  viewportMargin: Infinity,
-});
-document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";  
-  </script>
+    var input = document.getElementById('input');
+    var editor = CodeMirror.fromTextArea(input, {
+      lineNumbers: true,
+      viewportMargin: Infinity,
+    });
+    document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";  
+ 
+ </script>
 </body>
 </html>
