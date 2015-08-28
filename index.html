@@ -369,7 +369,9 @@ var runNix = function() {
           <button type="button" class="myButton" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
         </div>
         <h1><div id="contentTitle">A tour of Nix</div></h1>
-        <div id="contentText">If you can see this, questions.json wasn't loaded properly!</div>
+        <div id="contentText">If you can see this, <b>questions.json</b> wasn't loaded properly!<br><br>
+          Javascript execution: <b><div id="testJS">failed, are you blocking JS execution? This webpage won't work without JS!</div></b>.
+        </div>
       </div>
     </div>
   </div>
@@ -381,6 +383,7 @@ var editor = CodeMirror.fromTextArea(input, {
   lineNumbers: true,
   viewportMargin: Infinity,
 });
+document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";  
   </script>
 </body>
 </html>
