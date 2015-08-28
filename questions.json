@@ -49,7 +49,7 @@
     },
     {
         "topic": " Functions",
-        "question": "What to do:\n\n* Implement the `min` and the `max` function.\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
+        "question": "What to do:\n\n* Implement the `min` and the `max` function using `if () then X else Y`\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
         "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
         "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}"
     },
