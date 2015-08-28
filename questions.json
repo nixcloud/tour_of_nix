@@ -103,19 +103,19 @@
     },
     {
         "topic": " Attributes",
-        "question": "To learn the basic syntax replace every XX in the `rec` scope with \nvalues from the let scope.\n\n* Every exercise should evaluate to true.",
+        "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
         "code": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
         "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
     },
     {
         "topic": " Debugging",
-        "question": "This is the package, also called Nix-expression, of the nano text \neditor in nixpkgs.\n\n* find and fix all errors so that a proper `attribute set` is evaluated\n\n**Note:** We had to add some dummy functions or it wouldn't work in \nour simplified javascript environment. Those are needed since we don't want it to realy install \nnano within your browser. \n\n",
+        "question": "This is the `default.nix` of the nano text editor in nixpkgs.\n\n* find and fix all errors so that a proper `attribute set` is evaluated\n\n**Note:** We had to add some dummy functions or it wouldn't work in \nour simplified javascript environment. \n\n",
         "code": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\"\n  version = 2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/{name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description  \"A small, user-friendly console text editor\";\n  };\n}\n",
         "solution": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\";\n  version = \"2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/${name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description = \"A small, user-friendly console text editor\";\n  };\n}\n"
     },
     {
         "topic": " Fold",
-        "question": " \"Fold\" is a binary function that uses the function 'f' between successive elements of 'list' with 'z' as the starting value,\n\n i.e.,  'fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))'.\n\n ![alt text](https://upload.wikimedia.org/wikipedia/commons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n More informations about fold can be found on [wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29). \n\n \nuse fold to write a function that counts all \"a\" in a list.",
+        "question": "`Fold` is a binary function that uses the function 'f' between successive \nelements of `list` with 'z' as the starting value,\n\ni.e., `fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))`\n\n![alt text](https://upload.wikimedia.org/wikipedia/commons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n**Note:** More information about `fold` can be found at: [Wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29) \nfrom where we copied the image. \n\nNow:  \n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n",
         "code": "with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
         "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n"
     },
@@ -127,7 +127,7 @@
     },
     {
         "topic": " Fold",
-        "question": "use fold to write your own map function \n\n**Note:** The little error is intended, FIX IT!",
+        "question": "Use `fold` to write your own `map` function.\n\n**Note:** The little error is intended, FIX IT!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n"
     },
