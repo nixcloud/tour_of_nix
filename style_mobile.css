@@ -1,8 +1,20 @@
 @media all and (max-width: 1400px) {
   /* We tell both sidebars to share a row */
   #middle { flex-direction: column; }
-  #left  { order: 3;  padding-top: 6px; padding-right: 2px; padding-bottom: 200px;}/* width: calc(100%);}*/
-  #right { order: 2; margin-bottom: 0px; box-shadow: none;} /* width: calc(100%);}*/
+  #left  { 
+    order: 3;
+    padding-top: 6px; 
+    padding-right: 2px; 
+    padding-bottom: 200px;  
+    max-width:100%; 
+  }
+
+  #right { 
+    order: 2; 
+    margin-bottom: 0px; 
+    box-shadow: none;  
+    max-width: 100%;
+  }
 }
 
 /* document.getElementsByTagName('link')[2].disabled = true; */

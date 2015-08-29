@@ -155,6 +155,7 @@ textarea {
   background: rgba(255, 255, 255,0.95);
   border: 1px solid rgb(238, 238, 238);
 /*   border-left: 4px solid rgb(184, 217, 255); */
+  max-width: 70%;
 }
 
 #questionNavigation {
@@ -169,6 +170,7 @@ textarea {
   /*width: calc(50%); */
   order: 1;
   padding-right: 6px;
+  max-width: 70%;
 }
 
 #middle {
