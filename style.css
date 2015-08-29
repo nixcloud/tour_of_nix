@@ -58,7 +58,6 @@ h1 {
 .CodeMirror {
   border: 1px solid #eee;
   height: auto;
-  width: 100%;
 }
 .CodeMirror-scroll {
   height: initial;
