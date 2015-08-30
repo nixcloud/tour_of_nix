@@ -72,8 +72,36 @@
         "solution": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 4;     # must return 4\n  ex01 = (fu1) 1;   # must return 5\n  ex02 = (fu2 2) 3; # must return 7\n  ex03 = (fu2 3);   # must return <LAMBDA>\n  ex04 = ex03 1;    # must return 7\n  ex05 = (n: x: (fu2 x n)) 3 2; # must return 7\n}\n"
     },
     {
+        "topic": "Attribute sets: rec",
+        "question": "Try to find out what 'rec' stands for and why we need it in this case!",
+        "code": "rec {\n  x = \"a\";\n  y = x;\n}\n",
+        "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#rec allows recursions within an attribute set. \n#Be aware of infinit recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.\n\n"
+    },
+
+
+    {
+        "topic": "Attribute sets: examples 1",
+        "question": " Make all `ex00` up to `ex07` evaluate to true.",
+        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [XXX];\n  ex4 = attrValues attr == [XXX];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n    == { X = X; X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {XXX};\n}\n",
+        "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} == { a = \"b\"; c=\"\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n}\n"
+    },
+    {
+        "topic": "Attribute sets: examples 2",
+        "question": " Make `ex1` and `ex2` to evaluate to true.",
+        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
+        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
+    },
+    {
+        "topic": "Attribute sets: examples 3",
+        "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
+        "code": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
+        "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
+    },
+
+
+    {
         "topic": " Attribute sets and booleans",
-        "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Just remove the `#` to uncomment the exercises as you proceed.\n\n",
+        "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](http://nixos.org/nix/manual/#ssec-values) \nfor more details on `attribute sets`.\n\n",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX);\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex01 && !ex02 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
     },
@@ -90,41 +118,18 @@
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
     },
     {
-        "topic": " Map",
-        "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
-        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (XXX) XXXX;\n}\n",
-        "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
-    },
-    {
-        "topic": " Attributes",
-        "question": " Make all `ex00` up to `ex07` evaluate to true.",
-        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [XXX];\n  ex4 = attrValues attr == [XXX];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n    == { X = X; X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {XXX};\n}\n",
-        "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} == { a = \"b\"; c=\"\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n}\n"
-    },
-    {
-        "topic": " Attributes",
-        "question": "Try to find out what 'rec' stands for and why we need it in this case!",
-        "code": "rec {\n  x = \"a\";\n  y = x;\n}\n",
-        "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#rec allows recursions within an attribute set. \n#Be aware of infinit recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.\n\n"
-    },
-    {
-        "topic": " Attributes",
-        "question": " Make `ex1` and `ex2` to evaluate to true.",
-        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
-        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
-    },
-    {
-        "topic": " Attributes",
-        "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
-        "code": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
-        "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
-    },
-    {
         "topic": " Debugging",
         "question": "This is the `default.nix` of the nano text editor in nixpkgs.\n\n* find and fix all errors so that a proper `attribute set` is evaluated\n\n**Note:** We had to add some dummy functions or it wouldn't work in \nour simplified javascript environment. \n\n",
         "code": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\"\n  version = 2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/{name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description  \"A small, user-friendly console text editor\";\n  };\n}\n",
         "solution": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\";\n  version = \"2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/${name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description = \"A small, user-friendly console text editor\";\n  };\n}\n"
     },
+    {
+        "topic": " Map",
+        "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
+        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (XXX) XXXX;\n}\n",
+        "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
+    },
+
     {
         "topic": " Fold",
         "question": "`Fold` is a binary function that uses the function 'f' between successive \nelements of `list` with 'z' as the starting value,\n\ni.e., `fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))`\n\n![alt text](https://upload.wikimedia.org/wikipedia/\ncommons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n**Note:** More information about `fold` can be found at: \n[Wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29) \nfrom where we copied the image. \n\nNow:  \n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n",
