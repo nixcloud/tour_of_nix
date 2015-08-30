@@ -14,7 +14,7 @@
     {
         "topic": "Hello World",
         "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`variable` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
-        "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
+        "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n",
         "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
     },
     {
@@ -31,9 +31,9 @@
     },
     {
         "topic": "Typing system",
-        "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** Ignore the `filter` and `map` function for now, it simply \nfilters the `list l` by `type` and returns only matching `types`.\n\nLooking at the `list l`:\n\n* which `types` do the `bindings` of the list-elements have?\n* now `run` the program and look at the result. \n  Did you guess/figure every type correctly?\n* add a `-10` to the list but this time do not use `( and )`, what happens?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
-        "code": "with import <nixpkgs> {};\nwith builtins;\nlet\n  l = [ {} \"a\" {} (-3) (x: x) (x:x) (\"x\") \n    {} null 1 true (y: y+1) ({z}: z) (x: x)];\n  filter = li: test: lib.fold \n    (el: c: if (test el) then c ++ [el] else c) \n    [] li;\nin\n{\n  bool = filter l isBool;\n  int = filter l isInt;\n  string = filter l isString;\n  attrs = filter l isAttrs;\n  null = filter l isNull;\n  function = filter l isFunction;\n}\n",
-        "solution": "with import <nixpkgs> {};\nwith builtins;\nlet\n  l = [ {} \"a\" {} (-3) (x: x) (x:x) (\"x\") \n    {} null 1 true (y: y+1) ({z}: z) (x: x)];\n  filter = li: test: lib.fold \n    (el: c: if (test el) then c ++ [el] else c) \n    [] li;\nin\n{\n  bool = filter l isBool;\n  int = filter l isInt;\n  string = filter l isString;\n  attrs = filter l isAttrs;\n  null = filter l isNull;\n  function = filter l isFunction;\n}\n"
+        "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** use these functions: `isBool`, \n`isInt`, \n`isString`, \n`isNull`, \n`isList`, \n`isAttrs`\n\nDo this:\n\n* go through `ex00, ex01, ...` and replace X by `isBool` in respect to the\n  `type`\n* fix `ex13`, what is the problem?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
+        "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex03 = isX \"a\"; \n  #ex04 = isX (-3); \n  #ex05 = isX (x: x);\n  #ex06 = isX (x:x);\n  #ex07 = isX (\"x\");\n  #ex08 = isX null; \n  #ex10 = isX (y: y+1);\n  #ex11 = isX [({z}: z) (x: x)];\n  #ex12 = isX {a=[];};\n  #ex13 = isInt -10;\n}\n",
+        "solution": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  ex01 = isAttrs {};\n  ex03 = isString \"a\"; \n  ex04 = isInt (-3); \n  ex05 = isFunction (x: x);\n  ex06 = isString (x:x);\n  ex07 = isString (\"x\");\n  ex08 = isNull null; \n  ex10 = isFunction (y: y+1);\n  ex11 = isList [({z}: z) (x: x)];\n  ex12 = isAttrs {a=[];};\n  ex13 = isInt (-10);\n}"
     },
     {
         "topic": " Functions: Introduction",
@@ -96,6 +96,12 @@
         "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
     },
     {
+        "topic": "Attribute sets: merging",
+        "question": "Since programming in Nix is all about `attribute sets` it is important\nto know how to `merge` these using the `//` operator.\n\n    l = {a=\"A\"; b=\"B\";} // {a=\"aaa\"};\n\nwill evaluate to:\n\n    l = {a=\"aaa\"; b=\"B\";};\n    \nas the later `set` overwrites the attributes from the earlier one.\n\nNow:\n\n* solve each exercice: `ex00, ex01, ...` \n\n",
+        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (X);  \n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func (XX // x // z);\n}\n\n",
+        "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n"
+    },
+    {
         "topic": " Attribute sets and booleans",
         "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](http://nixos.org/nix/manual/#ssec-values) \nfor more details on `attribute sets`.\n\n",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX);\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
@@ -112,6 +118,18 @@
         "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
+    },
+    {
+        "topic": "Inheriting with imports-confusion!",
+        "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nvariables with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n",
+        "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit X; #fix this line, we want a and b in this scope\n  z = XXX.lib.isBool true; #fix this line\n}\n",
+        "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x a b;\n  z = myImport.lib.isBool true;\n}\n"
+    },
+    {
+        "topic": "Assertions",
+        "question": "`Assertions` are generally used to check that certain requirements \non or between features and dependencies hold. They look like this:\n\n    assert e1; e2\n    \nwhere `e1` is an expression that should evaluate to a `boolean` value. \nIf it evaluates to `true`, `e2` is returned; otherwise expression \nevaluation is aborted and a backtrace is printed.\n\n",
+        "code": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2); x + y;\n  n = \"-5\"; # only modify this line\nin\n\nassert (lib.isInt n);\n\nrec {\n  ex00 = func (n+3) 3;\n}",
+        "solution": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2); x + y;\n  n = -1;\nin\n\nassert (lib.isInt n);\n\nrec {\n  ex00 = func (n+3) 3;\n}"
     },
     {
         "topic": " Debugging",
