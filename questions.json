@@ -13,7 +13,7 @@
     },
     {
         "topic": "Hello World",
-        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** Using the `let`-construct is the Nix way of using a function, \nbounded to a variable, multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
+        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`variable` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
         "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
         "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
     },
@@ -28,6 +28,12 @@
         "question": "Inserting `Strings` using the pattern `${variable}` works great \nwith `Strings`. But `${}` can do more. You can even run functions within it.\n\nUse this and the builtin function `toString` to make the code work.\n\n**Note:** More builtin functions can be found in the [Nix manual](http://nixos.org/nix/manual/#ssec-builtins).\n",
         "code": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${value} the win!\";\n}\n",
         "solution": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${toString value} the win!\";\n}\n"
+    },
+    {
+        "topic": "Typing system",
+        "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** Ignore the `filter` and `map` function for now, it simply \nfilters the `list l` by `type` and returns only matching `types`.\n\nLooking at the `list l`:\n\n* which `types` do the `bindings` of the list-elements have?\n* now `run` the program and look at the result. \n  Did you guess/figure every type correctly?\n* add a `-10` to the list but this time do not use `( and )`, what happens?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
+        "code": "with import <nixpkgs> {};\nwith builtins;\nlet\n  l = [ {} \"a\" {} (-3) (x: x) (x:x) (\"x\") \n    {} null 1 true (y: y+1) ({z}: z) (x: x)];\n  filter = li: test: lib.fold \n    (el: c: if (test el) then c ++ [el] else c) \n    [] li;\nin\n{\n  bool = filter l isBool;\n  int = filter l isInt;\n  string = filter l isString;\n  attrs = filter l isAttrs;\n  null = filter l isNull;\n  function = filter l isFunction;\n}\n",
+        "solution": "with import <nixpkgs> {};\nwith builtins;\nlet\n  l = [ {} \"a\" {} (-3) (x: x) (x:x) (\"x\") \n    {} null 1 true (y: y+1) ({z}: z) (x: x)];\n  filter = li: test: lib.fold \n    (el: c: if (test el) then c ++ [el] else c) \n    [] li;\nin\n{\n  bool = filter l isBool;\n  int = filter l isInt;\n  string = filter l isString;\n  attrs = filter l isAttrs;\n  null = filter l isNull;\n  function = filter l isFunction;\n}\n"
     },
     {
         "topic": " Functions: Introduction",
@@ -60,10 +66,16 @@
         "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n  func3 = {a, b, ...}@bargs: if a == \"foo\" then b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n  \n  #this evaluates to \"foobar\"\n  foobar2 = func3 {a=\"foo\"; b=\"foo\"; c=\"bar\";};\n  #complete next line so it evaluates to \"foobar\"\n  foobar3 = func3 {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\";}; \n}\n"
     },
     {
+        "topic": "Partial functions",
+        "question": "Next we will have a look into `functions` and how they are \ndefined and called:\n\n* solve each question: `ex00, ex01, ...` by only modifying X with a \n`value` of type `Int`\n\n**Note:** If you see `ex03 = <LAMBDA>;` after `run`, this means \nthat `ex03` is bound to a `function`.\n\n\n## Currying & partial functions\nIn **mathematics and computer science**, \n[currying](https://en.wikipedia.org/wiki/Currying) \nis the technique of translating the evaluation of \n**a function that takes multiple arguments \n(or a tuple of arguments) into evaluating a sequence of functions**, \neach with a single argument (partial application). \n\nIt was introduced by Moses Schönfinkel and later developed \nby Haskell Curry.\n\n",
+        "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + x + 2*x) 4;\n  fu2 = (x: y: (x * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n  #ex01 = (fu1) X;   # must return 16\n  #ex02 = (fu2 X) X; # must return 7\n  #ex03 = (fu2 X);   # must return <LAMBDA>\n  #ex04 = ex03 X;    # must return 10\n  #ex05 = (n: x: (fu2 x n)) X X; # must return 4\n}\n",
+        "solution": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + x + 2*x) 4;\n  fu2 = (x: y: (x * x) + y);\nin\nrec {\n  ex00 = fu0 4;     # must return 4\n  ex01 = (fu1) 1;   # must return 16\n  ex02 = (fu2 2) 3; # must return 7\n  ex03 = (fu2 3);   # must return <LAMBDA>\n  ex04 = ex03 1;    # must return 10\n  ex05 = (n: x: (fu2 x n)) 3 2; # must return 4\n}\n"
+    },
+    {
         "topic": " Attribute sets and booleans",
         "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Just remove the `#` to uncomment the exercises as you proceed.\n\n",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX);\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
-        "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex1 && !ex2 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
+        "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex01 && !ex02 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
     },
     {
         "topic": " Lists",
