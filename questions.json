@@ -14,7 +14,7 @@
     {
         "topic": "Hello World",
         "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`variable` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
-        "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n",
+        "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
         "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
     },
     {
