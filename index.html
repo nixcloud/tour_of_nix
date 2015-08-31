@@ -278,7 +278,7 @@ var runNix = function() {
   var correct_solution;
   
   Module['print'] = function(text) {
-    Module['return'] = text + '\n'; 
+//    Module['return'] = text + '\n'; 
     correct_solution = text;
   };
   Module['printErr'] = function(text) {
@@ -297,16 +297,16 @@ var runNix = function() {
   document.getElementById('runInfo').innerHTML = "computation in progress";
   document.getElementById('output').value = "";
   Module['print'] = function(text) {
-    Module['return'] = text + '\n'; 
+//    Module['return'] = text + '\n'; 
     var o = document.getElementById('output');
     if (text == correct_solution){
       console.log("correct answer");
-      o.value += text;
+      o.value = text;
       o.style.backgroundColor = "#44aa44";
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
     }else{
       console.log("incorrect answer");
-      o.value += "your solution:\n" + text + "\nexpected was:\n" + correct_solution;
+      o.value = "your solution:\n" + text + "\nexpected was:\n" + correct_solution;
       o.style.backgroundColor = "#aa4444";
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000); 
     }
@@ -326,14 +326,14 @@ var runNix = function() {
     text = text.replace("/test.nix","line");
     text = text.replace(//g, "");
     console.log(text);
-    Module['return'] = text + '\n'; 
+//    Module['return'] = text + '\n'; 
     document.getElementById('runInfo').innerHTML = "";
     var o = document.getElementById('output')
-      o.value += text;
+    o.value = text;
     auto_resize(o)
     
     console.log("incorrect answer");
-    o.value += text;
+//    o.value += text;
     o.style.backgroundColor = "#aa4444";
 //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
   };
