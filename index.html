@@ -327,6 +327,7 @@ var runNix = function() {
     text = text.replace("/test.nix","line");
     text = text.replace("/test.nix","line");
     text = text.replace(//g, "");
+//    text = text.replace(":error:", ":\nerror");
     console.log(text);
 //    Module['return'] = text + '\n'; 
     document.getElementById('runInfo').innerHTML = "";
