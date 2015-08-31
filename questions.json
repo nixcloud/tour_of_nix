@@ -92,8 +92,8 @@
     {
         "topic": "Attribute sets: examples 3",
         "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
-        "code": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
-        "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: builtins.mul x y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
+        "code": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == XX // XX;\n  #Bonus: use only the attrSetBonus to solve this one\n#  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
+        "solution": "let\n  attrSetFoo = {b = \"foo\";};\n  attrSetBar = {b = \"f\"; f = \"bar\";};\n\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Attribute join\n  ex8 = {b = \"foo\"; f = \"bar\";} == attrSetBar // attrSetFoo;  \n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
     },
     {
         "topic": "Attribute sets: merging",
