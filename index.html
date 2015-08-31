@@ -271,10 +271,12 @@ var load_markdown = function() {
   }
 }
 
-  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
 
 // primary routine to execute the code from the editor in nix-instantiate
 var runNix = function() {
+//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+
   // run the solution
   
   var correct_solution;
@@ -332,7 +334,7 @@ var runNix = function() {
 //    Module['return'] = text + '\n'; 
     document.getElementById('runInfo').innerHTML = "";
     var o = document.getElementById('output')
-    o.value = text;
+    o.value += text +"\n";
     auto_resize(o)
     
     console.log("incorrect answer");
