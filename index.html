@@ -271,6 +271,8 @@ var load_markdown = function() {
   }
 }
 
+  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+
 // primary routine to execute the code from the editor in nix-instantiate
 var runNix = function() {
   // run the solution
@@ -287,9 +289,9 @@ var runNix = function() {
   };
   var solution_text = questions[current_question].solution;
   FS.writeFile('/test.nix', solution_text, {encoding: 'utf8'});
-  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
   //console.log(result);
+//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
   Module.callMain(Module['arguments']);
   
   //run the user input
@@ -339,7 +341,7 @@ var runNix = function() {
   };
   var input_text = editor.getValue();
   FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
-  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
   //console.log(result);
   Module.callMain(Module['arguments']);
