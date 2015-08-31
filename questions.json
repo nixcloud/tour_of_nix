@@ -114,7 +114,7 @@
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n"
     },
     {
-        "topic": " Lists",
+        "topic": " Lists & attribute sets",
         "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
@@ -122,8 +122,8 @@
     {
         "topic": "Inheriting with imports-confusion!",
         "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nvariables with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n",
-        "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit X; #fix this line, we want a and b in this scope\n  z = XXX.lib.isBool true; #fix this line\n}\n",
-        "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x a b;\n  z = myImport.lib.isBool true;\n}\n"
+        "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x; #example\n  #fix line below: we want a and b in this scope\n  inherit X; \n  #also fix this line\n  z = XXX.lib.isBool true;\n}\n",
+        "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit a b;\n  z = myImport.lib.isBool true;\n}\n"
     },
     {
         "topic": "Typing system",
