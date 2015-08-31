@@ -86,8 +86,8 @@
     {
         "topic": "Attribute sets: examples 2",
         "question": " Make `ex1` and `ex2` to evaluate to true.",
-        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
-        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = lib.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
+        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n\n\n",
+        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
     },
     {
         "topic": "Attribute sets: examples 3",
@@ -146,8 +146,8 @@
     {
         "topic": " Map",
         "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
-        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (XXX) XXXX;\n}\n",
-        "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: builtins.mul n 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
+        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map (XXX) XXXX;\n}\n",
+        "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
     },
     {
         "topic": " Fold",
