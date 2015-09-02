@@ -62,8 +62,8 @@
     {
         "topic": " Functions: the @-pattern II",
         "question": "`Attribute sets` can contain additional attributes which are not part of \nthe function definition.\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\nNow complete the last line: \n\n* It should evaluate to 'foobar'\n\n",
-        "code": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; XXXXXX #ONLY EDIT THIS LINE\n}\n",
-        "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";};\n\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\";}; \n}\n"
+        "code": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; XXXXXX #ONLY EDIT THIS LINE\n}\n",
+        "solution": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\";}; \n}\n"
     },
     {
         "topic": "Partial functions",
