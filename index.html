@@ -275,6 +275,7 @@ Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-tr
 
 // primary routine to execute the code from the editor in nix-instantiate
 var runNix = function() {
+  var start = new Date().getTime();
 //  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
 
   // run the solution
@@ -284,6 +285,10 @@ var runNix = function() {
   Module['print'] = function(text) {
 //    Module['return'] = text + '\n'; 
     correct_solution = text;
+    var end = new Date().getTime();
+    var time = end - start;
+    console.log('Execution time: ' + time + ' ms');
+
   };
   Module['printErr'] = function(text) {
   //this should not happen
