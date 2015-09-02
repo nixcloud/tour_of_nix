@@ -93,7 +93,7 @@
         "topic": "Attribute sets: examples 3",
         "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
         "code": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
-        "solution": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add n.one (f.mul n.two n.two);\n\n}"
+        "solution": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add (f.mul n.two n.two) n.one ;\n}"
     },
     {
         "topic": "Attribute sets: merging",
