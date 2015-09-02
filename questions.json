@@ -80,13 +80,13 @@
     {
         "topic": "Attribute sets: examples 1",
         "question": " Make all `ex00` up to `ex07` evaluate to true.",
-        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [XXX];\n  ex4 = attrValues attr == [XXX];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n    == { X = X; X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {XXX};\n}\n",
+        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [ XXX ];\n  ex4 = attrValues attr == [ XXX ];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n    == { X = X; X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == { XXX };\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} == { a = \"b\"; c=\"\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n}\n"
     },
     {
         "topic": "Attribute sets: examples 2",
         "question": " Make `ex1` and `ex2` to evaluate to true.",
-        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {XXX};\n  ex2 = builtins.fromJSON string == {XXX};\n}\n",
+        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == { XXX };\n  ex2 = builtins.fromJSON string == { XXX };\n}\n",
         "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
     },
     {
@@ -110,7 +110,7 @@
     {
         "topic": " Lists",
         "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
-        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true  false {a = 27;} 5];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList X;\n  ex01 = elemAt list 2 == X;\n  ex02 = length list == X;\n  ex03 = last list == X;\n  ex04 = filter f list == [XX];\n  ex05 = head list == X;\n  ex06 = tail list == [XXX];\n  ex07 = remove true list == [XXX];\n  ex08 = toList s == [XXX];\n  ex09 = take 3 list == [XXX];\n  ex10 = drop 4 list == [XXX];\n  ex11 = unique list == [XXX];\n  ex12 = list ++ [\"x\" \"y\"] == [XXX];\n}\n",
+        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true  false {a = 27;} 5];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList X;\n  ex01 = elemAt list 2 == X;\n  ex02 = length list == X;\n  ex03 = last list == X;\n  ex04 = filter f list == [ XX ];\n  ex05 = head list == X;\n  ex06 = tail list == [ XXX ];\n  ex07 = remove true list == [ XXX ];\n  ex08 = toList s == [ XXX ];\n  ex09 = take 3 list == [ XXX ];\n  ex10 = drop 4 list == [ XXX ];\n  ex11 = unique list == [ XXX ];\n  ex12 = list ++ [\"x\" \"y\"] == [ XXX ];\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n"
     },
     {
