@@ -55,7 +55,7 @@
     },
     {
         "topic": " Functions: the @-pattern",
-        "question": "`Attribute sets` can contain additional attributes which are not part of \nthe function definition.\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\nNow complete the arguments `attribute set`:\n\n  * **foo** must evaluate to 'foo'\n  * **foobar** must evaluate to 'foobar'\n\n",
+        "question": "## Ellipsis\n\nFunctions can be called with an `attribute set`, as we have seen.\nThis `attribute set` must contain all required 'function \narguments`.\n\nHowever, such an `Attribute set` can contain additional attributes but\nyou have to add `...` like this:\n\n    func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n**Note:** `...` is called `ellipsis`.\n\n## @-pattern\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\nNow complete the arguments `attribute set`:\n\n  * **foo** must evaluate to 'foo'\n  * **foobar** must evaluate to 'foobar'\n\n",
         "code": "let\n  arguments = {a=\"f\"; b=\"o\"; c=X; d=X;}; #only modify this line\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n}\n",
         "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";}; #only modify this line\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n}\n"
     },
