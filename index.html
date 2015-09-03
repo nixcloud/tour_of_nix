@@ -148,7 +148,21 @@ function keysReleased(e) {
 window.addEventListener("keydown", keysPressed, false);
 window.addEventListener("keyup", keysReleased, false);
 
+// implement browser forward and back button actions
+window.addEventListener("popstate", function(e) {
+  var id = getURLParameter("id");
+  var diff = id - current_question - 1;
+  change_question_withoutHistoryChange(diff);
+});
+
+// update current question and modify the window.history
 var change_question = function(myinput) {
+  change_question_withoutHistoryChange(myinput);
+  window.history.pushState('', '',  window.location.pathname + '?id=' + (current_question + 1));
+}
+
+// update current question and NOT modifying the window.history
+var change_question_withoutHistoryChange = function (myinput) {
   // save old state
   if (editingQuestionText == true) 
     alert("editor must be closed before opening a different question, now everything is corrupted -> reload and start over. sorry (qknight)")
@@ -171,8 +185,6 @@ var change_question = function(myinput) {
     current_question = 0;
   if (current_question >= questions.length-1)
     current_question = questions.length-1;
-
-  window.history.pushState('', '',  window.location.pathname + '?id=' + (current_question + 1));
 
   var contentTitle = document.getElementById('contentTitle');
   var contentText = document.getElementById('contentText');
