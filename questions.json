@@ -68,7 +68,7 @@
     {
         "topic": "Partial functions",
         "question": "Next we will have a look into `functions` and how they are \ndefined and called:\n\n* solve each question: `ex00, ex01, ...` by only modifying X with a \n`value` of type `Int`\n\n**Note:** If you see `ex03 = <LAMBDA>;` after `run`, this means \nthat `ex03` is bound to a `function`.\n\n\n## Currying & partial functions\nIn **mathematics and computer science**, \n[currying](https://en.wikipedia.org/wiki/Currying) \nis the technique of translating the evaluation of \n**a function that takes multiple arguments \n(or a tuple of arguments) into evaluating a sequence of functions**, \neach with a single argument (partial application). \n\nIt was introduced by Moses Schönfinkel and later developed \nby Haskell Curry.\n\n",
-        "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n  ex01 = (fu1) X;   # must return 5\n  ex02 = (fu2 X) X; # must return 7\n  ex03 = (fu2 X);   # must return <LAMBDA>\n  ex04 = ex03 X;    # must return 7\n  ex05 = (n: x: (fu2 x n)) X X; # must return 7\n}\n",
+        "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n  ex01 = (fu1) X;   # must return 5\n  ex02 = (fu2 X ) X; # must return 7\n  ex03 = (fu2 X );   # must return <LAMBDA>\n  ex04 = ex03 X;    # must return 7\n  ex05 = (n: x: (fu2 x n)) X X; # must return 7\n}\n",
         "solution": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 4;     # must return 4\n  ex01 = (fu1) 1;   # must return 5\n  ex02 = (fu2 2) 3; # must return 7\n  ex03 = (fu2 3);   # must return <LAMBDA>\n  ex04 = ex03 1;    # must return 7\n  ex05 = (n: x: (fu2 x n)) 3 2; # must return 7\n}\n"
     },
     {
@@ -92,19 +92,19 @@
     {
         "topic": "Attribute sets: examples 3",
         "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
-        "code": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = 5 == XX (XX XX XX) XX;\n}\n",
+        "code": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = 5 == XX ( XX XX XX ) XX;\n}\n",
         "solution": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add (f.mul n.two n.two) n.one ;\n}"
     },
     {
         "topic": "Attribute sets: merging",
         "question": "Since programming in Nix is all about `attribute sets` it is important\nto know how to `merge` these using the `//` operator.\n\n    l = {a=\"A\"; b=\"B\";} // {a=\"aaa\"};\n\nwill evaluate to:\n\n    l = {a=\"aaa\"; b=\"B\";};\n    \nas the later `set` overwrites the attributes from the earlier one.\n\nNow:\n\n* solve each exercice: `ex00, ex01, ...` \n\n",
-        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (X);  \n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func (XX // x // z);\n}\n\n",
+        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func ( X );  \n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func ( XX // x // z);\n}\n\n",
         "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n"
     },
     {
         "topic": " Attribute sets and booleans",
         "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](http://nixos.org/nix/manual/#ssec-values) \nfor more details on `attribute sets`.\n\n",
-        "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX);\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
+        "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX );\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex01 && !ex02 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
     },
     {
@@ -146,7 +146,7 @@
     {
         "topic": " Map",
         "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
-        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map (XXX) XXXX;\n}\n",
+        "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map ( XXX ) XXXX;\n}\n",
         "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplys every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
     },
     {

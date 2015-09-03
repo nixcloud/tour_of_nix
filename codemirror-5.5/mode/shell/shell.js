@@ -64,7 +64,7 @@ CodeMirror.defineMode('shell', function() {
       state.tokens.unshift(tokenDollar);
       return tokenize(stream, state);
     }
-    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@') {
+    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@' || ch === '!' || ch === '|' || ch == '-' || ch == '>' || ch == '?') {
       return 'operator';
     }
     if (ch === '-') {
@@ -78,7 +78,8 @@ CodeMirror.defineMode('shell', function() {
         return 'number';
       }
     }
-    stream.eatWhile(/[\w-]/);
+//    stream.eatWhile(/[\w-]/);
+    stream.eatWhile(/[^X\W]/);
 //    stream.eatWhile(/\w-/);
 
     var cur = stream.current();
