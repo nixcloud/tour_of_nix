@@ -64,7 +64,8 @@ CodeMirror.defineMode('shell', function() {
       state.tokens.unshift(tokenDollar);
       return tokenize(stream, state);
     }
-    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@' || ch === '!' || ch === '|' || ch == '-' || ch == '>' || ch == '?') {
+    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@' || ch === '!' || ch === '|' || ch === '-' || ch === '>' || ch === '<' || ch === '?')
+    {
       return 'operator';
     }
     if (ch === '-') {
