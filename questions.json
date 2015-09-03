@@ -128,7 +128,7 @@
     {
         "topic": "Typing system",
         "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** use these functions: `isBool`, \n`isInt`, \n`isString`, \n`isNull`, \n`isList`, \n`isAttrs`\n\nDo this:\n\n* go through `ex00, ex01, ...` and replace X by `isBool` in respect to the\n  `type`\n* fix `ex13`, what is the problem?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
-        "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex03 = isX \"a\"; \n  #ex04 = isX (-3); \n  #ex05 = isX (x: x);\n  #ex06 = isX (x:x);\n  #ex07 = isX (\"x\");\n  #ex08 = isX null; \n  #ex10 = isX (y: y+1);\n  #ex11 = isX [({z}: z) (x: x)];\n  #ex12 = isX {a=[];};\n  #ex13 = isInt -10;\n}\n",
+        "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex03 = isX \"a\"; \n  #ex04 = isX (-3); \n  #ex05 = isX (x: x);\n  #ex06 = isX (x:x);\n  #ex07 = isX (\"x\");\n  #ex08 = isX null; \n  #ex10 = isX (y: y+1);\n  #ex11 = isX [({z}: z) (x: x)];\n  #ex12 = isX {a=[];};\n  #ex13 = isX -10;\n}\n",
         "solution": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  ex01 = isAttrs {};\n  ex03 = isString \"a\"; \n  ex04 = isInt (-3); \n  ex05 = isFunction (x: x);\n  ex06 = isString (x:x);\n  ex07 = isString (\"x\");\n  ex08 = isNull null; \n  ex10 = isFunction (y: y+1);\n  ex11 = isList [({z}: z) (x: x)];\n  ex12 = isAttrs {a=[];};\n  ex13 = isInt (-10);\n}"
     },
     {
