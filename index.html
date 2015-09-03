@@ -196,7 +196,7 @@ var change_question_withoutHistoryChange = function (myinput) {
   var mysolution = questions[current_question].mysolution;
   contentSolution.style.display="none";
 
-  contentTitle.innerHTML = String(current_question + 1 + " - " + topic);
+  contentTitle.innerHTML = String(current_question + 1 + "<font size=\"3%\"> / " + questions.length + "</font>" + " - " + topic);
   contentText.innerHTML = markdown.toHTML(question);
 
     var links = document.links;
