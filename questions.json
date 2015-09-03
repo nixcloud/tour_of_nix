@@ -30,37 +30,37 @@
         "solution": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${toString value} the win!\";\n}\n"
     },
     {
-        "topic": " Functions: Introduction",
+        "topic": "Functions: Introduction",
         "question": "Next we will have a look into `functions` and how they are defined and called:\n\n* Write a `function` that consumes 3 `Strings` and combines them to one. \n\n**Note:** Strings concatenation can be done with the '+' operator.",
         "code": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: XXXX; \nin\n{\n  foo = func f o \"o\";\n}\n",
         "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: a+b+c; \nin\n{\n  foo = func f o \"o\";\n}\n"
     },
     {
-        "topic": " Functions with 'attribute sets'",
+        "topic": "Functions with 'attribute sets'",
         "question": "This time we pass an `attribute set` to define the `function's` input arguments.\n\n* Write a function that consumes 3 `Strings` and combines them to one.\n\n**Note:** `Attribute Sets` are a set of key value pairs. \n\nAn example for an `Attribute Set` would be: **{a=f;b=o;}**",
         "code": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: XXXX; \nin\n{\n  foo = func {a=f; XXXXX\n}\n",
         "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: a+b+c; \nin\n{\n  foo = func {a=f; b=o; c=o;};\n}\n"
     },
     {
-        "topic": " Functions: your part...",
+        "topic": "Functions: your part...",
         "question": "##Implementing your first function!\nWhat to do:\n\n* Implement the `min` and the `max` function using `if () then X else Y`\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
         "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
         "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}"
     },
     {
-        "topic": " Functions: default values",
+        "topic": "Functions: default values",
         "question": "When passing an `attribute set` to `function`, you can set default values.\n\nDoing so, allows the function to be called without that parameter, making \nit optional.\n\n**Note:** A default value is defined with a '?'. \n\nNow:\n\n* Change the `function` 'func' in a way that **foobar** is \nevaluated to **'foobar'**.\n\n",
         "code": "let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b , c }: a+b+c; #only modify this line!\nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #must evaluate to \"foo\"\n  bar = func {a=b; c=\"r\";}; #must evaluate to \"bar\"\n  foobar = func {a=foo;b=bar;}; #must evaluate to \"foobar\"\n}\n",
         "solution": "let\n  f = \"f\";\n  o = \"o\";\n  b = \"b\";\n  func = {a ? f, b ? \"a\", c ? \"\"}: a+b+c; #Only modify this line! \nin\nrec {\n  foo = func {b=\"o\"; c=o;}; #should be foo\n  bar = func {a=b; c=\"r\";}; #should be bar\n  foobar = func {a=foo;b=bar;}; #should be foobar\n}"
     },
     {
-        "topic": " Functions: the @-pattern",
+        "topic": "Functions: the @-pattern",
         "question": "## Ellipsis\n\nFunctions can be called with an `attribute set`, as we have seen.\nThis `attribute set` must contain all required 'function \narguments`.\n\nHowever, such an `Attribute set` can contain additional attributes but\nyou have to add `...` like this:\n\n    func2 = args@{a, b, c, ...}: a+b+c+args.d;\n\n**Note:** `...` is called `ellipsis`.\n\n## @-pattern\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\nNow complete the arguments `attribute set`:\n\n  * **foo** must evaluate to 'foo'\n  * **foobar** must evaluate to 'foobar'\n\n",
         "code": "let\n  arguments = {a=\"f\"; b=\"o\"; c=X; d=X;}; #only modify this line\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n}\n",
         "solution": "let\n  arguments = {a=\"f\"; b=\"o\"; c=\"o\"; d=\"bar\";}; #only modify this line\n\n  func = {a, b, c, ...}: a+b+c; \n  func2 = args@{a, b, c, ...}: a+b+c+args.d;\nin\n{\n  #the argument d is not used \n  foo = func arguments;\n  #now the argument d is used\n  foobar = func2 arguments;\n}\n"
     },
     {
-        "topic": " Functions: the @-pattern II",
+        "topic": "Functions: the @-pattern II",
         "question": "`Attribute sets` can contain additional attributes which are not part of \nthe function definition.\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\nNow complete the last line: \n\n* It should evaluate to 'foobar'\n\n",
         "code": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; XXXXXX #ONLY EDIT THIS LINE\n}\n",
         "solution": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\";}; \n}\n"
@@ -102,19 +102,19 @@
         "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n"
     },
     {
-        "topic": " Attribute sets and booleans",
+        "topic": "Attribute sets and booleans",
         "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](http://nixos.org/nix/manual/#ssec-values) \nfor more details on `attribute sets`.\n\n",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX );\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = true -> attrSet.XX;\n  #contains attribute\n#  ex05 = attrSet ? XX;\n#  ex06 = attrSet.XX ? f;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex01 && !ex02 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
     },
     {
-        "topic": " Lists",
+        "topic": "Lists",
         "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
         "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList X;\n  ex01 = elemAt list 2 == X;\n  ex02 = length list == X;\n  ex03 = last list == X;\n  ex04 = filter f list == [ XX ];\n  ex05 = head list == X;\n  ex06 = tail list == [ XXX ];\n  ex07 = remove true list == [ XXX ];\n  ex08 = toList s == [ XXX ];\n  ex09 = take 3 list == [ XXX ];\n  ex10 = drop 4 list == [ XXX ];\n  ex11 = unique list == [ XXX ];\n  ex12 = list ++ [\"x\" \"y\"] == [ XXX ];\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  list = [2 \"4\" true true {a = 27;} 2];\n  f = x: isString x;\n  s = \"foobar\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex00 = isList list;\n  ex01 = elemAt list 2 == true;\n  ex02 = length list == 6;\n  ex03 = last list == 2;\n  ex04 = filter f list == [\"4\"];\n  ex05 = head list == 2;\n  ex06 = tail list == [\"4\" true true {a = 27;} 2];\n  ex07 = remove true list == [2 \"4\" {a = 27;} 2];\n  ex08 = toList s == [s];\n  ex09 = take 3 list == [2 \"4\" true];\n  ex10 = drop 4 list == [{a = 27;} 2];\n  ex11 = unique list == [2 \"4\" true {a = 27;}];\n  ex12 = list ++ [\"x\" \"y\"] == [2 \"4\" true true {a = 27;} 2 \"x\" \"y\"];\n}\n"
     },
     {
-        "topic": " Lists & attribute sets",
+        "topic": "Lists & attribute sets",
         "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
@@ -138,49 +138,49 @@
         "solution": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2); x + y;\n  n = -1;\nin\n\nassert (lib.isInt n);\n\nrec {\n  ex00 = func (n+3) 3;\n}"
     },
     {
-        "topic": " Debugging",
+        "topic": "Debugging",
         "question": "This is the `default.nix` of the nano text editor in nixpkgs.\n\n* find and fix all errors so that a proper `attribute set` is evaluated\n\n**Note:** We had to add some dummy functions or it wouldn't work in \nour simplified javascript environment. \n\n",
         "code": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\"\n  version = 2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/{name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description  \"A small, user-friendly console text editor\";\n  };\n}\n",
         "solution": "let\n  #dummyfunctions\n  fetchurl = x: x;\n  ncurses = \"ncurses\";\n  gettext = \"gettext\";\nin\nrec {\n  pname = \"nano\";\n  version = \"2.3.6\";\n\n  name = \"${pname}-${version}\";\n\n  src = fetchurl {\n    url = \"mirror://gnu/nano/${name}.tar.gz\";\n    sha256 = \"a74bf3f18b12c1c777ae737c0e463152439e381aba8720b4bc67449f36a09534\";\n  };\n\n  buildInputs = [ ncurses gettext ];\n\n  configureFlags = \"sysconfdir=/etc\";\n\n  meta = {\n    homepage = http://www.nano-editor.org/;\n    description = \"A small, user-friendly console text editor\";\n  };\n}\n"
     },
     {
-        "topic": " Map",
+        "topic": "Map",
         "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
         "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map ( XXX ) XXXX;\n}\n",
         "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
     },
     {
-        "topic": " Fold",
+        "topic": "Fold: Introduction",
         "question": "`Fold` is a binary function that uses the function 'f' between successive \nelements of `list` with 'z' as the starting value,\n\ni.e., `fold f z [x_1 x_2 ... x_n] == f x_1 (f x_2 ... (f x_n z))`\n\n![alt text](https://upload.wikimedia.org/wikipedia/\ncommons/3/3e/Right-fold-transformation.png \"fold visualized\")\n\n**Note:** More information about `fold` can be found at: \n[Wikipedia](https://en.wikipedia.org/wiki/Fold_%28higher-order_function%29) \nfrom where we copied the image. \n\nNow:  \n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n",
         "code": "with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
         "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n"
     },
     {
-        "topic": " Fold",
+        "topic": "Fold: reverseList",
         "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** There also is a `builtin` function `lib.reverseList`.\nYour function should behave exactly the same!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold XXXX;\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n"
     },
     {
-        "topic": " Fold",
+        "topic": "Fold: Implementing 'map'",
         "question": "Use `fold` to write your own `map` function.\n\n**Note:** The little error is intended, FIX IT!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n"
     },
     {
-        "topic": " Reimplementation",
+        "topic": "Reimplementation: attrVals",
         "question": " Write your own implementation of the `attrVals` function.\n\n It consumes a list of `attribute names` and an \n `attribute set`. It returnes the values of each \n `attribute name`.  \n \n **Warning:** This is hard!",
         "code": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tips: use the map function and access the attribute values \n  #in the same way as 'getSingleVal'\n  attrVals = TODO;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\"; #is [1]\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n",
         "solution": "\nwith import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n  #This is an example function that extracts a single value \n  getSingleVal = (attrSet: x: attrSet.${x});\n\n  #tip use map and acces the attribute values in the same way\n  #as 'getSingleVal'\n  attrVals = List: attrSet: map (x: attrSet.${x}) List;\n\nin\nrec {\n  example = getSingleVal attrSet \"a\";\n  solution = attrVals [\"a\" \"b\" \"c\"] attrSet; #should be [1 2 3]\n}\n\n"
     },
     {
-        "topic": " Reimplementation",
+        "topic": "Reimplementation: attrValues",
         "question": " Write your own implementation of the `attrValues` function.\n\n This function consumes an `attribute set` and returns all values \n sorted by the `attribute name`.\n\n You are allowed to use the builtin function `attrNames` \n and the `attrVals` function you just implemented in the \n last lecture.\n \n **Warning:** This is hard!",
         "code": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n\n  attrValues = XXXX;\nin\nrec {\n  solution = attrValues attrSet; #should be [1 2 3]\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  attrSet = {c = 3; a = 1; b = 2;};\n\n  attrValues = attrSet: lib.attrVals (builtins.attrNames attrSet) attrSet;\nin\nrec {\n  solution = attrValues attrSet; #should be [1 2 3]\n}\n"
     },
     {
-        "topic": " Reimplementation",
+        "topic": "Reimplementation: catAttrs",
         "question": "Write the function `catAttrs`. This function collects each \n`attribute` with a specific name from a list of `attribute sets`.\n\n`Attribute sets` that don't contain the named attribute are ignored.\n\n **Note:** you can use the builtin function `concatLists`. \n \n **Warning:** This is hard!",
         "code": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n  \n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = TODO\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  list = [[\"a\"] [\"b\"] [\"c\"]];\n\n  attrList = [{a = 1;} {b = 0;} {a = 2;}];\n  catAttrs = name: List: builtins.concatLists (map (x: if x ? ${name} then [x.${name}] else []) List);\nin\nrec {\n  example = builtins.concatLists list; #is [ \"a\" \"b\" \"c\" ]\n  result = catAttrs \"a\" attrList; #should be [1 2] \n}\n"
