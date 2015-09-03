@@ -64,7 +64,8 @@ CodeMirror.defineMode('shell', function() {
       state.tokens.unshift(tokenDollar);
       return tokenize(stream, state);
     }
-    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@' || ch === '!' || ch === '|' || ch == '-' || ch == '>' || ch == '?') {
+    if (ch === '+' || ch === '=' || ch === '*' || ch === '/' || ch === ':' || ch === '@' || ch === '!' || ch === '|' || ch === '-' || ch === '>' || ch === '<' || ch === '?')
+    {
       return 'operator';
     }
     if (ch === '-') {
@@ -72,7 +73,17 @@ CodeMirror.defineMode('shell', function() {
       stream.eatWhile(/\w/);
       return 'attribute';
     }
-    if (/\d/.test(ch)) {
+//    if (ch === 'h'){
+//        stream.eatWhile(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/);
+//      if(stream.eol() || !/\w/.test(stream.peek())) {
+//        return 'string';
+//      }
+//    }
+    if (ch === '[' || ch === '.'){
+      return null;
+    }
+  //  if (/[\d\.\[]/.test(ch)) {
+    if (/\d/.test(ch)){
       stream.eatWhile(/\d/);
       if(stream.eol() || !/\w/.test(stream.peek())) {
         return 'number';
