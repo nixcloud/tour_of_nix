@@ -91,14 +91,14 @@
     },
     {
         "topic": "Attribute sets: examples 3",
-        "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Every exercise should evaluate to true.",
+        "question": "To learn the basic syntax replace every XX in the `rec scope` with \nvalues from the `let scope`.\n\nNow:\n\n* Exercise should evaluate to true.",
         "code": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = 5 == XX ( XX XX XX ) XX;\n}\n",
         "solution": "let\n  attrSetBonus = {f = {add = (x: y: x + y);\n                       mul = (x: y: x * y);};\n                  n = {one = 1; two = 2;};};\nin\nrec {\n  #Bonus: use only the attrSetBonus to solve this one\n  exBonus = with attrSetBonus; 5 == f.add (f.mul n.two n.two) n.one ;\n}"
     },
     {
         "topic": "Attribute sets: merging",
-        "question": "Since programming in Nix is all about `attribute sets` it is important\nto know how to `merge` these using the `//` operator.\n\n    l = {a=\"A\"; b=\"B\";} // {a=\"aaa\"};\n\nwill evaluate to:\n\n    l = {a=\"aaa\"; b=\"B\";};\n    \nas the later `set` overwrites the attributes from the earlier one.\n\nNow:\n\n* solve each exercice: `ex00, ex01, ...` \n\n",
-        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func ( X );  \n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func ( XX // x // z);\n}\n\n",
+        "question": "Since programming in Nix is all about `attribute sets` it is important\nto know how to `merge` these using the `//` operator.\n\n    l = {a=\"A\"; b=\"B\";} // {a=\"aaa\"};\n\nwill evaluate to:\n\n    l = {a=\"aaa\"; b=\"B\";};\n    \nas the later `set` overwrites the attributes from the earlier one.\n\nNow:\n\n* Every exercise `ex00, ex01, ...` should evaluate to true.\n\n",
+        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func ( x );  \n  # hit 'run', you need the output to solve this!\n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func (X // x // z);\n}\n\n",
         "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n"
     },
     {
