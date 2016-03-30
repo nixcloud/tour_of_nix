@@ -79,7 +79,7 @@
     },
     {
         "topic": "Attribute sets: examples 1",
-        "question": " Make all `ex00` up to `ex07` evaluate to true.",
+        "question": " Make all `ex00` up to `ex06` evaluate to true.",
         "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n  ex1 = attr.a == X;\n  ex2 = attr.${s} == X;\n  ex3 = attrVals [\"c\" \"b\"] attr == [ XXX ];\n  ex4 = attrValues attr == [ XXX ];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n    == { X = X; X = X;};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == { XXX };\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} == { a = \"b\"; c=\"\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n}\n"
     },
