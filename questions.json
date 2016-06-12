@@ -45,7 +45,7 @@
         "topic": "Functions: your part...",
         "question": "##Implementing your first function!\nWhat to do:\n\n* Implement the `min` and the `max` function using `if () then X else Y`\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
         "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
-        "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}"
+        "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n# make stdenv.lib available\n# with import <nixpkgs> { };\n# {\n#   # finally make use of it\n#   ex1 = stdenv.lib.min 5 3;\n#   ex2 = stdenv.lib.max 9 4;\n# }\n"
     },
     {
         "topic": "Functions: default values",
@@ -70,6 +70,12 @@
         "question": "Next we will have a look into `functions` and how they are \ndefined and called:\n\n* solve each question: `ex00, ex01, ...` by only modifying X with a \n`value` of type `Int`\n\n**Note:** If you see `ex03 = <LAMBDA>;` after `run`, this means \nthat `ex03` is bound to a `function`.\n\n\n## Currying & partial functions\nIn **mathematics and computer science**, \n[currying](https://en.wikipedia.org/wiki/Currying) \nis the technique of translating the evaluation of \n**a function that takes multiple arguments \n(or a tuple of arguments) into evaluating a sequence of functions**, \neach with a single argument (partial application). \n\nIt was introduced by Moses Schönfinkel and later developed \nby Haskell Curry.\n\n",
         "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n  ex01 = (fu1) X;   # must return 5\n  ex02 = (fu2 X ) X; # must return 7\n  ex03 = (fu2 X );   # must return <LAMBDA>\n  ex04 = ex03 X;    # must return 7\n  ex05 = (n: x: (fu2 x n)) X X; # must return 7\n}\n",
         "solution": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 4;     # must return 4\n  ex01 = (fu1) 1;   # must return 5\n  ex02 = (fu2 2) 3; # must return 7\n  ex03 = (fu2 3);   # must return <LAMBDA>\n  ex04 = ex03 1;    # must return 7\n  ex05 = (n: x: (fu2 x n)) 3 2; # must return 7\n}\n"
+    },
+    {
+        "topic": "Partial application II",
+        "question": "Functions can be called with an `attribute set`, as we have seen. This is another common \nexample of partial application, so solve it!\n\nComplete the arguments `attribute set`:\n\n  * A must evaluate to 'HappyFunctionsAreCalled'\n\n",
+        "code": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";}; #only modify this line\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments XXX\n}\n",
+        "solution": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";}; #only modify this line\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments {d=\"Called\"; b = \"Functions\"; c=\"Are\";};\n}\n"
     },
     {
         "topic": "Attribute sets: rec",
