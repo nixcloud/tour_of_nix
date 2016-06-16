@@ -8,7 +8,9 @@ https://nixcloud.io/tour/
 
 happy learning!
 
-**HINT:** we have a newer version of 'a tour of nix', which is based on 'bootstrap' but it is not yet released.
+**HINT:** we have a newer version of 'a tour of nix', which is based on 'bootstrap' but it is not released yet.
+
+
 
 # building & running
 
@@ -62,6 +64,7 @@ will redo the emscripten port cleanly and put the source on our repository.
 
 see:
 
+* https://lastlog.de/blog/posts/tour_of_nix.html
 * https://github.com/NixOS/nixpkgs/pull/16208
 * https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
 
@@ -104,3 +107,4 @@ listed there.
 * Paul Seitz <paul.m.seitz@gmail.com>
 * Joachim Schiele <js@lastlog.de>
 
+![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/v0.0.1/footerFG.png)
