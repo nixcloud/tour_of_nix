@@ -42,7 +42,11 @@ manually invoking it:
 
 install it:
 
-    nix-env -f default.nix -A nix-tour
+    nix-env -f default.nix -iA nix-tour
+
+afterwards you can start it like this:
+
+    nix-tour
 
 # collaboration
 
