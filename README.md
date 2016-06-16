@@ -10,7 +10,7 @@ happy learning!
 
 **HINT:** we have a newer version of 'a tour of nix', which is based on 'bootstrap' but it is not released yet.
 
-
+![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/master/tour_of_nix.jpg)
 
 # building & running
 
@@ -107,4 +107,4 @@ listed there.
 * Paul Seitz <paul.m.seitz@gmail.com>
 * Joachim Schiele <js@lastlog.de>
 
-![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/v0.0.1/footerFG.png)
+![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/master/footerFG.png)
