@@ -32,9 +32,6 @@ to see the tour, simply do this:
 
 **note:** chromium won't load xhr requests from file:// but instead requires a webserver to work.
 
-# motivation
-
-https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
 
 # collaboration
 
@@ -48,7 +45,10 @@ contained in the last question of the tour.
 we, the nixcloud devs, are working on a new emscripten based toolchain in nix. once this is final, we 
 will redo the emscripten port cleanly and put the source on our repository.
 
-see https://github.com/NixOS/nixpkgs/pull/16208
+see:
+
+* https://github.com/NixOS/nixpkgs/pull/16208
+* https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
 
 until that happens you can request the source code via email from us which currently is a 300mb git
 repository in a very unusable state. this is also the reason why we didn't upload it yet.
