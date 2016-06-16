@@ -32,6 +32,17 @@ to see the tour, simply do this:
 
 **note:** chromium won't load xhr requests from file:// but instead requires a webserver to work.
 
+## electron 
+with electron we can create a native executable so that one can use `nix-env` to install the tour locally.
+
+manually invoking it:
+
+    nix-shell
+    electron electron-main.js
+
+install it:
+
+    nix-env -f default.nix -A nix-tour
 
 # collaboration
 
@@ -52,18 +63,6 @@ see:
 
 until that happens you can request the source code via email from us which currently is a 300mb git
 repository in a very unusable state. this is also the reason why we didn't upload it yet.
-
-## electron 
-with electron we can create a native executable so that one can use `nix-env` to install the tour locally.
-
-manually invoking it:
-
-    nix-shell
-    electron electron-main.js
-
-install it:
-
-    nix-env -f default.nix -A nix-tour
 
 # license
 
