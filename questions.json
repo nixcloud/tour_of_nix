@@ -132,6 +132,12 @@
         "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit a b;\n  z = myImport.lib.isBool true;\n}\n"
     },
     {
+        "topic": "Scoping of attributes in let/with",
+        "question": "This question is about scopes. `let` binds `attributes` as well as `with` does.\n\nQuestion: Which value is `res` assinged to and why?\n\nSolution: See the `solution` button's associated source code.\n\n",
+        "code": "let\n  x = 123;\n  as = { a = \"foo\"; b = \"bar\"; x=\"234\"; };\n \nin with as; {\n res = x; # what value is res bound to?\n}\n\n",
+        "solution": "# most ppl would assume that x would be bound to \"234\" because it was\n# introduced last (`with as`). but instead it is bound to 123; which was\n# introduced by `let`\n\n# the motivation for this is:\n\n# file1.nix\n\n# {\n# pkg1 = ...\n# pkg2 = ...\n#\n# ...\n#\n# }\n\n\n# file2.nix\n\n# let\n# pkg256 = ...\n\n# in\n\n# with import file1.nix;\n# pkg256\n\n{ res = 123; }\n"
+    },
+    {
         "topic": "Typing system",
         "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** use these functions: `isBool`, \n`isInt`, \n`isString`, \n`isNull`, \n`isList`, \n`isAttrs` and \n`isFunction`.\n\nDo this:\n\n* go through `ex00, ex01, ...` and replace X by `isBool` in respect to the\n  `type`\n* fix `ex06`, what is the problem?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
         "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex03 = isX \"a\"; \n  #ex04 = isX (-3); \n  #ex05 = isX (x: x);\n  #ex06 = isX (x:x);\n  #ex07 = isX (\"x\");\n  #ex08 = isX null; \n  #ex09 = isX (y: y+1);\n  #ex10 = isX [({z}: z) (x: x)];\n  #ex11 = isX {a=[];};\n  #ex12 = isX -10; # oh, what is that?\n}\n",
