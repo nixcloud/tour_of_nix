@@ -8,7 +8,9 @@ https://nixcloud.io/tour/
 
 happy learning!
 
-**HINT:** we have a newer version of 'a tour of nix', which is based on 'bootstrap' but it is not yet released.
+**HINT:** we have a newer version of 'a tour of nix', which is based on 'bootstrap' but it is not released yet.
+
+![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/master/tour_of_nix.jpg)
 
 # building & running
 
@@ -32,9 +34,21 @@ to see the tour, simply do this:
 
 **note:** chromium won't load xhr requests from file:// but instead requires a webserver to work.
 
-# motivation
+## electron 
+with electron we can create a native executable so that one can use `nix-env` to install the tour locally.
 
-https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
+manually invoking it:
+
+    nix-shell
+    electron electron-main.js
+
+install it:
+
+    nix-env -f default.nix -iA nix-tour
+
+afterwards you can start it like this:
+
+    nix-tour
 
 # collaboration
 
@@ -48,22 +62,14 @@ contained in the last question of the tour.
 we, the nixcloud devs, are working on a new emscripten based toolchain in nix. once this is final, we 
 will redo the emscripten port cleanly and put the source on our repository.
 
-see https://github.com/NixOS/nixpkgs/pull/16208
+see:
+
+* https://lastlog.de/blog/posts/tour_of_nix.html
+* https://github.com/NixOS/nixpkgs/pull/16208
+* https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
 
 until that happens you can request the source code via email from us which currently is a 300mb git
 repository in a very unusable state. this is also the reason why we didn't upload it yet.
-
-## electron 
-with electron we can create a native executable so that one can use `nix-env` to install the tour locally.
-
-manually invoking it:
-
-    nix-shell
-    electron electron-main.js
-
-install it:
-
-    nix-env -f default.nix -A nix-tour
 
 # license
 
@@ -101,3 +107,4 @@ listed there.
 * Paul Seitz <paul.m.seitz@gmail.com>
 * Joachim Schiele <js@lastlog.de>
 
+![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/master/footerFG.png)
