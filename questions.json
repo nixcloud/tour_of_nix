@@ -146,8 +146,8 @@
     {
         "topic": "Assertions",
         "question": "`Assertions` are generally used to check that certain requirements \non or between features and dependencies hold. They look like this:\n\n    assert e1; e2\n    \nwhere `e1` is an expression that should evaluate to a `boolean` value. \nIf it evaluates to `true`, `e2` is returned; otherwise expression \nevaluation is aborted and a backtrace is printed.\n\n",
-        "code": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2); x + y;\n  n = \"-5\"; # only modify this line\nin\n\nassert (lib.isInt n);\n\nrec {\n  ex00 = func (n+3) 3;\n}",
-        "solution": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2); x + y;\n  n = -1;\nin\n\nassert (lib.isInt n);\n\nrec {\n  ex00 = func (n+3) 3;\n}"
+        "code": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2) || abort \"x has to be 2 or it won't work!\"; x + y;\n  n = \"-5\"; # only modify this line\nin\n\nassert (lib.isInt n) || abort \"Type error since supplied argument is no int!\";\n\nrec {\n  ex00 = func (n+3) 3;\n}",
+        "solution": "with import <nixpkgs> {};\nlet\n  func = x: y: assert (x==2) || abort \"x has to be 2 or it won't work!\"; x + y;\n  n = -1;\nin\n\nassert (lib.isInt n) || abort \"Type error since supplied argument is no int!\";\n\nrec {\n  ex00 = func (n+3) 3;\n}"
     },
     {
         "topic": "Debugging",
