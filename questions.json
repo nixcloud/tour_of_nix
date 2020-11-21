@@ -91,9 +91,9 @@
     },
     {
         "topic": "Attribute sets: examples 2",
-        "question": " Make `ex1` and `ex2` to evaluate to true.",
-        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == { XXX };\n  ex2 = builtins.fromJSON string == { XXX };\n}\n",
-        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
+        "question": " Make `ex0` and `ex1` to evaluate to true.",
+        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == { XXX };\n  ex1 = builtins.fromJSON string == { XXX };\n}\n",
+        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex1 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
     },
     {
         "topic": "Attribute sets: examples 3",
