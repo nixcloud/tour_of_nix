@@ -44,8 +44,8 @@
     {
         "topic": "Functions: your part...",
         "question": "##Implementing your first function!\nWhat to do:\n\n* Implement the `min` and the `max` function using `if () then X else Y`\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't do this in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
-        "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n",
-        "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex1 = min 5 3;\n  ex2 = max 9 4;\n}\n# make stdenv.lib available\n# with import <nixpkgs> { };\n# {\n#   # finally make use of it\n#   ex1 = stdenv.lib.min 5 3;\n#   ex2 = stdenv.lib.max 9 4;\n# }\n"
+        "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex0 = min 5 3;\n  ex1 = max 9 4;\n}\n",
+        "solution": "let\n  min = x: y: if x < y then x else y;\n  max = x: y: if x > y then x else y;\nin\n{\n  ex0 = min 5 3;\n  ex1 = max 9 4;\n}\n# make stdenv.lib available\n# with import <nixpkgs> { };\n# {\n#   # finally make use of it\n#   ex0 = stdenv.lib.min 5 3;\n#   ex1 = stdenv.lib.max 9 4;\n# }\n"
     },
     {
         "topic": "Functions: default values",
@@ -91,9 +91,9 @@
     },
     {
         "topic": "Attribute sets: examples 2",
-        "question": " Make `ex1` and `ex2` to evaluate to true.",
-        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == { XXX };\n  ex2 = builtins.fromJSON string == { XXX };\n}\n",
-        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex1 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex2 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
+        "question": " Make `ex0` and `ex1` to evaluate to true.",
+        "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == { XXX };\n  ex1 = builtins.fromJSON string == { XXX };\n}\n",
+        "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex1 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n"
     },
     {
         "topic": "Attribute sets: examples 3",
@@ -139,9 +139,9 @@
     },
     {
         "topic": "Typing system",
-        "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** use these functions: `isBool`, \n`isInt`, \n`isString`, \n`isNull`, \n`isList`, \n`isAttrs` and \n`isFunction`.\n\nDo this:\n\n* go through `ex00, ex01, ...` and replace X by `isBool` in respect to the\n  `type`\n* fix `ex06`, what is the problem?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
-        "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex03 = isX \"a\"; \n  #ex04 = isX (-3); \n  #ex05 = isX (x: x);\n  #ex06 = isX (x:x);\n  #ex07 = isX (\"x\");\n  #ex08 = isX null; \n  #ex09 = isX (y: y+1);\n  #ex10 = isX [({z}: z) (x: x)];\n  #ex11 = isX {a=[];};\n  #ex12 = isX -10; # oh, what is that?\n}\n",
-        "solution": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  ex01 = isAttrs {};\n  ex03 = isString \"a\"; \n  ex04 = isInt (-3); \n  ex05 = isFunction (x: x);\n  ex06 = isString (x:x); # this is because of url parsing: foo = http://bar.com;\n  ex07 = isString (\"x\");\n  ex08 = isNull null; \n  ex09 = isFunction (y: y+1);\n  ex10 = isList [({z}: z) (x: x)];\n  ex11 = isAttrs {a=[];};\n  ex12 = isInt (-10); # () were missing\n}"
+        "question": "The Nix language uses dynamic typing and there are `builtin` \nfunctions to check the type of a `binding`. \n\n**Note:** use these functions: `isBool`, \n`isInt`, \n`isString`, \n`isNull`, \n`isList`, \n`isAttrs` and \n`isFunction`.\n\nDo this:\n\n* go through `ex00, ex01, ...` and replace X by `isBool` in respect to the\n  `type`\n* fix `ex05`, what is the problem?\n\n**Note:** `()` can either be a `function` or indicates `precedence`.\n",
+        "code": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  #ex01 = isX {};\n  #ex02 = isX \"a\"; \n  #ex03 = isX (-3); \n  #ex04 = isX (x: x);\n  #ex05 = isX (x:x);\n  #ex06 = isX (\"x\");\n  #ex07 = isX null; \n  #ex08 = isX (y: y+1);\n  #ex09 = isX [({z}: z) (x: x)];\n  #ex10 = isX {a=[];};\n  #ex11 = isX -10; # oh, what is that?\n}\n",
+        "solution": "with import <nixpkgs> {};\nwith lib;\n{\n  ex00 = isAttrs {};\n  ex01 = isAttrs {};\n  ex02 = isString \"a\"; \n  ex03 = isInt (-3); \n  ex04 = isFunction (x: x);\n  ex05 = isString (x:x); # this is because of url parsing: foo = http://bar.com;\n  ex06 = isString (\"x\");\n  ex07 = isNull null; \n  ex08 = isFunction (y: y+1);\n  ex09 = isList [({z}: z) (x: x)];\n  ex10 = isAttrs {a=[];};\n  ex11 = isInt (-10); # () were missing\n}"
     },
     {
         "topic": "Assertions",
