@@ -13,19 +13,19 @@
     },
     {
         "topic": "Hello World",
-        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nvariables or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`variable` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
+        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nattributes or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`attribute` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
         "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
         "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
     },
     {
         "topic": "Strings",
-        "question": "Nix can also insert `Strings` with ${variable}.\n \n * Complete the `String` to 'Hello World'.",
+        "question": "Nix can also insert `Strings` with ${attribute}.\n \n * Complete the `String` to 'Hello World'.",
         "code": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} \"; # Modify this line\n}\n",
         "solution": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} World\";\n}\n"
     },
     {
         "topic": "Integer to string",
-        "question": "Inserting `Strings` using the pattern `${variable}` works great \nwith `Strings`. But `${}` can do more. You can even run functions within it.\n\nUse this and the builtin function `toString` to make the code work.\n\n**Note:** More builtin functions can be found in the [Nix manual](https://nixos.org/manual/nix/stable/expressions/builtins.html#built-in-functions).\n",
+        "question": "Inserting `Strings` using the pattern `${attribute}` works great \nwith `Strings`. But `${}` can do more. You can even run functions within it.\n\nUse this and the builtin function `toString` to make the code work.\n\n**Note:** More builtin functions can be found in the [Nix manual](https://nixos.org/manual/nix/stable/expressions/builtins.html#built-in-functions).\n",
         "code": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${value} the win!\";\n}\n",
         "solution": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${toString value} the win!\";\n}\n"
     },
@@ -109,7 +109,7 @@
     },
     {
         "topic": "Attribute sets and booleans",
-        "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the variable `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](https://nixos.org/manual/nix/stable/language/values#attribute-set) \nfor more details on `attribute sets`.\n\n",
+        "question": "To learn the basic syntax of Nix, replace every XX in the function body\nwith values from the attribute `attrSet` bound in the let scope.\n\nEach individual exercise `ex00, ex01, ...` should evaluate to `true`. \n\n**Note:** Remove the `#` to uncomment the exercises as you proceed.\n\nSee [Nix documentation](https://nixos.org/manual/nix/stable/language/values#attribute-set) \nfor more details on `attribute sets`.\n\n",
         "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  #boolean\n  ex0 = attrSet.b.t;\n  #equal\n#  ex01 =  \"a\" == attrSet.XX; \n  #unequal \n#  ex02 = !(\"b\" != attrSet.XX );\n  #and/or/neg\n#  ex03 = ex01 && !ex02 || ! attrSet.XX;\n  #implication\n#  ex04 = attrSet ? XX;\n#  ex05 = attrSet.XX ? f;\n}\n",
         "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = null;\n  attrSet.e.f = \"g\";\nin\nrec {\n  ex0 = attrSet.b.t;\n  #equal\n  ex01 = \"a\" == attrSet.x;\n  #unequal \n  ex02 = !(\"b\" != attrSet.y);\n  #and/or/neg\n  ex03 = ex01 && !ex02 || !attrSet.b.f;\n  #implication\n  ex04 = true -> attrSet.b.t;\n  #contains attribute\n  ex05 = attrSet ? e;\n  ex06 = attrSet.e ? f;\n}"
     },
@@ -127,7 +127,7 @@
     },
     {
         "topic": "inherit/import/with!",
-        "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nvariables with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n",
+        "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nattributes with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n",
         "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x; #example\n  #fix line below: we want a and b in this scope\n  inherit X; \n  #also fix this line\n  z = XXX.lib.isBool true;\n}\n",
         "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit a b;\n  z = myImport.lib.isBool true;\n}\n"
     },
