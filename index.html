@@ -8,6 +8,9 @@
   <meta HTTP-EQUIV="REFRESH" content="0; url=https://www.mozilla.org/en-US/firefox/new/">
   <![endif]-->
 
+  <link href="bootstrap-5.0.2/bootstrap.min.css" rel="stylesheet">
+  <script src="bootstrap-5.0.2/bootstrap.bundle.min.js"></script>
+
   <!--
   -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
@@ -390,9 +393,9 @@ var runNix = function() {
         <div id="adsfas" class="flex-container-col">
           <textarea class="input" id="input" rows="8">demo text textarea</textarea>
           <div id="editorButtonGroup"  class="flex-container-row">
-            <button type="button" class="myButton" id="resetButton" onClick="resetQuestion()" title="">reset</button>
-            <button type="button" class="myButton" id="solutionButton" onClick="showSolution()" title="">solution</button>
-            <button type="button" class="myButton" id="runButton" onClick="runNix()" title="use shift+return">run</button>
+            <button type="button" class="myButton button" id="resetButton" onClick="resetQuestion()" title="">reset</button>
+            <button type="button" class="myButton button" id="solutionButton" onClick="showSolution()" title="">solution</button>
+            <button type="button" class="myButton button" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
         </div>
         <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
@@ -401,8 +404,8 @@ var runNix = function() {
       </div>
       <div id="right" class="flex-container-col">
         <div id="questionNavigation" class="flex-container-row">
-          <button type="button" class="myButton" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
-          <button type="button" class="myButton" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
+          <button type="button" class="myButton button" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
+          <button type="button" class="myButton button" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
         </div>
         <h1><div id="contentTitle">A tour of Nix_</div></h1>
         <div id="contentText">If you can see this, <b>questions.json</b> wasn't loaded properly!<br><br>
