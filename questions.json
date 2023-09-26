@@ -36,12 +36,6 @@
         "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = a: b: c: a+b+c; \nin\n{\n  foo = func f o \"o\";\n}\n"
     },
     {
-        "topic": "Functions with 'attribute sets'",
-        "question": "This time we pass an `attribute set` to define the `function's` input arguments.\n\n* Write a function that consumes 3 `Strings` and combines them to one.\n\n**Note:** `Attribute Sets` are a set of key value pairs. \n\nAn example for an `Attribute Set` would be: **{a=f;b=o;}**",
-        "code": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: XXX; \nin\n{\n  foo = func {a=f; XXX\n}\n",
-        "solution": "let\n  f = \"f\";\n  o = \"o\";\n  func = {a, b, c}: a+b+c; \nin\n{\n  foo = func {a=f; b=o; c=o;};\n}\n"
-    },
-    {
         "topic": "Functions: your part...",
         "question": "##Implementing your first function!\nWhat to do:\n\n* Implement the `min` and the `max` function using `if () then X else Y`\n\n**Note:** those functions already exist and can be accessed with `lib.min` \nand `lib.max` (don't use lib.min and lib.max here but instead implement them yourself in this exercise).\n \n**Experiments:** \n\n* What happens if you create an infinite recursion call to `min`?\n* Now, instead of calling your `min` and `max` implementation, use `lib.min` and\n`lib.max`. \n\n  The question is actually: what has to be added in order to use `lib`?\n \n ",
         "code": "let\n  min = XX #modify these\n  max = XX #two lines only\nin\n{\n  ex0 = min 5 3;\n  ex1 = max 9 4;\n}\n",
@@ -121,9 +115,9 @@
     },
     {
         "topic": "Lists & attribute sets",
-        "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nDo this: \n\n* ex0 should evaluate to true.",
-        "code": "let\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
-        "solution": "let\n list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
+        "question": "To learn the basic syntax replace every XX in the function body with values from the let scope.\n\n\nEvery exercise should evaluate to true.",
+        "code": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == XX ++ XX;\n}\n",
+        "solution": "let\n  attrSet = {x = \"a\"; y = \"b\"; b = {t = true; f = false;};};\n  attrSet.c = 1;\n  attrSet.d = 2;\n  attrSet.e.f = \"g\";\n\n  list1 = [attrSet.c attrSet.d];\n  list2 = [attrSet.x attrSet.y];\n\nin\n{\n  #List concatenation.\n  ex0 = [\"a\" \"b\" 1 2] == list2 ++ list1;\n}"
     },
     {
         "topic": "inherit/import/with!",
@@ -163,7 +157,7 @@
     },
     {
         "topic": "Fold: Introduction",
-        "question": "right `fold` is a binary function `op` between successive elements of 'list' with `nul` as the starting value, i.e., `fold op nul [x_1 x_2 ... x_n]`. \n\n Type: `fold :: (a -> b -> b) -> b -> [a] -> b` \n\nExample: `concat = fold (el: c: el + c) \"z\" [ \"a\" \"b\" \"c\" ] \n=> \"abcz\"`\n\n**Note:** There is **fold left** and **fold right** and `lib.fold` \nimplements **fold right**.\n\nNow:\n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n* Change `list = [ 1 2 3 4 ];` and rewrite the `countA` to `fold` lists instead of a string.\n\n**Note:** More recent nix versions have `lib.lists.foldr` (aka `fold`) and also `lib.lists.foldl`, see <https://nixos.org/manual/nixpkgs/stable/#chap-functions>",
+        "question": "right `fold` is a binary function `op` between successive elements of 'list' with `nul` as the starting value, i.e., `fold op nul [x_1 x_2 ... x_n]`. \n\nExample: `concat = fold (el: c: el + c) \"z\" [ \"a\" \"b\" \"c\" ] \n=> \"abcz\"`\n\n**Note:** There is **fold left** and **fold right** and `lib.fold` \nimplements **fold right**.\n\nNow:\n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n* Change `list = [ 1 2 3 4 ];` and rewrite the `countA` to `fold` lists instead of a string.\n\n**Note:** More recent nix versions have `lib.lists.foldr` (aka `fold`) and also `lib.lists.foldl`, see <https://nixos.org/manual/nixpkgs/stable/#chap-functions>",
         "code": "with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
         "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n"
     },
