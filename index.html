@@ -3,6 +3,7 @@
 <head>
   <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
   <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
+  <title>A tour of Nix</title>
 
   <!--[if IE]>
   <meta HTTP-EQUIV="REFRESH" content="0; url=https://www.mozilla.org/en-US/firefox/new/">
@@ -11,20 +12,18 @@
   <link href="bootstrap-5.0.2/bootstrap.min.css" rel="stylesheet">
   <script src="bootstrap-5.0.2/bootstrap.bundle.min.js"></script>
 
-  <!--
-  -->
   <script type="text/javascript" src="nix-instantiate.js"></script>
   <script type="text/javascript" src="markdown.min.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
-  <title>A tour of Nix</title>
 
   <link rel="stylesheet" href="codemirror-5.5/lib/codemirror.css">
+  <link rel="stylesheet" href="codemirror-5.5/addon/lint/lint.css">
   <link rel="stylesheet" href="style.css" type="text/css"/>
   <link id ="styleMobile" rel="stylesheet" href="style_mobile.css" type="text/css"/>
   <link rel="stylesheet" href="font/font.css" type="text/css"/>
   <script type="text/javascript" src="codemirror-5.5/lib/codemirror.js"></script>
+  <script type="text/javascript" src="codemirror-5.5/addon/lint/lint.js"></script>
   <script type="text/javascript" src="codemirror-5.5/mode/shell/shell.js"></script>
-
   <script type="text/javascript" charset="utf-8">
 
 // global variables
@@ -291,13 +290,44 @@ var load_markdown = function() {
 
 Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
 
+function extractLineAndPosition(inputString) {
+  const pattern = /line:(\d+):(\d+)/;
+  const match = inputString.match(pattern);
+
+  if (match) {
+    const lineNumber = parseInt(match[1], 10);
+    const textPosition = parseInt(match[2], 10);
+    return { found: true, lineNumber, textPosition };
+  } else {
+    // Return a default value indicating that the pattern was not found.
+    return { found: false, lineNumber: -1, textPosition: -1 };
+  }
+}
+
+function highlightError(error_message) {
+  const result = extractLineAndPosition(error_message);
+  if (result.found) {
+    console.log("Pattern found:");
+    console.log("Line Number:", result.lineNumber);
+    console.log("Text Position:", result.textPosition);
+
+    var marker = document.createElement("div");
+    marker.setAttribute('class', 'CodeMirror-lint-marker-error');
+    marker.setAttribute('title', error_message);
+
+    editor.setGutterMarker(result.lineNumber - 1,'gutter-error', marker);
+  } else {
+    console.log("Pattern not found in the input string.");
+  }
+}
+
 // primary routine to execute the code from the editor in nix-instantiate
 var runNix = function() {
+  editor.clearGutter('gutter-error');
   var start = new Date().getTime();
 //  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
 
   // run the solution
-  
   var correct_solution;
   
   Module['print'] = function(text) {
@@ -331,7 +361,7 @@ var runNix = function() {
       o.value = text;
       o.style.backgroundColor = "#44aa44";
   //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
-    }else{
+    } else {
       console.log("incorrect answer");
       o.value = "your solution:\n" + text + "\nexpected was:\n" + correct_solution;
       o.style.backgroundColor = "#aa4444";
@@ -339,7 +369,6 @@ var runNix = function() {
     }
     auto_resize(o);
     document.getElementById('runInfo').innerHTML = "";
-        
   };
   Module['printErr'] = function(text) {
     text = text.replace("[31;1m", "");
@@ -354,7 +383,8 @@ var runNix = function() {
     text = text.replace(//g, "");
 //    text = text.replace(":error:", ":\nerror");
     console.log(text);
-//    Module['return'] = text + '\n'; 
+    highlightError(text); // runNix() return one line per error (up to several lines) and highlightError is called per line
+//    Module['return'] = text + '\n';
     document.getElementById('runInfo').innerHTML = "";
     var o = document.getElementById('output')
     o.value += text +"\n";
@@ -371,7 +401,7 @@ var runNix = function() {
   //var result = FS.readFile('test.nix', {encoding: 'utf8'});
   //console.log(result);
   Module.callMain(Module['arguments']);
-};   	    
+};
 
   </script>
 </head>
@@ -421,8 +451,9 @@ var runNix = function() {
     var editor = CodeMirror.fromTextArea(input, {
       lineNumbers: true,
       viewportMargin: Infinity,
+      gutters: ['gutter-error'],
     });
-    document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";  
+    document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";
  
  </script>
 </body>
