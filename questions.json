@@ -79,7 +79,7 @@
     },
     {
         "topic": "Attribute sets: examples 1",
-        "question": " Make all `ex0` up to `ex7` evaluate to true.\n\n**Note:** For the '?' operator, see <https://nixos.org/manual/nix/stable/language/operators#has-attribute>",
+        "question": " Make all `ex0` up to `ex7` evaluate to true.\n\n**Note:** For the '?' operator, see <https://nixos.org/manual/nix/stable/language/operators#has-attribute>\n\n**Note:** <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-listToAttrs>",
         "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs X;\n#  ex1 = attr.a == X;\n#  ex2 = attr.${s} == X;\n#  ex3 = attrVals [\"c\" \"b\"] attr == [ XXX ];\n#  ex4 = attrValues attr == [ XXX ];\n#  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} \n#    == { X = X; X = X;};\n#  ex6 = removeAttrs attr [\"b\" \"c\"] == { XXX };\n#  ex7 = ! attr ? a == XXX;\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attr = {a=\"a\"; b = 1; c = true;};\n  s = \"b\";\nin\n{\n  #replace all X, everything should evaluate to true\n  ex0 = isAttrs attr;\n  ex1 = attr.a == \"a\";\n  ex2 = attr.${s} == 1;\n  ex3 = attrVals [\"c\" \"b\"] attr == [true 1];\n  ex4 = attrValues attr == [\"a\" 1 true];\n  ex5 = builtins.intersectAttrs attr {a=\"b\"; d=234; c=\"\";} == { a = \"b\"; c=\"\";};\n  ex6 = removeAttrs attr [\"b\" \"c\"] == {a = \"a\";};\n  ex7 = ! attr ? a == false;\n}\n"
     },
@@ -154,6 +154,12 @@
         "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
         "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map ( XXX ) XXX;\n}\n",
         "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}"
+    },
+    {
+        "topic": "mapAttrs",
+        "question": "A function called `builtin.mapAttrs` exists which is similar to `builtin.map`.\n\nThe `mapAttrs`-function requires these arguments: a `function` and a `attrSet`. \n\nIt evaluates the given function on every element of the given attribute set. \n\nYour Job: \n\n * In the exercise, multiply every *value* by 7.\n\nDocumentation: <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-mapAttrs>\n\n**Note**: mapAttrs is builtin but not in this old version of the tour, just use `lib.mapAttrs` instead!",
+        "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs XXX\n}\n",
+        "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs (n: v: v * 7) attrSet;\n}\n"
     },
     {
         "topic": "Fold: Introduction",
