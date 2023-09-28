@@ -25,7 +25,7 @@
     },
     {
         "topic": "Integer to string",
-        "question": "Inserting `Strings` using the pattern `${attribute}` works great \nwith `Strings`. But `${}` can do more. You can even run functions within it.\n\nUse this and the builtin function `toString` to make the code work.\n\n**Note:** More builtin functions can be found in the [Nix manual](https://nixos.org/manual/nix/stable/expressions/builtins.html#built-in-functions).\n",
+        "question": "Inserting `Strings` using the pattern `${attribute}` works great \nwith `Strings`. But `${}` can do more. You can even run functions within it.\n\nUse this and the builtin function `toString` to make the code work.\n\n**Note:** See also <https://noogle.dev/>\n\n**Note:** More builtin functions can be found in the [Nix manual](https://nixos.org/manual/nix/stable/expressions/builtins.html#built-in-functions).\n",
         "code": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${value} the win!\";\n}\n",
         "solution": "let \n  h = \"Strings\";\n  value = 4;\nin\n{\n  helloWorld = \"${h} ${toString value} the win!\";\n}\n"
     },
