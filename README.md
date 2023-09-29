@@ -19,7 +19,7 @@ requires many modifications to the nix source base and lots of optimizations so 
 
 technical background: 
 
-  https://lastlog.de/blog/posts/tour_of_nix.html
+  https://lastlog.de/blog/tour_of_nix.html
 
 to see the tour, simply do this:
 
@@ -64,9 +64,9 @@ will redo the emscripten port cleanly and put the source on our repository.
 
 see:
 
-* https://lastlog.de/blog/posts/tour_of_nix.html
+* https://lastlog.de/blog/tour_of_nix.html
 * https://github.com/NixOS/nixpkgs/pull/16208
-* https://lastlog.de/blog/posts/emscripten-1.36.4_on_nixos.html
+* https://lastlog.de/blog/emscripten-1.36.4_on_nixos.html
 
 until that happens you can request the source code via email from us which currently is a 300mb git
 repository in a very unusable state. this is also the reason why we didn't upload it yet.
