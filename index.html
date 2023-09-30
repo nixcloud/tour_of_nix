@@ -81,11 +81,11 @@ var indexToPath = function (index) {
     console.log("index is invalid, returning 0");
     return 0;
   }
-  if (index > questions.length - 1) {
+  if (index - 1 > questions.length) {
     console.log("index is bigger than questions.length -1, returning 0");
     return 0;
   }
-  return questions[index].path;
+  return questions[index - 1].path;
 }
 
 
