@@ -75,16 +75,46 @@ var auto_resize = function (e) {
 function getURLParameter(name) {
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
 }
-function load_wanted_page() {
-  var i = parseInt(getURLParameter("id"))
-    //console.log("parser of getURLParameter found: " + getURLParameter("id"))
-    //console.log("parser of getURLParameter found: " + i)
-    if (!isNaN(i)) {
-      change_question(i-1) 
-    } else {
-      change_question(0) 
-    }
+
+var indexToPath = function (index) {
+  if (index === "") {
+    console.log("index is invalid, returning 0");
+    return 0;
+  }
+  if (index > questions.length - 1) {
+    console.log("index is bigger than questions.length -1, returning 0");
+    return 0;
+  }
+  return questions[index].path;
 }
+
+
+var pathToIndex = function (path) {
+  if (path === "") {
+      return 0;
+  }
+  for (let i = 0; i < questions.length; i++) {
+      if (questions[i].path === path) {
+          return i;
+      }
+  }
+  return 0;
+}
+
+function load_wanted_page() {
+  let id = getURLParameter("id");
+  let i = parseInt(id);
+
+  //console.log("parser of getURLParameter found: " + getURLParameter("id"))
+  //console.log("parser of getURLParameter found: " + i)
+  if (!isNaN(i)) {
+    change_question(i-1)
+  } else {
+    let v = pathToIndex(id);
+    change_question(v)
+  }
+}
+
 //loads the questions.json from the webpage
 function loadJSON(path, success, error) {
   var xhr = new XMLHttpRequest();
@@ -104,8 +134,31 @@ function loadJSON(path, success, error) {
   xhr.send();
 }
 loadJSON('questions.json',
-  function(data) { /*console.log(data);*/ questions = data; prepare_data(); load_wanted_page();},
-  function(xhr) { console.error(xhr); }
+  function(data) {
+    questions = data;
+
+    const uniqueSet = new Set();
+    // Iterate through the array
+    for (const q of questions) {
+      // If the item is already in the Set, it's not unique
+      if (q.path === undefined) {
+        console.log("error: questions contains undefined path: " + q.topic)
+        return false;
+      }
+      if (uniqueSet.has(q.path)) {
+        console.log("error: questions contains none-unique path for: " + q.path)
+        return false;
+      }
+      // Add the item to the Set to track it
+      uniqueSet.add(q.path);
+    }
+
+    prepare_data();
+    load_wanted_page();
+  },
+  function(xhr) {
+    console.error(xhr);
+  }
 );
 
 // shortcuts
@@ -160,7 +213,7 @@ window.addEventListener("popstate", function(e) {
 // update current question and modify the window.history
 var change_question = function(myinput) {
   change_question_withoutHistoryChange(myinput);
-  window.history.pushState('', '',  window.location.pathname + '?id=' + (current_question + 1));
+  window.history.pushState('', '',  window.location.pathname + '?id=' + indexToPath(current_question + 1));
 }
 
 // update current question and NOT modifying the window.history
