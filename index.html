@@ -256,7 +256,7 @@ var change_question_withoutHistoryChange = function (myinput) {
   var mysolution = questions[current_question].mysolution;
   contentSolution.style.display="none";
 
-  contentTitle.innerHTML = String(current_question + 1 + "<font size=\"3%\"> / " + questions.length + "</font>" + " - " + topic);
+  contentTitle.innerHTML = String(current_question + 1 + "<font size=\"3%\"> / " + questions.length + "</font>" + " " + topic);
 
   var paypal='<p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"> <input type="hidden" name="cmd" value="_donations"> <input type="hidden" name="business" value="js@lastlog.de"> <input type="hidden" name="lc" value="DE"> <input type="hidden" name="item_name" value="Help Paul and Joachim in making a tour of nix better!"> <input type="hidden" name="no_note" value="0"> <input type="hidden" name="currency_code" value="EUR"> <input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_SM.gif:NonHostedGuest"> <input type="image" src="paypal.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal."> </form></p>'
   var text = markdown.toHTML(question);
@@ -495,7 +495,7 @@ var runNix = function() {
           <button type="button" class="myButton button" id="prevButton" title="use ctrl+k" onClick="change_question(-1)" >prev</button>
           <button type="button" class="myButton button" id="nextButton" title="use ctrl+j" onClick="change_question(1)" >next</button>
         </div>
-        <h1><div id="contentTitle">A tour of Nix_</div></h1>
+        <h2><div id="contentTitle">A tour of Nix_</div></h2>
         <div id="contentText">If you can see this, <b>questions.json</b> wasn't loaded properly!<br><br>
           Javascript execution: <b><div id="testJS">failed, are you blocking JS execution? This webpage won't work without JS!</div></b>.
         </div>

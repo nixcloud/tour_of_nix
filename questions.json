@@ -191,14 +191,14 @@
     {
         "topic": "Fold: Introduction",
         "path": "fold/introduction",
-        "question": "right `fold` is a binary function `op` between successive elements of 'list' with `nul` as the starting value, i.e., `fold op nul [x_1 x_2 ... x_n]`. \n\nExample: `concat = fold (el: c: el + c) \"z\" [ \"a\" \"b\" \"c\" ] \n=> \"abcz\"`\n\n**Note:** There is **fold left** and **fold right** and `lib.fold` \nimplements **fold right**.\n\nNow:\n\n* use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`.\n\n* Change `list = [ 1 2 3 4 ];` and rewrite the `countA` to `fold` lists instead of a string.\n\n**Note:** More recent nix versions have `lib.lists.foldr` (aka `fold`) and also `lib.lists.foldl`, see <https://nixos.org/manual/nixpkgs/stable/#chap-functions>",
-        "code": "with import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold XXX;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n",
-        "solution": "\n# use fold to write a function that counts all \"a\" in a list\nwith import <nixpkgs> { };\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  countA = lib.fold (x: y: if x == \"a\" then 1 + y else y) 0;\nin\nrec {\n  example = lib.fold (x: y: x + y) \"\" [\"a\" \"b\" \"c\"]; #is \"abc\"\n  result = countA list; #should be 3\n}\n\n\n"
+        "question": "Right `fold` is a binary function:\n\n`fold func init [x_1 x_2 ... x_n]`, where:\n\n* `func`, a function like `(el: container: container + el)`\n* `init` as the initial starting value\n\nExample: `concat = fold (el: c: el + c) \"z\" [ \"a\" \"b\" \"c\" ] \n=> \"abcz\"`\n\n**Note:** There is **fold left** and **fold right** and `fold` \nimplements **fold right**.\n\nYour job:\n\n* `ex0`: use `fold` to write a function that counts all `strings` \nwith value \"a\" in a given `list`\n\n* `ex1`: use `fold` to multiply each element by 2 and add the [ 8 ] to it\n\n**Note:** More recent nix versions have `lib.lists.foldr` (aka `fold`) and also `lib.lists.foldl`, see <https://nixos.org/manual/nixpkgs/stable/#chap-functions>",
+        "code": "with import <nixpkgs> { };\nwith lib;\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  intList = [ 1 2 3 ];\n  countA = XXX\n  #mulB = XXX\nin\nrec {\n  example = fold (x: y: x + y) \"z\" [\"a\" \"b\" \"c\"]; #is \"abcz\"\n  ex0 = countA list; #should be 3\n  #ex1 = mulB intList; #should be [ 2 4 6 8 ]\n}",
+        "solution": "with import <nixpkgs> { };\nwith lib;\nlet\n  list = [\"a\" \"b\" \"a\" \"c\" \"d\" \"a\"];\n  intList = [ 1 2 3 ];\n  countA = l: fold (el: c: if el == \"a\" then c + 1 else c) 0 l;\n  mulB = l: fold (el: c: [(el * 2)] ++ c) [8] l;\nin\nrec {\n  example = fold (x: y: x + y) \"z\" [\"a\" \"b\" \"c\"]; #is \"abcz\"\n  ex0 = countA list; #should be 3\n  ex1 = mulB intList; #should be [ 2 4 6 8 ]\n}"
     },
     {
-        "topic": "Fold: reverseList",
-        "path": "fold/reverselist",
-        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** There also is a `builtin` function `lib.reverseList`.\nYour function should behave exactly the same!",
+        "topic": "Reimplementation: reverseList",
+        "path": "reimplementation/reverselist",
+        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** You basically implement the function`lib.reverseList`.\nYour function should behave exactly the same!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold XXX;\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n"
     },
