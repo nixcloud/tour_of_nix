@@ -136,7 +136,6 @@ function loadJSON(path, success, error) {
 loadJSON('questions.json',
   function(data) {
     questions = data;
-
     const uniqueSet = new Set();
     // Iterate through the array
     for (const q of questions) {
@@ -152,7 +151,6 @@ loadJSON('questions.json',
       // Add the item to the Set to track it
       uniqueSet.add(q.path);
     }
-
     prepare_data();
     load_wanted_page();
   },
@@ -205,9 +203,16 @@ window.addEventListener("keyup", keysReleased, false);
 
 // implement browser forward and back button actions
 window.addEventListener("popstate", function(e) {
-  var id = getURLParameter("id");
-  var diff = id - current_question - 1;
-  change_question_withoutHistoryChange(diff);
+  let id = getURLParameter("id");
+  let i = parseInt(id);
+  //console.log("parser of getURLParameter found: " + getURLParameter("id"))
+  //console.log("parser of getURLParameter found: " + i)
+  if (!isNaN(i)) {
+    change_question_withoutHistoryChange(i - 1 - current_question)
+  } else {
+    let v = pathToIndex(id);
+    change_question_withoutHistoryChange(v - current_question)
+  }
 });
 
 // update current question and modify the window.history
