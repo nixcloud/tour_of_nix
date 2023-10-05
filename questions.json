@@ -23,9 +23,9 @@
     {
         "topic": "Strings",
         "path": "strings/introduction",
-        "question": "Nix can also insert `Strings` with `${attribute}` where `attribute` is referenced from a let scope.\n \n * Complete the `String` to 'Hello World'.",
-        "code": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} \"; # Modify this line\n}\n",
-        "solution": "let \n  h = \"Hello\";\nin\n{\n  helloWorld = \"${h} World\";\n}\n"
+        "question": "Nix can also insert `Strings` with `${attribute}` where `attribute` is referenced from a let scope.\n \n * Complete ex0, ex1 and ex2 to each print 'Hello World'.",
+        "code": "let \n  h = \"Hello\";\nin\n{\n  ex0 = \"${h} X\";\n  ex1 = \"${h + X + X}\";\n  ex2 = ''${h + X + X}'';\n}\n",
+        "solution": "let \n  h = \"Hello\";\nin\n{\n  ex0 = \"${h} World\";\n  ex1 = \"${h + \" \" + \"World\"}\";\n  ex2 = ''${h + \" \" + \"World\"}'';\n}\n"
     },
     {
         "topic": "Integer to string",
