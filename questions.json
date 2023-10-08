@@ -16,7 +16,7 @@
     {
         "topic": "Hello World",
         "path": "introduction/helloworld",
-        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to 'Hello World', replace all 'X' with \nattributes or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`attribute` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
+        "question": "A simple introduction to `Strings` in Nix:\n\n* Complete the `String` to \"Hello World\", replace all 'X' with \nattributes or `Strings`.\n\n## Let expressions\n\nThe let expression is composed of:\n\n    let <bindings> in <body>\n    \nThe bindings are a series of definitions separated by semi-colons. \n\n**Note:** In Nix you can use the `let`-construct to bind a `value` to a \n`attribute` but also a `function`. In the `<body>` you can then\nrefer to the `bound values`, even multiple times.\n\nMore at [Nix by example part1](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55#8310) by James Fisher.\n",
         "code": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + X + X;\n}\n",
         "solution": "let \n  h = \"Hello\";\n  w = \"World\";\nin\n{\n  helloWorld = h + \" \" + w;\n}\n"
     },
@@ -26,6 +26,13 @@
         "question": "Nix can also insert `Strings` with `${attribute}` where `attribute` is referenced from a let scope.\n \n * Complete ex0, ex1 and ex2 to each print 'Hello World'.",
         "code": "let \n  h = \"Hello\";\nin\n{\n  ex0 = \"${h} X\";\n  ex1 = \"${h + X + X}\";\n  ex2 = ''${h + X + X}'';\n}\n",
         "solution": "let \n  h = \"Hello\";\nin\n{\n  ex0 = \"${h} World\";\n  ex1 = \"${h + \" \" + \"World\"}\";\n  ex2 = ''${h + \" \" + \"World\"}'';\n}\n"
+    },
+    {
+        "topic": "Multiline string",
+        "path": "strings/multiline",
+        "question": "In Nix you are frequently using multiline `strings` to create text files using double quotes, i.e. `''xxx''` in combination with attributes:\n\n    foo = ''\n      foo: ${fooValue}\n      bar: ${barValue}\n    '';\n\nRead <https://nixos.org/manual/nix/stable/language/values> about string handling in Nix!\n\nSo now:\n\n * Format ex0 as wanted by the solution checker!\n\n**Note:** Play a little with the space indention depth and see what change it imposes on the generated string.\n\n**Note:** If `vip` is `false`, we get an empty newline with indention! We could also append the vipString to ex0 like `ex0 = ''...'' + vipString` and rewrite vipString with `\"` instead of `''`to fix this as `\"` won't remove our leading spaces.",
+        "code": "let \n  user = \"mrNix\";\n  pass = \"99supersecret\";\n  vip = true;\n  vipString = if vip == true then ''vip: XXX '' else XXX\nin\n{\n  ex0 = ''\n  ${user}\n    password: XXX\n    ${vipString}\n  '';\n}\n",
+        "solution": "let \n  user = \"mrNix\";\n  pass = \"99supersecret\";\n  vip = true;\n  vipString = if vip == true then ''vip: \"true\" '' else \"\";\nin\n{\n  ex0 = ''\n  ${user}\n    password: ${pass}\n    ${vipString}\n  '';\n}\n"
     },
     {
         "topic": "Integer to string",
