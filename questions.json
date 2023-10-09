@@ -72,7 +72,7 @@
     {
         "topic": "Functions: the @-pattern II",
         "path": "functions/ellipsis2",
-        "question": "`Attribute sets` can contain additional attributes which are not part of \nthe function definition.\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\n**Note:** `bargs@{a, b, ...}:` is equivalent to `{a, b, ...}@bargs:`.\n\nNow complete the last line: \n\n* It should evaluate to 'foobar'\n\n",
+        "question": "`Attribute sets` can contain additional attributes which are not part of \nthe function definition.\n\nInside a function, those `attributes` can be accessed with the \n`@-pattern`.\n\n**Note:** `bargs@{a, b, ...}:` is equivalent to `{a, b, ...}@bargs:`.\n\nNow complete the last line: \n\n* It should evaluate to 'foobar'\n\nSee usage in [nixpkgs/all-packages](https://github.com/NixOS/nixpkgs/blob/5a237aecb57296f67276ac9ab296a41c23981f56/pkgs/top-level/all-packages.nix#L16761).\n",
         "code": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; XXX #ONLY EDIT THIS LINE\n}\n",
         "solution": "let\n  func = {a, b, ...}@bargs: if a == \"foo\" then\n    b + bargs.c else b + bargs.x + bargs.y;\nin\n{\n  #complete next line so it evaluates to \"foobar\"\n  foobar = func {a=\"bar\"; b=\"foo\"; x=\"bar\"; y=\"\";}; \n}\n"
     },
