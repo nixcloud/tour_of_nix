@@ -78,14 +78,14 @@
     },
     {
         "topic": "Partial application",
-        "path": "functions/currying",
-        "question": "Next we will have a look into `functions` and how they are \ndefined and called:\n\n* solve each question: `ex00, ex01, ...` by only modifying X with a \n`value` of type `Int`\n\n**Note:** If you see `ex03 = <LAMBDA>;` after `run`, this means \nthat `ex03` is bound to a `function`.\n\n\n## Currying & partial functions\nIn **mathematics and computer science**, \n[currying](https://en.wikipedia.org/wiki/Currying) \nis the technique of translating the evaluation of \n**a function that takes multiple arguments \n(or a tuple of arguments) into evaluating a sequence of functions**, \neach with a single argument (partial application). \n\nIt was introduced by Moses Schönfinkel and later developed \nby Haskell Curry.\n\n",
-        "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n#  ex01 = (fu1) X;   # must return 5\n#  ex02 = (fu2 X ) X; # must return 7\n#  ex03 = (fu2 X );   # must return <LAMBDA>\n#  ex04 = ex03 X;    # must return 7\n#  ex05 = (n: x: (fu2 x n)) X X; # must return 7\n}\n",
+        "path": "functions/partial_application",
+        "question": "**Partial application**: A function returning another function that might return another function, but each returned function can take several parameters.\n\nLet's have a look into `functions` and how they are defined and called:\n\n* solve each question: `ex00, ex01, ...` by only modifying X with a \n`value` of type `Int`\n\n**Note:** If you see `ex03 = <LAMBDA>;` after `run`, this means \nthat `ex03` is bound to a `function`.\n",
+        "code": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 X;     # must return 4\n#  ex01 = (fu1) X;   # must return 5\n#  ex02 = (fu2 X ) X; # must return 7\n#  ex03 = (fu2 X );   # must return <LAMBDA>s\n#  ex04 = ex03 X;    # must return 7\n#  ex05 = (n: x: (fu2 x n)) X X; # must return 7\n}\n",
         "solution": "let\n  b = 1;\n  fu0 = (x: x);\n  fu1 = (x: y: x + y) 4;\n  fu2 = (x: y: (2 * x) + y);\nin\nrec {\n  ex00 = fu0 4;     # must return 4\n  ex01 = (fu1) 1;   # must return 5\n  ex02 = (fu2 2) 3; # must return 7\n  ex03 = (fu2 3);   # must return <LAMBDA>\n  ex04 = ex03 1;    # must return 7\n  ex05 = (n: x: (fu2 x n)) 3 2; # must return 7\n}\n"
     },
     {
         "topic": "Partial application II",
-        "path": "functions/currying2",
+        "path": "functions/partial_application2",
         "question": "Functions can be called with an `attribute set`, as we have seen. This is another common \nexample of partial application, so solve it!\n\nComplete the arguments `attribute set`:\n\n  * A must evaluate to 'HappyFunctionsAreCalled'\n\n",
         "code": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments XXX #only modify this line\n}\n",
         "solution": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments {d=\"Called\"; b = \"Functions\"; c=\"Are\";};\n}\n"
