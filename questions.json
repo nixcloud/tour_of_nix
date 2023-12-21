@@ -158,7 +158,7 @@
         "path": "scopes",
         "question": "This question is about scopes. `let` binds `attributes` as well as `with` does.\n\nQuestion: Which value is `res` assinged to and why?\n\nSolution: See the `solution` button's associated source code.\n\n",
         "code": "let\n  x = 123;\n  as = { a = \"foo\"; b = \"bar\"; x=\"234\"; };\n \nin with as; {\n res = x; # what value is res bound to?\n}\n\n",
-        "solution": "# most ppl would assume that x would be bound to \"234\" because it was\n# introduced last (`with as`). but instead it is bound to 123; which was\n# introduced by `let`\n\n# the motivation for this is:\n\n# file1.nix\n\n# {\n# pkg1 = ...\n# pkg2 = ...\n#\n# ...\n#\n# }\n\n\n# file2.nix\n\n# let\n# pkg256 = ...\n\n# in\n\n# with import file1.nix;\n# pkg256\n\n{ res = 123; }\n"
+        "solution": "{ res = 123; }\n# most ppl would assume that x would be bound to \"234\" because it was\n# introduced last using `with as` but instead it actualy binds to 123;\n#\n#See this example, why it makes sense:\n#{ config, lib, pkgs, ... }:\n#\n#let\n#  vim = pkgs.stdenv.mkDerivation { \n#     name = \"vim-hack\";\n#     unpackPhase = \"true\"; \n#     installPhase = ''\n#       mkdir -p $out/bin; \n#       echo '#!/bin/sh\n#       echo hi' > $out/bin/vim1; \n#       chmod u+x $out/bin/vim1\n#     '';\n#     };\n#in\n#\n#{\n#  environment.systemPackages = with pkgs; [ vim ];\n#}\n"
     },
     {
         "topic": "Typing system",
