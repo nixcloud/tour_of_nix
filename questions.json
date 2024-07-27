@@ -245,7 +245,7 @@
         "question": "Use `fold` to write your own `map` function.\n\n**Note:** The little error is intended, FIX IT!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
-        "youtube": "https://www.youtube.com/watch?v=LApNEuzt9Is&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
+        "youtube": "https://www.youtube.com/watch?v=RZuWUn_QHnQ&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Reimplementation: attrVals",
