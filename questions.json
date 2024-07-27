@@ -173,7 +173,7 @@
         "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nattributes with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n`inherit` takes one or more arguments.\n\nDo this:\n\n* make it work!",
         "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x; #example\n  #fix line below: we want a and b in this scope\n  inherit X; \n  #also fix this line\n  z = XXX.lib.isBool true;\n}\n",
         "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit a b;\n  z = myImport.lib.isBool true;\n}\n",
-        "youtube": ""
+        "youtube": "https://www.youtube.com/watch?v=1XwNjrCVUvs&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Scoping of attributes in let/with",
