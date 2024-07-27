@@ -101,7 +101,7 @@
         "question": "Functions can be called with an `attribute set`, as we have seen. This is another common \nexample of partial application, so solve it!\n\nComplete the arguments `attribute set`:\n\n  * A must evaluate to 'HappyFunctionsAreCalled'\n\n",
         "code": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments XXX #only modify this line\n}\n",
         "solution": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments {d=\"Called\"; b = \"Functions\"; c=\"Are\";};\n}\n",
-        "youtube": "https://www.youtube.com/watch?v=ITaAmTWGQeE&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
+        "youtube": "https://www.youtube.com/watch?v=WaiIcgidSgs&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Attribute sets: rec",
