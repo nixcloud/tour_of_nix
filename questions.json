@@ -122,7 +122,7 @@
     {
         "topic": "Attribute sets: examples 2",
         "path": "attrset/examples2",
-        "question": " Make `ex0` and `ex1` to evaluate to true.",
+        "question": " Make `ex0` and `ex1` evaluate to true.",
         "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == { XXX };\n  ex1 = builtins.fromJSON string == { XXX };\n}\n",
         "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex1 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n",
         "youtube": "https://www.youtube.com/watch?v=GQO1HUV0A9E&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
