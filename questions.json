@@ -210,7 +210,7 @@
     {
         "topic": "Map",
         "path": "map",
-        "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
+        "question": "A function called `builtins.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
         "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map ( XXX ) XXX;\n}\n",
         "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}",
         "youtube": "https://www.youtube.com/watch?v=4fp-7_yz07I&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
@@ -218,7 +218,7 @@
     {
         "topic": "mapAttrs",
         "path": "mapAttrs",
-        "question": "A function called `builtin.mapAttrs` exists which is similar to `builtin.map`.\n\nThe `mapAttrs`-function requires these arguments: a `function` and a `attrSet`. \n\nIt evaluates the given function on every element of the given attribute set. \n\nYour Job: \n\n * In the exercise, multiply every *value* by 7.\n\nDocumentation: <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-mapAttrs>\n\n**Note**: mapAttrs is builtin but not in this old version of the tour, just use `lib.mapAttrs` instead!",
+        "question": "A function called `builtins.mapAttrs` exists which is similar to `builtins.map`.\n\nThe `mapAttrs`-function requires these arguments: a `function` and a `attrSet`. \n\nIt evaluates the given function on every element of the given attribute set. \n\nYour Job: \n\n * In the exercise, multiply every *value* by 7.\n\nDocumentation: <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-mapAttrs>\n\n**Note**: mapAttrs is builtin but not in this old version of the tour, just use `lib.mapAttrs` instead!",
         "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs XXX\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs (n: v: v * 7) attrSet;\n}\n",
         "youtube": "https://www.youtube.com/watch?v=JYHTVORLGA0&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
