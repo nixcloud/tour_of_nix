@@ -234,7 +234,7 @@
     {
         "topic": "Reimplementation: reverseList",
         "path": "reimplementation/reverselist",
-        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** You basically implement the function`lib.reverseList`.\nYour function should behave exactly the same!",
+        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** You basically implement the function `lib.reverseList`.\nYour function should behave exactly the same!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold XXX;\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
         "youtube": ""
