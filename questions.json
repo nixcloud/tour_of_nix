@@ -101,14 +101,14 @@
         "question": "Functions can be called with an `attribute set`, as we have seen. This is another common \nexample of partial application, so solve it!\n\nComplete the arguments `attribute set`:\n\n  * A must evaluate to 'HappyFunctionsAreCalled'\n\n",
         "code": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments XXX #only modify this line\n}\n",
         "solution": "let\n  arguments = {a=\"Happy\"; b=\"Awesome\";};\n\n  func = {a, b}: {d, b, c}: a+b+c+d;\nin\n{\n  A = func arguments {d=\"Called\"; b = \"Functions\"; c=\"Are\";};\n}\n",
-        "youtube": "https://www.youtube.com/watch?v=ITaAmTWGQeE&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
+        "youtube": "https://www.youtube.com/watch?v=WaiIcgidSgs&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Attribute sets: rec",
         "path": "attrset/rec",
         "question": "`Sets` or `attribute sets` are really **the core of the Nix language**, since ultimately the language \nis all about creating derivations, which are really \njust `sets of attributes` to be passed to build scripts.\n\nSets are just a list of name/value pairs (called attributes) \nenclosed in curly brackets, where each value is an arbitrary \nexpression terminated by a semicolon. For example:\n\n    { x = 123;\n      text = \"Hello\";\n      y = f { bla = 456; };\n    }\n\nThis defines a set with attributes named x, text, y. The order of the attributes is irrelevant. An attribute name may only occur once.\n\nNow:\n\n* Find out what the `rec` keyword does and what the difference to an `attribute set` without `rec` is.\n* Delete the `rec` before the `attribute set` and observe the different behaviour of the nix interpreter.\n\n**Hint:** You find the answer within the solution section.\n\n**Note:** That is all for now, but you can continue reading in the [nix documentation](https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets).\n\n",
         "code": "rec {\n  x = \"a\";\n  y = x;\n}\n",
-        "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#Recursive sets are just normal sets, but the attributes can refer to each other.\n#Be aware of infinit recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.",
+        "solution": "rec {\n  x = \"a\";\n  y = x;\n}\n#Recursive sets are just normal sets, but the attributes can refer to each other.\n#Be aware of infinite recursions. They are not possible!\n#rec {\n#  x = y;\n#  y = x;\n#} Does not Work.",
         "youtube": "https://www.youtube.com/watch?v=dc79E_EC-E8&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
@@ -122,7 +122,7 @@
     {
         "topic": "Attribute sets: examples 2",
         "path": "attrset/examples2",
-        "question": " Make `ex0` and `ex1` to evaluate to true.",
+        "question": " Make `ex0` and `ex1` evaluate to true.",
         "code": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == { XXX };\n  ex1 = builtins.fromJSON string == { XXX };\n}\n",
         "solution": "let\n  list = [ { name = \"foo\"; value = 123; }\n           { name = \"bar\"; value = 456; } ];\n  string = ''{\"x\": [1, 2, 3], \"y\": null}'';\nin \n{\n  ex0 = builtins.listToAttrs list == {foo = 123; bar = 456;};\n  ex1 = builtins.fromJSON string == {x = [1 2 3]; y = null;};\n}\n\n\n",
         "youtube": "https://www.youtube.com/watch?v=GQO1HUV0A9E&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
@@ -139,8 +139,8 @@
         "topic": "Attribute sets: merging",
         "path": "attrset/merging",
         "question": "Since programming in Nix is all about `attribute sets` it is important\nto know how to `merge` these using the `//` operator.\n\n    l = {a=\"A\"; b=\"B\";} // {a=\"aaa\"};\n\nwill evaluate to:\n\n    l = {a=\"aaa\"; b=\"B\";};\n    \nas the later `set` overwrites the attributes from the earlier one.\n\nNow:\n\n* Every exercise `ex00, ex01, ...` should evaluate to what it is compared \nto, just see the output after hitting 'run' once.\n\n",
-        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func ( x );  \n  # hit 'run', you need the output to solve this!\n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func (X // x // z);\n}\n\n",
-        "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\";};\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink of: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n",
+        "code": "let\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\"; };\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink with: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func ( x );  \n  # hit 'run', you need the output to solve this!\n  #ex01=func (y // X );  \n  #ex02=func (x // { X=\"lychees\";});\n  #ex03=func (X // x // z);\n}\n\n",
+        "solution": "with import <nixpkgs> { };\nlet\n  x = { a=\"bananas\"; b= \"pineapples\"; };\n  y = { a=\"kakis\"; c =\"grapes\"; };\n  z = { a=\"raspberrys\"; c= \"oranges\"; };\n\n  func = {a, b, c ? \"another secret ingredient\"}: \"A drink with: \" + \n    a + \", \" + b + \" and \" + c;\nin\nrec {\n  ex00=func (x);  \n  ex01=func (y // x );  \n  ex02=func (x // { c=\"lychees\";});\n  ex03=func (z // x // z);\n}\n",
         "youtube": "https://www.youtube.com/watch?v=55HXT8Xxh1Q&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
@@ -173,7 +173,7 @@
         "question": "These 3 keywords can be confused pretty easily. Since we are using them\na lot in `A tour of Nix` we need to introduce them properly.\n\n## With\n\nA with-expression, introduces the `set e1` into the lexical scope of the `expression e2`. \n\n    let \n      as = { x = \"foo\"; y = \"bar\"; };\n    in \n      with as; x + y\n\n## Import\n\nLoad, parse and return the Nix expression in the file path. \n`import` implements Nix’s module system: you can put any Nix expression (such as a set or a function) in a separate file, and use it from Nix expressions in other files.\n\n    rec {\n      x = 123;\n      y = import ./foo.nix;\n    }\n\n## Inherit\nThe `inherit` keyword causes the specified `attributes` to be bound to whatever \nattributes with the same name happen to be in scope.\n\n    let \n      x = 123; \n    in\n    { \n      inherit x;\n      y = 456;\n    }\n`inherit` takes one or more arguments.\n\nDo this:\n\n* make it work!",
         "code": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x; #example\n  #fix line below: we want a and b in this scope\n  inherit X; \n  #also fix this line\n  z = XXX.lib.isBool true;\n}\n",
         "solution": "let \n  myImport = import <nixpkgs> {};\n  x = 123; \n  as = { a = \"foo\"; b = \"bar\"; };\n  \nin with as; { \n  inherit x;\n  inherit a b;\n  z = myImport.lib.isBool true;\n}\n",
-        "youtube": ""
+        "youtube": "https://www.youtube.com/watch?v=1XwNjrCVUvs&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Scoping of attributes in let/with",
@@ -210,7 +210,7 @@
     {
         "topic": "Map",
         "path": "map",
-        "question": "A function called `builtin.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list with 2. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
+        "question": "A function called `builtins.map` exists.\n\nThe `map-function` requires these arguments: a `function` and a `list`. \nIt evaluates the given function on every element of the given list. \n\nIn the example it is used to multiply \nevery number in a list by two. \n\nYour job:\n\n* Use the map function to extend every `string` in **bar** with \"bar\". \n\n**Note:** You can modify the `Strings` in any way. \nThey don't have to evaluate to 'foobar' (nor should they).",
         "code": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n#  foobar = map ( XXX ) XXX;\n}\n",
         "solution": "let\n  bar = [\"bar\" \"foo\" \"bla\"];\n  numbers = [1 2 3 4];\nin\n{\n  #multiplies every number by 2\n  example = map (n: n * 2) numbers; \n  #complete this\n  foobar = map (x: x + \"bar\") bar;\n}",
         "youtube": "https://www.youtube.com/watch?v=4fp-7_yz07I&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
@@ -218,7 +218,7 @@
     {
         "topic": "mapAttrs",
         "path": "mapAttrs",
-        "question": "A function called `builtin.mapAttrs` exists which is similar to `builtin.map`.\n\nThe `mapAttrs`-function requires these arguments: a `function` and a `attrSet`. \n\nIt evaluates the given function on every element of the given attribute set. \n\nYour Job: \n\n * In the exercise, multiply every *value* by 7.\n\nDocumentation: <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-mapAttrs>\n\n**Note**: mapAttrs is builtin but not in this old version of the tour, just use `lib.mapAttrs` instead!",
+        "question": "A function called `builtins.mapAttrs` exists which is similar to `builtins.map`.\n\nThe `mapAttrs`-function requires these arguments: a `function` and a `attrSet`. \n\nIt evaluates the given function on every element of the given attribute set. \n\nYour Job: \n\n * In the exercise, multiply every *value* by 7.\n\nDocumentation: <https://nixos.org/manual/nix/stable/language/builtins.html#builtins-mapAttrs>\n\n**Note**: mapAttrs is builtin but not in this old version of the tour, just use `lib.mapAttrs` instead!",
         "code": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs XXX\n}\n",
         "solution": "with import <nixpkgs> { };\nwith stdenv.lib;\nlet\n  attrSet = { a = -2; b = 3; };\nin \n{\n  ex0 = lib.mapAttrs (n: v: v * 7) attrSet;\n}\n",
         "youtube": "https://www.youtube.com/watch?v=JYHTVORLGA0&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
@@ -234,10 +234,10 @@
     {
         "topic": "Reimplementation: reverseList",
         "path": "reimplementation/reverselist",
-        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** You basically implement the function`lib.reverseList`.\nYour function should behave exactly the same!",
+        "question": "Use `fold` to implement the `reverseList` function.\n\n**Note:** You basically implement the function `lib.reverseList`.\nYour function should behave exactly the same!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold XXX;\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  reverseList = lib.fold (e: acc: acc ++ [ e ]) [];\nin\nrec {\n  example = lib.reverseList listOfNumbers;\n  result = reverseList listOfNumbers;\n}\n",
-        "youtube": ""
+        "youtube": "https://www.youtube.com/watch?v=LApNEuzt9Is&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Fold: Implementing 'map'",
@@ -245,7 +245,7 @@
         "question": "Use `fold` to write your own `map` function.\n\n**Note:** The little error is intended, FIX IT!",
         "code": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = XXX fold XXX; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
         "solution": "with import <nixpkgs> { };\nlet\n  listOfNumbers = [2 4 6 9 27];\n  myMap = op: list: lib.fold (x: y: [(op x)] ++ y) [] list; \nin\nrec {\n  #your map should create the same result as the standard map function\n  example = map (x: builtins.div x 2) listOfNumbers; \n  result = myMap (x: builtins.div x 2) listOfNumbers;\n}\n",
-        "youtube": "https://www.youtube.com/watch?v=LApNEuzt9Is&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
+        "youtube": "https://www.youtube.com/watch?v=RZuWUn_QHnQ&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
     },
     {
         "topic": "Reimplementation: attrVals",
@@ -274,7 +274,7 @@
     {
         "topic": "The end",
         "path": "end",
-        "question": "## It is done!\nCongratulations! You reached the end of this course and you made it!\n\n**We hope you liked 'A tour of Nix'!** If you want to get in **contact**, \nplease raise an issue at [https://github.com/nixcloud/tour_of_nix](https://github.com/nixcloud/tour_of_nix/issues)\n\n\n##Education & Consulting\n\nAn excelent resource is <https://nixos.org/community/commercial-support>\n\n## Further reading\n\n* [NixPkgs manual](https://nixos.org/nixpkgs/manual) \n\n  Covers topics as: buildPhases, override(s) and support for specific \n  programming languages\n\n* [NixOS Wiki](https://nixos.wiki/)\n\n  Practical usage examples, like the \n  [Cheatsheet](https://nixos.wiki/wiki/Cheatsheet)\n\n* [nix.dev](https://nix.dev/)\n\n  Introduction to nix-shell, flakes and workflows.\n\n* [Nix by example](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55)\n\n  Parse trees, evaluation order, composite data-types, laziness, conditionals, Let expressions, and much more...\n\n* [Luca Bruno's nix pill(s)](https://lethalman.blogspot.de/2014/07/nix-pill-1-why-you-should-give-it-try.html)\n  \n  The Nix Pills are a wonderful introduction into Nix programming and you will \n  have much joy reading them!\n\n## Donations\n\nFinancial support for hosting the tour of nix is appreciated: \n\n ??PAYPAL??\n\n##Contributing\n\nYou are welcome to extend the tour of nix, it is an open source project! Create issues on <https://github.com/nixcloud/tour_of_nix/issues> or modify the questions.json and create a PR!\n\n### Manual editing\nDownload <https://nixcloud.io/tour/questions.json> and open it in the \neditor of your choise.\n\n### Using the inline editor\n\nShortcuts:\n\n* `ctrl+,` - loads markdown into the editor\n* `ctrl+.` - compiles markdown2html into the right side\n\n  **Note:** do this twice and the editor is restored to the previous state!\n\n* `ctrl+i` - reset the editor to the default content\n* `ctrl+s` - save the questions to `questions.json` into you \n  `downloads` directory\n  \nIf you want to add new questions, use the javascript console. \n\n**Warning:** `ctrl+shift+i` won't work in chrome, so use the mouse with \nRMB to `inspect element`. From that javascript console you can extend the `questions` \nobject, which holds all the questions.\n\n**Warning:** You might want to play with the workflow for some time as\nyou can easily 'overwrite' or 'reset' your contributions by accident!",
+        "question": "## It is done!\nCongratulations! You reached the end of this course and you made it!\n\n**We hope you liked 'A tour of Nix'!** If you want to get in **contact**, \nplease raise an issue at [https://github.com/nixcloud/tour_of_nix](https://github.com/nixcloud/tour_of_nix/issues)\n\n\n##Education & Consulting\n\nAn excellent resource is <https://nixos.org/community/commercial-support>\n\n## Further reading\n\n* [NixPkgs manual](https://nixos.org/nixpkgs/manual) \n\n  Covers topics such as: buildPhases, override(s) and support for specific \n  programming languages.\n\n* [NixOS Wiki](https://nixos.wiki/)\n\n  Practical usage examples, like the \n  [Cheatsheet](https://nixos.wiki/wiki/Cheatsheet).\n\n* [nix.dev](https://nix.dev/)\n\n  Introduction to nix-shell, flakes and workflows.\n\n* [Nix by example](https://medium.com/@MrJamesFisher/nix-by-example-a0063a1a4c55)\n\n  Parse trees, evaluation order, composite data-types, laziness, conditionals, Let expressions, and much more...\n\n* [Luca Bruno's nix pill(s)](https://lethalman.blogspot.de/2014/07/nix-pill-1-why-you-should-give-it-try.html)\n  \n  The Nix Pills are a wonderful introduction into Nix programming and you will \n  have much joy reading them!\n\n## Donations\n\nFinancial support for hosting the tour of nix is appreciated: \n\n ??PAYPAL??\n\n##Contributing\n\nYou are welcome to extend the tour of nix, it is an open source project! Create issues on <https://github.com/nixcloud/tour_of_nix/issues> or modify the questions.json and create a PR!\n\n### Manual editing\nDownload <https://nixcloud.io/tour/questions.json> and open it in the \neditor of your choise.\n\n### Using the inline editor\n\nShortcuts:\n\n* `ctrl+,` - loads markdown into the editor\n* `ctrl+.` - compiles markdown2html into the right side\n\n  **Note:** do this twice and the editor is restored to the previous state!\n\n* `ctrl+i` - reset the editor to the default content\n* `ctrl+s` - save the questions to `questions.json` into you \n  `downloads` directory\n  \nIf you want to add new questions, use the javascript console. \n\n**Warning:** `ctrl+shift+i` won't work in chrome, so use the mouse with \nRMB to `inspect element`. From that javascript console you can extend the `questions` \nobject, which holds all the questions.\n\n**Warning:** You might want to play with the workflow for some time as\nyou can easily 'overwrite' or 'reset' your contributions by accident!",
         "code": "with import <nixpkgs> { }; \nrec {\n  made_it = \"it is done\";\n}\n",
         "solution": "with import <nixpkgs> { }; \nrec {\n  made_it = \"it is done\";\n}\n",
         "youtube": "https://www.youtube.com/watch?v=qWxGtbeRGhU&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
