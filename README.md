@@ -29,13 +29,15 @@ to see the tour, simply do this:
 
 ## chrome/chromium
 
-    nix-shell -p python --command 'python -m SimpleHTTPServer'
+    nix-shell -p python3 --command 'python3 -m http.server 9000'
     chromium localhost:8000
 
 **note:** chromium won't load xhr requests from file:// but instead requires a webserver to work.
 
 ## electron 
 with electron we can create a native executable so that one can use `nix-env` to install the tour locally.
+
+note: electron support is broken, i'll leave the code for later fixes.
 
 manually invoking it:
 
