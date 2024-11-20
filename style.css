@@ -83,7 +83,7 @@ textarea {
   font-size: small; 
 }
 
-#header {
+#header_container {
 /*   display: none; */
   flex-grow: 1;
   background-color: white;
@@ -92,6 +92,8 @@ textarea {
   margin-right: 6px;
   margin-bottom: 6px;
   opacity: 0.95;
+  display: flex;
+  justify-content: space-between   ;
 /*   background-color: green; */
 }
 
@@ -201,9 +203,6 @@ textarea {
   z-index: 100;
   width: 70px;
   height: 45px;
-  top: 3px;
-  right: 12px;
-  position: absolute;
   display: none;
 }
 
@@ -214,3 +213,18 @@ textarea {
 @media all and (max-width: 1400px) {
     #rotate { display: flex; }
 }
+
+#gotogh {
+  background-image: url(github-mark.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  z-index: 100;
+  width: 45px;
+  height: 45px;
+}
+#gotogh:hover {
+  background-color: rgba(178, 208, 242, 0.26);
+}
+
+
+
