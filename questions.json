@@ -178,7 +178,7 @@
     {
         "topic": "Scoping of attributes in let/with",
         "path": "scopes",
-        "question": "This question is about scopes. `let` binds `attributes` as well as `with` does.\n\nQuestion: Which value is `res` assinged to and why?\n\nSolution: See the `solution` button's associated source code.\n\n",
+        "question": "This question is about scopes. `let` binds `attributes` as well as `with` does.\n\nQuestion: Which value is `res` assigned to and why?\n\nSolution: See the `solution` button's associated source code.\n\n",
         "code": "let\n  x = 123;\n  as = { a = \"foo\"; b = \"bar\"; x=\"234\"; };\n \nin with as; {\n res = x; # what value is res bound to?\n}\n\n",
         "solution": "{ res = 123; }\n# most ppl would assume that x would be bound to \"234\" because it was\n# introduced last using `with as` but instead it actualy binds to 123;\n#\n#See this example, why it makes sense:\n#{ config, lib, pkgs, ... }:\n#\n#let\n#  vim = pkgs.stdenv.mkDerivation { \n#     name = \"vim-hack\";\n#     unpackPhase = \"true\"; \n#     installPhase = ''\n#       mkdir -p $out/bin; \n#       echo '#!/bin/sh\n#       echo hi' > $out/bin/vim1; \n#       chmod u+x $out/bin/vim1\n#     '';\n#     };\n#in\n#\n#{\n#  environment.systemPackages = with pkgs; [ vim ];\n#}\n",
         "youtube": "https://www.youtube.com/watch?v=LPU7-hIGQQ0&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-"
