@@ -37,6 +37,14 @@
         echo '{ ... }: { lib = import ./lib; }' > $out/default.nix
       '';
 
+      # questions/*.md as the questions.json the page loads
+      # (tools/build-questions.mjs). Fails on a file that is not listed in
+      # questions/order.txt, or not in the format tools/questions.mjs reads.
+      questions =
+        pkgs.runCommand "questions.json" { nativeBuildInputs = [ pkgs.nodejs-slim ]; } ''
+          node ${./tools}/build-questions.mjs ${./questions} $out
+        '';
+
       # The output of every question's solution, from the same Nix the
       # guest runs, built for this machine: the page compares a run's
       # output with it, so a click evaluates once. The build fails when a
@@ -53,7 +61,7 @@
           ''
             export HOME=$TMPDIR NIX_STATE_DIR=$TMPDIR/state NIX_REMOTE=dummy://
             export NIX_PATH=nixpkgs=${tourNixpkgs}
-            python3 ${./tools/expected.py} ${./questions.json} $out
+            python3 ${./tools/expected.py} ${questions} $out
           '';
 
       # One read-only erofs disk, mounted at /nix in the guest:
@@ -79,7 +87,6 @@
       # The tour's own files, as they are in the repository.
       tourFiles = [
         "index.html"
-        "questions.json"
         "style.css"
         "style_mobile.css"
         "markdown.min.js"
@@ -105,6 +112,8 @@
         cp -r ${./codemirror-5.5/addon/lint} $out/codemirror-5.5/addon/lint
         cp -r ${./codemirror-5.5/mode/shell} $out/codemirror-5.5/mode/shell
         cp ${./codemirror-5.5/LICENSE} $out/codemirror-5.5/LICENSE
+        cp ${questions} $out/questions.json
+        cp ${./tools/questions.mjs} $out/questions.mjs
         cp ${expected} $out/expected.json
 
         cp -r ${./vm}/. $out/vm/
@@ -170,6 +179,7 @@
         inherit
           image
           site
+          questions
           expected
           mimeTypes
           ;

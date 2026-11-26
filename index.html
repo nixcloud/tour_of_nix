@@ -16,6 +16,8 @@
     // Nix runs in vm/vm.html (an iframe below the editor); this is the
     // page's handle on it. See vm/client.js.
     import { connect } from "./vm/client.js";
+    import { formatQuestion } from "./questions.mjs";
+    window.formatQuestion = formatQuestion;
     window.tourNix = connect(document.getElementById("vm"), { onStatus: showBootStatus });
     tourNix.booted.then(
       () => showBootStatus(null),
@@ -49,29 +51,27 @@ var solutionValues = new Map();
 var nixBooted = false;
 var running = false;
 
-// export current question object to questions.json
+// save the current question as the file it comes from, questions/<path>.md
+// (tools/questions.mjs): its text, the editor's code and the solution box.
+// The file is named after the path, with "--" for each "/", since a
+// download cannot be put in a directory: functions--minmax.md goes to
+// questions/functions/minmax.md.
 var saveQuestions = function() {
-  // http://stackoverflow.com/questions/7486085/copying-array-by-value-in-javascript
-  var t = JSON.parse(JSON.stringify(questions));
-    
-  for (i = 0; i < t.length; i++) {
-    t[i].code = t[i].mycode;
-    t[i].solution = t[i].mysolution;
-    delete t[i].mycode;
-    delete t[i].mysolution;
-    delete t[i].result;
-    delete t[i].resultColor;
-    delete t[i].fullError;
+  if (editingQuestionText) {
+    alert("close the question editor first (ctrl+.)");
+    return;
   }
-
-  // hack: might not have been synced yet (click next and prev for example, to do so)
-  t[selected_question].solution = document.getElementById("solution").value;
-  t[selected_question].code = editor.getValue();
-
-  var questionsJSON = JSON.stringify(t, null, 4)
-  var blob = new Blob([questionsJSON], {type: "text/plain;"});
-  
-  saveAs(blob, "questions.json");
+  var q = questions[selected_question];
+  var text = formatQuestion({
+    topic: q.topic,
+    path: q.path,
+    question: q.question,
+    code: editor.getValue(),
+    solution: document.getElementById("solution").value,
+    youtube: q.youtube,
+  });
+  var blob = new Blob([text], {type: "text/markdown;charset=utf-8"});
+  saveAs(blob, q.path.split("/").join("--") + ".md");
 }
 
 // on import, create a copy of code into mycode so we can use the 'reset' button

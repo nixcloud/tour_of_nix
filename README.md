@@ -35,15 +35,32 @@ the 2014 version used nix 1.9 compiled with emscripten (nix-instantiate.js):
 
 # collaboration
 
-if you want to contribute questions or fixes to them, there is a file called `questions.json`. 
-just edit this file, run `nix build` and reload the 'tour' in your browser. there is a guide on how to edit questions
-contained in the last question of the tour https://nixcloud.io/tour/?id=end
+every question is one markdown file, `questions/<path>.md`, where `<path>` is its id in the tour's
+url (`?id=functions/minmax`). `questions/order.txt` lists their files in order (`functions/minmax.md`). a file looks like this:
+
+    ---
+    topic: Strings
+    youtube: https://www.youtube.com/watch?v=...
+    ---
+
+    the question's text, in markdown.
+
+    ```nix code
+    the code the reader starts from
+    ```
+
+    ```nix solution
+    the solution
+    ```
+
+edit them, run `nix build` and reload the 'tour' in your browser. the build turns them into
+`questions.json` (`tools/build-questions.mjs`) and fails, saying why, when a file is not in this
+form, not listed in `order.txt`, or its solution does not evaluate. the last question of the tour,
+https://nixcloud.io/tour/?id=end, has a guide on editing questions in the browser:
 
     ctrl+, - loads markdown into the editor
     ctrl+. - compiles markdown2html into the right side
-    ctrl+s - save the questions to questions.json into you downloads directory
-    
-**note:** this workflow is a big buggy, copy your questions also to a text editor as backup.
+    ctrl+s - saves the question as its markdown file into your downloads directory
 
 # future work
 
@@ -88,5 +105,13 @@ the built site carries their license files next to them (`vm/vendor/`).
 
 * Paul Seitz <paul.m.seitz@gmail.com>
 * Joachim Schiele <js@lastlog.de>
+
+# thanks
+
+* [Farid Zakaria](https://fzakaria.com/) for [trynix](https://trynix.dev), which runs real nix
+  programs in the browser on unkernel: it showed how this tour could run a real, current nix, and
+  its pins, its xz decoder fix and its headers are what the tour builds on
+* [Pooya Parsa](https://github.com/pi0) for [unkernel](https://github.com/pithings/unkernel), the
+  linux compiled to webassembly that nix runs on here
 
 ![meerkats FTW](https://raw.githubusercontent.com/nixcloud/tour_of_nix/master/footerFG.png)

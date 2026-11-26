@@ -46,6 +46,11 @@ Thanks to **contributors**:
 * [aflatter](https://github.com/aflatter) (helping with spinner design)
 * [goibhniu](https://github.com/cillianderoiste) (careful review)
 * [lethalman](http://lethalman.blogspot.de/) (careful review)
+* [Farid Zakaria](https://fzakaria.com/) (his [trynix](https://trynix.dev), real Nix 
+  programs in the browser on unkernel, showed how this tour could run a real, 
+  current Nix)
+* [Pooya Parsa](https://github.com/pi0) (his [unkernel](https://github.com/pithings/unkernel), 
+  the Linux compiled to WebAssembly that Nix runs on here)
 
 **Note:** If we forgot to list you here, just let us know!
 
