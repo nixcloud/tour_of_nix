@@ -19,10 +19,11 @@ the build adds the kernel, the terminal and the disk. For example:
 on the server.
 
 Any server works, with or without Range requests or compression: the
-kernel and the disk are gzipped by the build, and the page unpacks them.
+kernel and the disk are compressed with xz by the build, and the page
+unpacks them (vendor/xzwasm.js).
 With COOP/COEP headers the guest gets two CPUs instead of one.
 
-By default the page downloads the gzipped disk once and keeps it in memory
+By default the page downloads the compressed disk once and keeps it in memory
 (and in the Cache API for the next visit). `?disk=lazy` on `vm/vm.html`
 reads it in pieces with Range requests instead, which only pays off for a
 disk much larger than what Nix reads of it.
@@ -36,7 +37,7 @@ The headers for two CPUs, if your server can set them:
     Cross-Origin-Opener-Policy: same-origin
     Cross-Origin-Embedder-Policy: require-corp
 
-`nix.<hash>.erofs` and its `.gz` change name whenever their contents
+`nix.<hash>.erofs` and its `.xz` change name whenever their contents
 change, so they can be cached forever; `disk.json` names the current pair
 and should not be cached.
 
@@ -47,8 +48,8 @@ nothing:
 
 | | MB |
 | --- | --- |
-| the disk, gzipped: the static nix (33 MB stripped) and nixpkgs' `lib` | 14.6 |
-| the kernel, gzipped | 4.4 |
+| the disk, xz: the static nix (33 MB stripped) and nixpkgs' `lib` | 9.9 |
+| the kernel, xz | 3.5 |
 | the SDK and the terminal | 1.9 |
 
 Later evaluations download nothing. A second visit reads the disk from

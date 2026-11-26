@@ -9,11 +9,11 @@
 import { checkSupport, createKernel } from "./vendor/unkernel/web.mjs";
 import { FitAddon, init, Terminal } from "./vendor/ghostty-web.js";
 import { toResult } from "./result.js";
-import { openDisk } from "./disk.js";
+import { openDisk, unxz } from "./disk.js";
 
-// The kernel, gzipped by the build: 4.4 MB instead of 11.3, from any
-// server, whether it compresses or not.
-const KERNEL = "vendor/unkernel/unkernel.wasm.gz";
+// The kernel, compressed with xz by the build: 3.5 MB instead of 11.3,
+// from any server, whether it compresses or not.
+const KERNEL = "vendor/unkernel/unkernel.wasm.xz";
 
 async function fetchKernel() {
   const res = await fetch(KERNEL);
@@ -21,9 +21,7 @@ async function fetchKernel() {
     throw new Error(`${KERNEL}: HTTP ${res.status}`);
   }
   // application/wasm lets the browser compile while it downloads.
-  return new Response(res.body.pipeThrough(new DecompressionStream("gzip")), {
-    headers: { "content-type": "application/wasm" },
-  });
+  return unxz(res, { "content-type": "application/wasm" });
 }
 
 const PARENT_ORIGIN = location.origin;

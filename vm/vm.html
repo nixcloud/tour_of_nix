@@ -6,11 +6,12 @@
   #terminal { height: 100%; }
 </style>
 <div id="terminal"></div>
+<script src="vendor/xzwasm.js"></script>
 <script>
   // A module that fails to load (a 404 anywhere in vm.js's imports)
   // throws nothing the parent could see, so say so here, and name the
   // first file of the built site that is missing.
-  const BUILT_FILES = ["vendor/unkernel/web.mjs", "vendor/ghostty-web.js", "disk.json"];
+  const BUILT_FILES = ["vendor/unkernel/web.mjs", "vendor/ghostty-web.js", "vendor/xzwasm.js", "disk.json"];
 
   async function loadFailed() {
     let message = "vm.js failed to load";

@@ -1,0 +1,22 @@
+Subject: [PATCH] Copy each decoded chunk out of the decoder's memory
+
+XzReadableStream enqueued a view into the wasm output buffer, then
+reset the buffer for the next chunk. A consumer that has not copied
+the view by the time the next pull runs reads the next chunk's bytes
+in its place: the output has the right length and wrong contents.
+Whether that happens depends on the stream scheduling of the engine
+(node: every time; Chrome: rarely), which is how a NAR decoded fine
+on one browser and failed to parse on another. Enqueue a copy.
+
+---
+--- a/xzwasm.js
++++ b/xzwasm.js
+@@ -117,7 +117,7 @@
+         if (result !== XZ_OK && result !== XZ_STREAM_END) {
+             throw new Error(`get_next_output failed with error code ${result}`);
+         }
+-        const outChunk = this.mem8.subarray(this.outStart, this.outStart + /* outPos */ this.mem32[5]);
++        const outChunk = this.mem8.slice(this.outStart, this.outStart + this.mem32[5]);
+         return { outChunk, finished: result === XZ_STREAM_END };
+     }
+ 
