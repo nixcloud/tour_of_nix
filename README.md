@@ -1,8 +1,7 @@
 # introduction
 
 this repository contains 'a tour of nix', an interactive programming guide dedicated to the 
-nix programming language. there is also a standalone version called 'nix-tour' which 
-is based on 'electron' and can be installed and used offline.
+nix programming language.
 
 https://nixcloud.io/tour/ 
 
@@ -12,28 +11,32 @@ happy learning!
 
 # building & running
 
-building nix with emscripten was a huge challenge and back in 2014 i managed to pull it off but lost all 
-the source code so you have to use the generated javascript binaries in this repository.
+the tour runs a real, current nix in the browser: [unkernel](https://github.com/pithings/unkernel),
+a linux kernel compiled to webassembly, runs the aarch64 `nix-instantiate` from nixpkgs off a
+read-only disk image. the pieces are pinned like in [trynix](https://github.com/fzakaria/trynix).
+`vm/README.md` has the details.
 
-technical background: 
+    nix build                      # the static site in ./result
+    nix run .#serve                # serve it on http://127.0.0.1:8137/
+
+`result/` is a plain static site, any web server will do, for example:
+
+    python3 -m http.server -d result
+
+**note:** opening `index.html` from `file://` does not work; it needs a web server. the browser
+needs JSPI (webassembly's javascript promise integration): chrome 137, firefox 153 or safari 27.
+
+the build also evaluates every solution in `questions.json` with nix and fails if one does not
+evaluate (`nix build .#expected`).
+
+the 2014 version used nix 1.9 compiled with emscripten (nix-instantiate.js): 
 
   https://lastlog.de/blog/tour_of_nix.html
-
-## firefox
-
-    firefox index.html
-
-## chromium
-
-    nix-shell -p python3 --command 'python3 -m http.server 9000'
-    chromium localhost:8000
-
-**note:** chromium won't load xhr requests from file:// but instead requires a webserver to work.
 
 # collaboration
 
 if you want to contribute questions or fixes to them, there is a file called `questions.json`. 
-just edit this file and reload the 'tour' in your browser. there is a guide on how to edit questions
+just edit this file, run `nix build` and reload the 'tour' in your browser. there is a guide on how to edit questions
 contained in the last question of the tour https://nixcloud.io/tour/?id=end
 
     ctrl+, - loads markdown into the editor
@@ -52,7 +55,7 @@ https://github.com/nixcloud/tour_of_nix/issues/22
 
 # license
 
-the bundled nix-instantiate as well as the questions.json file are licensed as:
+the questions.json file is licensed as:
 
        GNU LESSER GENERAL PUBLIC LICENSE
            Version 2.1, February 1999
@@ -68,18 +71,18 @@ see `COPYING.md` for details on their license.
 oh, and there is this font/ - directory. really don't have a clue what license that uses. was from google 
 and is probably licensed 'world domination with no privacy' or something... not sure...
 
-## bundled nix-instantiate
+## nix in the browser
 
-we added these files into this repository, which is used to evaluate so called nix-expressions:
+nothing of it is in this repository: `nix build` fetches it, pinned by hash in `flake.nix` and
+`flake.lock`:
 
-* nix-instantiate.html.mem
-* nix-instantiate.data
-* nix-instantiate.js
-* nix-instantiate.js.mem
+* nix and its runtime closure (aarch64-linux, from cache.nixos.org): LGPL-2.1 and the licenses of
+  its dependencies
+* the library of nixpkgs (`lib`): MIT
+* [unkernel](https://github.com/pithings/unkernel): MIT and GPL-2.0-only (the kernel)
+* [ghostty-web](https://github.com/coder/ghostty-web): MIT
 
-**note:** if you want to use this library for other purposes than this 'tour of nix' you probably 
-want to read the 'building & running' section above. and you really want to read the blog post 
-listed there.
+the built site carries their license files next to them (`vm/vendor/`).
 
 # authors
 

@@ -228,3 +228,44 @@ textarea {
 
 
 
+
+/* the complete error message, under the output box */
+#fullError {
+  margin-top: 2px;
+  font-size: small;
+}
+
+#fullError pre {
+  background-color: rgb(51, 51, 51);
+  color: rgb(238, 238, 238);
+  padding: 5px;
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "DejaVu Sans Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  max-height: 24em;
+  overflow: auto;
+}
+
+/* the shell Nix runs in (vm/vm.html), opened with the shell button */
+#shellPanel {
+  display: none;
+  height: 20em;
+  margin-top: 4px;
+  border: 1px solid rgba(0,0,0,0.15);
+  resize: vertical;
+  overflow: hidden;
+}
+
+#shellPanel.open {
+  display: flex;
+}
+
+#shellPanel iframe {
+  flex-grow: 1;
+  border: 0;
+}
+
+#stopButton {
+  display: none;
+}

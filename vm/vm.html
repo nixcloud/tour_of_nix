@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>nix vm</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; }
+  #terminal { height: 100%; }
+</style>
+<div id="terminal"></div>
+<script>
+  // A module that fails to load (a 404 anywhere in vm.js's imports)
+  // throws nothing the parent could see, so say so here, and name the
+  // first file of the built site that is missing.
+  const BUILT_FILES = ["vendor/unkernel/web.mjs", "vendor/ghostty-web.js", "disk.json"];
+
+  async function loadFailed() {
+    let message = "vm.js failed to load";
+    for (const file of BUILT_FILES) {
+      const res = await fetch(file, { method: "HEAD" }).catch(() => null);
+      if (!res?.ok) {
+        message =
+          `${file} is missing: this is the source folder, not the built site. ` +
+          "Run `nix build` and serve ./result instead.";
+        break;
+      }
+    }
+    parent.postMessage({ type: "failed", message }, location.origin);
+  }
+</script>
+<script type="module" src="vm.js" onerror="loadFailed()"></script>

@@ -7,14 +7,18 @@ Nix can be algorithmically
 used to solve problems.** However, this is not an introduction into `nix-env`, 
 `nix-shell`, `nix-repl` and 
 we won't build/install software using `stdenv.mkDerivation`. Still 
-we bundled [nixpkgs](https://github.com/nixos/nixpkgs) into 
-'A tour of Nix' and you can use the **Nix library** functions' from 
-**pkgs/lib**, which are used for packaging software.
+we bundled the library of [nixpkgs](https://github.com/nixos/nixpkgs) into 
+'A tour of Nix' and you can use the **Nix library** functions from 
+**lib**, which are used for packaging software.
 
 When ready, just click the next button on the top right corner.
 
-**Note:** 'A tour of Nix' can be used offline once it has loaded in the 
-browser. 
+**Note:** [Youtube videos](https://www.youtube.com/watch?v=dKsA_yR7gQ4&list=PLMr2KA8WWojv-4cgqIiVebml0FrMl8N_-)
+
+**Note: **Updated many questions in 2023!
+
+**Note:** Updated in 2026: 'A tour of Nix' now runs a real, current Nix 
+in your browser. Nothing you type is sent to a server.
 ##Shortcuts
 
 * next page: `ctrl + j`
@@ -49,30 +53,16 @@ Thanks to **contributors**:
 
 'A tour of Nix' contains this software:
 
-* [Nix 1.9](https://github.com/nixos/nix) (compiled with emscripten)
-* [nixpkgs](https://github.com/nixos/nixpkgs)
-* [emscripten-1.29.10](https://github.com/kripken/emscripten)
+* [Nix](https://github.com/nixos/nix) (aarch64 Linux build from nixpkgs)
+* [nixpkgs](https://github.com/nixos/nixpkgs) (its `lib`)
+* [unkernel](https://github.com/pithings/unkernel) (Linux compiled to WebAssembly; MIT and GPL-2.0-only)
+* [ghostty-web](https://github.com/coder/ghostty-web) (the terminal; MIT)
 * [codemirror 5.5](https://codemirror.net/)
 * [markdown.js](https://github.com/evilstreak/markdown-js)
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js)
 
 
-### emscripten (1.29.10)
------
-Emscripten is available under 2 licenses, the MIT license and the
-University of Illinois/NCSA Open Source License.
-
-Both are permissive open source licenses, with little if any
-practical difference between them.
-
-The reason for offering both is that (1) the MIT license is
-well-known, while (2) the University of Illinois/NCSA Open Source
-License allows Emscripten's code to be integrated upstream into
-LLVM, which uses that license, should the opportunity arise.
------
-
-
-### Nix (1.9)
+### Nix
 
 ---
 

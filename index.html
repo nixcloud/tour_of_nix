@@ -12,7 +12,16 @@
   <link href="bootstrap-5.0.2/bootstrap.min.css" rel="stylesheet">
   <script src="bootstrap-5.0.2/bootstrap.bundle.min.js"></script>
 
-  <script type="text/javascript" src="nix-instantiate.js"></script>
+  <script type="module">
+    // Nix runs in vm/vm.html (an iframe below the editor); this is the
+    // page's handle on it. See vm/client.js.
+    import { connect } from "./vm/client.js";
+    window.tourNix = connect(document.getElementById("vm"), { onStatus: showBootStatus });
+    tourNix.booted.then(
+      () => showBootStatus(null),
+      (err) => { document.getElementById("runInfo").textContent = "Nix did not start: " + err.message; },
+    );
+  </script>
   <script type="text/javascript" src="markdown.min.js"></script>
   <script type="text/javascript" src="FileSaver.min.js"></script>
 
@@ -32,6 +41,13 @@ var selected_question = 0;
 var questions;
 var current_question = 0;
 var editingQuestionText = false;
+// expected.json: per question path, the solution's text and its output,
+// computed when the site was built
+var expected = {};
+// outputs of solutions evaluated in the browser, by solution text
+var solutionValues = new Map();
+var nixBooted = false;
+var running = false;
 
 // export current question object to questions.json
 var saveQuestions = function() {
@@ -45,6 +61,7 @@ var saveQuestions = function() {
     delete t[i].mysolution;
     delete t[i].result;
     delete t[i].resultColor;
+    delete t[i].fullError;
   }
 
   // hack: might not have been synced yet (click next and prev for example, to do so)
@@ -133,6 +150,10 @@ function loadJSON(path, success, error) {
   xhr.open("GET", path, true);
   xhr.send();
 }
+loadJSON('expected.json',
+  function(data) { expected = data; },
+  function(xhr) { console.log("no expected.json: solutions are evaluated in the browser"); }
+);
 loadJSON('questions.json',
   function(data) {
     questions = data;
@@ -153,6 +174,7 @@ loadJSON('questions.json',
     }
     prepare_data();
     load_wanted_page();
+    document.getElementById("spinner").style.display = "none";
   },
   function(xhr) {
     console.error(xhr);
@@ -234,6 +256,7 @@ var change_question_withoutHistoryChange = function (myinput) {
     questions[current_question].mysolution = document.getElementById('solution').value;
     questions[current_question].result = output.value;
     questions[current_question].resultColor = output.style.backgroundColor;
+    questions[current_question].fullError = document.getElementById('fullErrorText').textContent;
     auto_resize(output)
   }
 
@@ -284,6 +307,7 @@ var change_question_withoutHistoryChange = function (myinput) {
 
   if (typeof(questions[current_question].resultColor) !== "undefined")
     output.style.backgroundColor = questions[current_question].resultColor;
+  showFullError(questions[current_question].fullError);
 
   auto_resize(output);
   auto_resize(contentSolution);
@@ -312,6 +336,8 @@ var resetQuestion = function() {
   
   var output = document.getElementById('output');
   output.style.backgroundColor = "grey";
+  editor.clearGutter('gutter-error');
+  showFullError(null);
   console.log("reset question")
 }
 // embedded 'Questions' editor using the 'editor'
@@ -348,119 +374,118 @@ var load_markdown = function() {
   }
 }
 
-Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
-
-function extractLineAndPosition(inputString) {
-  const pattern = /line:(\d+):(\d+)/;
-  const match = inputString.match(pattern);
-
-  if (match) {
-    const lineNumber = parseInt(match[1], 10);
-    const textPosition = parseInt(match[2], 10);
-    return { found: true, lineNumber, textPosition };
-  } else {
-    // Return a default value indicating that the pattern was not found.
-    return { found: false, lineNumber: -1, textPosition: -1 };
-  }
+var toggleShell = function() {
+  document.getElementById('shellPanel').classList.toggle('open');
 }
 
-function highlightError(error_message) {
-  const result = extractLineAndPosition(error_message);
-  if (result.found) {
-    console.log("Pattern found:");
-    console.log("Line Number:", result.lineNumber);
-    console.log("Text Position:", result.textPosition);
-
-    var marker = document.createElement("div");
-    marker.setAttribute('class', 'CodeMirror-lint-marker-error');
-    marker.setAttribute('title', error_message);
-
-    editor.setGutterMarker(result.lineNumber - 1,'gutter-error', marker);
-  } else {
-    console.log("Pattern not found in the input string.");
+// Boot progress of the Nix VM in #runInfo; null once it is up.
+function showBootStatus(text) {
+  if (text === null) {
+    nixBooted = true;
   }
+  if (running) {
+    return;
+  }
+  document.getElementById('runInfo').textContent =
+    text === null ? "" : (nixBooted ? text : "starting Nix: " + text);
 }
 
-// primary routine to execute the code from the editor in nix-instantiate
-var runNix = function() {
+// The complete error, as Nix printed it, under the output box.
+function showFullError(text) {
+  var details = document.getElementById('fullError');
+  document.getElementById('fullErrorText').textContent = text || "";
+  details.hidden = !text;
+}
+
+function highlightError(result) {
+  if (result.line === null) {
+    return;
+  }
+  var marker = document.createElement("div");
+  marker.setAttribute('class', 'CodeMirror-lint-marker-error');
+  marker.setAttribute('title', result.short);
+  editor.setGutterMarker(result.line - 1, 'gutter-error', marker);
+}
+
+// What the question's solution evaluates to: from expected.json while
+// the solution is the one the site was built with, else evaluated here
+// once.
+async function expectedValue(question) {
+  var known = expected[question.path];
+  if (known && known.solution === question.solution) {
+    return known.value;
+  }
+  if (!solutionValues.has(question.solution)) {
+    var r = await tourNix.evaluate(question.solution);
+    solutionValues.set(question.solution, r.ok ? r.value : null);
+  }
+  return solutionValues.get(question.solution);
+}
+
+var ESCAPES = /\x1b\[[0-9;]*m/g;
+
+// primary routine: evaluate the editor's code in the Nix VM and compare
+// its output with the solution's
+var runNix = async function() {
+  if (running || editingQuestionText) {
+    return;
+  }
+  running = true;
+  var index = current_question;
+  var question = questions[index];
+  var o = document.getElementById('output');
   editor.clearGutter('gutter-error');
-  var start = new Date().getTime();
-//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
+  showFullError(null);
+  o.value = "";
+  document.getElementById('runInfo').textContent = nixBooted ? "computation in progress" : "waiting for Nix to start";
+  document.getElementById('stopButton').style.display = "inline-block";
 
-  // run the solution
-  var correct_solution;
-  
-  Module['print'] = function(text) {
-//    Module['return'] = text + '\n'; 
-    correct_solution = text;
-    var end = new Date().getTime();
-    var time = end - start;
-    console.log('Execution time: ' + time + ' ms');
-
-  };
-  Module['printErr'] = function(text) {
-  //this should not happen
-  //TODO exception handling 
-  };
-  var solution_text = questions[current_question].solution;
-  FS.writeFile('/test.nix', solution_text, {encoding: 'utf8'});
-  //var result = FS.readFile('test.nix', {encoding: 'utf8'});
-  //console.log(result);
-//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
-  Module.callMain(Module['arguments']);
-  
-  //run the user input
-  console.log("running runNix()");
-  document.getElementById('runInfo').innerHTML = "computation in progress";
-  document.getElementById('output').value = "";
-  Module['print'] = function(text) {
-//    Module['return'] = text + '\n'; 
-    var o = document.getElementById('output');
-    if (text == correct_solution){
-      console.log("correct answer");
-      o.value = text;
-      o.style.backgroundColor = "#44aa44";
-  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
+  var text, color, full = null, result = null;
+  try {
+    result = await tourNix.evaluate(editor.getValue());
+    if (!result.ok) {
+      text = result.short;
+      color = "#aa4444";
+      full = result.full.replace(ESCAPES, "");
     } else {
-      console.log("incorrect answer");
-      o.value = "your solution:\n" + text + "\nexpected was:\n" + correct_solution;
-      o.style.backgroundColor = "#aa4444";
-  //    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000); 
+      var want = await expectedValue(question);
+      if (want === null) {
+        text = result.value + "\n(the solution of this question does not evaluate, so this was not checked)";
+        color = "grey";
+      } else if (result.value === want) {
+        text = result.value;
+        color = "#44aa44";
+      } else {
+        text = "your solution:\n" + result.value + "\nexpected was:\n" + want;
+        color = "#aa4444";
+      }
     }
-    auto_resize(o);
-    document.getElementById('runInfo').innerHTML = "";
-  };
-  Module['printErr'] = function(text) {
-    text = text.replace("[31;1m", "");
-    text = text.replace("[1m", "");
-    text = text.replace("[1m", "");
-    text = text.replace("[0m","");
-    text = text.replace("[0m","");
-    text = text.replace("/test.nix","line");
-    text = text.replace("/test.nix","line");
-    text = text.replace("/test.nix","line");
-    text = text.replace("/test.nix","line");
-    text = text.replace(//g, "");
-//    text = text.replace(":error:", ":\nerror");
-    console.log(text);
-    highlightError(text); // runNix() return one line per error (up to several lines) and highlightError is called per line
-//    Module['return'] = text + '\n';
-    document.getElementById('runInfo').innerHTML = "";
-    var o = document.getElementById('output')
-    o.value += text +"\n";
-    auto_resize(o)
-    
-    console.log("incorrect answer");
-//    o.value += text;
-    o.style.backgroundColor = "#aa4444";
-//    setTimeout(function () {o.style.backgroundColor = "grey"}, 2000);
-  };
-  var input_text = editor.getValue();
-  FS.writeFile('/test.nix', input_text, {encoding: 'utf8'});
-//  Module['arguments'] = ['-I', 'nixpkgs=nixpkgs', '--eval', '--strict', '--show-trace', '/test.nix'];
-  //var result = FS.readFile('test.nix', {encoding: 'utf8'});
-  //console.log(result);
-  Module.callMain(Module['arguments']);
+  } catch (err) {
+    text = err.message;
+    color = "#aa4444";
+  }
+
+  running = false;
+  document.getElementById('stopButton').style.display = "none";
+  document.getElementById('runInfo').textContent = "";
+  if (current_question !== index) {
+    // the reader moved on: keep the result for when they come back
+    question.result = text;
+    question.resultColor = color;
+    question.fullError = full;
+    return;
+  }
+  o.value = text;
+  o.style.backgroundColor = color;
+  auto_resize(o);
+  showFullError(full);
+  if (result && !result.ok) {
+    highlightError(result);
+  }
+};
+
+var stopNix = function() {
+  tourNix.stop();
 };
 
   </script>
@@ -487,13 +512,17 @@ var runNix = function() {
           <textarea class="input" id="input" rows="8">demo text textarea</textarea>
           <div id="editorButtonGroup"  class="flex-container-row">
             <button type="button" class="myButton button" id="resetButton" onClick="resetQuestion()" title="">reset</button>
+            <button type="button" class="myButton button" id="shellButton" onClick="toggleShell()" title="the shell Nix runs in">shell</button>
             <button type="button" class="myButton button" id="solutionButton" onClick="showSolution()" title="">solution</button>
+            <button type="button" class="myButton button" id="stopButton" onClick="stopNix()" title="stop the evaluation">stop</button>
             <button type="button" class="myButton button" id="runButton" onClick="runNix()" title="use shift+return">run</button>
           </div>
         </div>
         <textarea id="output" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
+        <details id="fullError" hidden><summary>full error</summary><pre id="fullErrorText"></pre></details>
         <textarea id="solution" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-        <div id="runInfo"></div>
+        <div id="runInfo">starting Nix</div>
+        <div id="shellPanel"><iframe id="vm" src="vm/vm.html" title="the shell Nix runs in"></iframe></div>
       </div>
       <div id="right" class="flex-container-col">
         <div id="questionNavigation" class="flex-container-row">
@@ -516,7 +545,7 @@ var runNix = function() {
       viewportMargin: Infinity,
       gutters: ['gutter-error'],
     });
-    document.getElementById('testJS').innerHTML = "works! Maybe wait a little longer as this webpage is rather big with 27Mib!";
+    document.getElementById('testJS').innerHTML = "works!";
  
  </script>
 </body>

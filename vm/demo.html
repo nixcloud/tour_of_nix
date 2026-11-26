@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>outer page</title>
+<style>
+  body { font: 15px sans-serif; max-width: 60rem; margin: 1rem auto; padding: 0 1rem; }
+  textarea { width: 100%; height: 9rem; font-family: monospace; }
+  pre { padding: .5rem; background: grey; color: #fff; white-space: pre-wrap; }
+  iframe { width: 100%; height: 20rem; border: 0; }
+</style>
+<textarea id="code">let
+  h = "Hello";
+in
+{
+  helloWorld = h + X;
+}</textarea>
+<button id="run">run</button> <button id="stop">stop</button> <span id="status">booting</span>
+<pre id="short"></pre>
+<details><summary>full error</summary><pre id="full"></pre></details>
+<iframe id="vm" src="vm.html" allow="cross-origin-isolated"></iframe>
+<script type="module">
+  import { connect } from "./client.js";
+  const $ = (id) => document.getElementById(id);
+  const nix = connect($("vm"), { onStatus: (s) => ($("status").textContent = s) });
+  nix.booted.catch((err) => {
+    $("short").textContent = err.message;
+    $("short").style.background = "#aa4444";
+  });
+  $("run").onclick = async () => {
+    const r = await nix.evaluate($("code").value).catch((err) => ({ short: err.message, full: "" }));
+    $("short").textContent = r.ok ? r.value : r.short;
+    $("short").style.background = r.ok ? "#44aa44" : "#aa4444";
+    $("full").textContent = r.full.replace(/\x1b\[[0-9;]*m/g, "");
+    $("status").textContent = `${r.ms} ms`;
+  };
+  $("stop").onclick = () => nix.stop();
+</script>
