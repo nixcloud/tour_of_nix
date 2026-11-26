@@ -62,14 +62,6 @@ https://nixcloud.io/tour/?id=end, has a guide on editing questions in the browse
     ctrl+. - compiles markdown2html into the right side
     ctrl+s - saves the question as its markdown file into your downloads directory
 
-# future work
-
-## source code rework
-
-thanks to https://github.com/tomberek we have this now:
-
-https://github.com/nixcloud/tour_of_nix/issues/22
-
 # license
 
 the questions.json file is licensed as:
