@@ -25,7 +25,7 @@ Now:
 
 **Hint:** You find the answer within the solution section.
 
-**Note:** That is all for now, but you can continue reading in the [nix documentation](https://nixos.org/manual/nix/stable/language/constructs.html#recursive-sets).
+**Note:** That is all for now, but you can continue reading in the [nix documentation](https://nix.dev/manual/nix/stable/language/constructs#recursive-sets).
 
 ```nix code
 rec {
